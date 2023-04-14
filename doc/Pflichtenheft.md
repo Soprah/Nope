@@ -17,6 +17,8 @@ Es soll das Kartenspiel "Nope" implementiert werden inklusive simulierte Spieler
 | Benutzer der Software | Name des Spielers |  |  |  |
 | Benutzer der Software | Name der KI |  |  |  |
 ## 2.2 Funktionale Anforderungen
+Aus dem Regelwerk von Nope lassen sich folgende Anforderungen ableiten:
+- Ein Spieler schickt dem Server zur Anmeldung eine Nachricht. Als Antwort bekommt dieser eine Session ID. Anhand der Session ID ist zu erkennen ob der Spieler als erster an der Reiche ist. Alle Spieler mit einer gültigen Session ID können nun dem Server mitteilen dass Sie eine Karten ziehen möchte. Dies erfolgt einzeln für jede Karte. Wenn der erste Spieler genug Karten auf der Hand hat, kann er nun den Server mitteilen dass er die Oberste Karte auf dem Ablagestapel sehen möchte. Der Server schickt daraufhin die entsprechende Information und stoppt dabei die Zeit. Wenn der Spieler mehr als 10 Sekunden für seien Zug braucht ist diese ungültig und der Spieler hat verloren. Wenn der Zug innerhalb der Frist erfolgt dann prüft der Server ob dieser gültig ist. Bei einem ungültigen Zug hat der Spieler ebenfalls verloren. Bei einem gültigen Zug wandert die gelegte Karte auf die oberste Position des Ablagestapels. Dem folgenden Spieler, welcher anhand seiner Session ID im Wartezustand ist, wird nun die Oberste Karte im Ablagestapel mitgeteilt und der Server prüft alle weiteren Züge wie vorher beschrieben.
 ## 2.3 Nicht-funktionale Anforderungen
 ### 2.3.1 Rahmenbedingungen
 ### 2.3.2 Betriebsbedingungen
