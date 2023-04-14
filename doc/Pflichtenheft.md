@@ -17,7 +17,7 @@ Es soll das Kartenspiel "Nope" implementiert werden inklusive simulierte Spieler
 | Benutzer der Software | Name des Spielers |  |  |  |
 | Benutzer der Software | Name der KI |  |  |  |
 ## 2.2 Funktionale Anforderungen
-### STRUKTURIERUNG DER ANFORDERUNGEN IN FUNKTIONALE GRUPPEN
+### 2.2.1 STRUKTURIERUNG DER ANFORDERUNGEN IN FUNKTIONALE GRUPPEN
 -	Spielregeln:
     -  	Festlegung der Regeln & Abläufe
         - Siegbedingungen
@@ -43,7 +43,7 @@ Es soll das Kartenspiel "Nope" implementiert werden inklusive simulierte Spieler
             - Welche Karten besitzen KI-1 / KI-2 in der Hand
             - Welche Karten liegen noch im Deck
             - Gewinner und Verlierer eines Matches
-### AKTEURE
+### 2.2.2 AKTEURE
 -	KI-Spieler/Spieler 1: 
     - Spielersimulation 1, die eine Partie mitspielt
     - KI-Spieler/Spieler 2:
@@ -54,8 +54,7 @@ Es soll das Kartenspiel "Nope" implementiert werden inklusive simulierte Spieler
     - Verbindet Spieler
     - Steuert das Spiel
     - Speichert wichtige Informationen in Datenbank
-
-### WEITERE ENTITÄTEN/BEGRIFFE INNERHALB DER FACHDOMÄNE
+### 2.2.3 WEITERE ENTITÄTEN/BEGRIFFE INNERHALB DER FACHDOMÄNE
 -	Spielregeln:
     - Regeln & Abläufe des Kartenspiels, die von dem Kartenspiel festgelegt und von uns ggf. angepasst wurden (z.B. gibt es keinen Kartengeber)
 -	Karten:
@@ -79,8 +78,7 @@ Es soll das Kartenspiel "Nope" implementiert werden inklusive simulierte Spieler
     - Wie sich das Spiel über die Spielzüge entwickelt
 -	Gewinnergebnis:
     - Welcher Spieler gewonnen hat
-
-
+## 2.3 Nicht-funktionale Anforderungen
 ### 2.3.1 Rahmenbedingungen
 ### 2.3.2 Betriebsbedingungen
 ### 2.3.3 Qualitätsmerkmale
@@ -96,7 +94,7 @@ Das Auswählen einer Karte erfolgt mit der Angabe der Position auf der Hand. Neu
 | Benutzer | Karten aus dem Kartenstapel ziehen | sodass ich diese auf meine Hand ablegen kann |  |
 | Benutzer | am Anfang solange Karten ziehen bis meine Hand voll ist | das Spiel beginnen kann |  |
 | Benutzer | die oberste Karte auf dem Ablagestapel sehen | damit ich meinen Zug planen kann |  |
-| Benutzer | bei Sonderkarten weitere Karten auf dem Ablagestapel einsehen | damit ich meinen Zug planen kann |  |
+| Benutzer | bei der Durchblick-Karte weitere Karten auf dem Ablagestapel einsehen | damit ich meinen Zug planen kann |  |
 | Benutzer | Karten auf dem Ablagestapel ablegen | der folgende Spieler seinen Zug machen kann |  |
 # Technische Beschreibung
 ## Systemübersicht
