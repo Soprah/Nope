@@ -96,7 +96,7 @@ Das Auswählen einer Karte erfolgt mit der Angabe der Position auf der Hand. Neu
 | Benutzer | Karten aus dem Kartenstapel ziehen | sodass ich diese auf meine Hand ablegen kann |  |
 | Benutzer | am Anfang solange Karten ziehen bis meine Hand voll ist | das Spiel beginnen kann |  |
 | Benutzer | die oberste Karte auf dem Ablagestapel sehen | damit ich meinen Zug planen kann |  |
-| Benutzer | bei Sonderkarten weitere Karten auf dem Ablagestapel einsehen | damit ich meinen Zug planen kann |  |
+| Benutzer | bei der Durchblick-Karte weitere Karten auf dem Ablagestapel einsehen | damit ich meinen Zug planen kann |  |
 | Benutzer | Karten auf dem Ablagestapel ablegen | der folgende Spieler seinen Zug machen kann |  |
 # Technische Beschreibung
 ## Systemübersicht
