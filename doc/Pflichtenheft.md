@@ -1,8 +1,15 @@
 # Anforderungs- und Entwurfsspezifikation (“Pflichtenheft”)
 
-# Einführung
-## Beschreibung
-## Ziele
+# 1 Einführung
+## 1.1 Beschreibung
+Es soll das Kartenspiel "Nope" implementiert werden inklusive simulierte Spieler die automatisch strategische Züge ausführen
+## 1.2 Ziele
+- Das Spiel soll über eine Verteilte Systemarchitektur verfügen:
+    - Dabei wird es aufgeteilt in Form einer Client-Server-Architektur
+    - Mehrere Spieler können sich über das Netzwerk verbinden um gegeneinander zu spielen
+    - Es können mehrere Runden des Spiels gleichzeitig gespielt werden
+ - Zielbenutzergruppe:
+    - Dozenten und Studenten, welche im Modul Softwareprojekt involviert sind
 # 2 Anforderungen
 ## 2.1 Stakeholder
 | Funktion / Relevanz | Name | Kontakt / Verfügbarkeit | Wissen | Interessen / Ziele |
@@ -38,11 +45,35 @@ Das Auswählen einer Karte erfolgt mit der Angabe der Position auf der Hand. Neu
 ## Entwurf
 ## Fehlerbehandlung
 ## Validierung
-# Projektorganisation
-## Annahmen
-## Risiken
-## Verantwortlichkeiten
-## Grober Projektplan
+# 4 Projektorganisation
+## 4.1 Annahmen
+- Verwendete Technologien:
+    - Programmiersprachen: Java, Python
+    - Frameworks: RabbitMQ
+    - Verwaltung: Github
+
+- Einschränkungen, Betriebsbedingungen und Faktoren, die die Entwicklung beeinflussen:
+    - Jedes Mitglied arbeitet am eigenen PC, es muss Acht gegeben werden auf Betriebssystemspezifische Fehler und sonstige Eigenarten
+
+- Interne Qualitätsanforderungen:
+    - Ausgibige Tests
+## 4.2 Risiken
+- Gruppenmitglieder könnten spontan wegfallen aus gesundheitlichen oder persönlichen Gründen
+- Der Workload von anderen Modulen kann dazu führen, dass weniger Zeit in das Projekt investiert wird
+- Mitglieder könnten, trotz besten Willens, überfordert mit der Aufgabe sein
+## 4.3 Verantwortlichkeiten
+Aufgrund der geringen Anzahl an Teammitgliedern werden die Aufgaben größtenteils gemeinsam bearbeitet.
+Somit sind Eric Neppert, Oskar Schaubert, Waldemar Schäfer, Jason Piper und Manuel Wiebe alle beteiligt an der implementierung der Server Logik.
+Zusätzlich implementiert jedes Mitglied eigenständig einen KI-Spieler.
+Sollten weitere Rollen im Verlauf des Implementierens nötig werden, werden einzelne Mitglieder dafür auserkoren.
+Zum aktuellen Zeitpunkt ist dies nur die Rolle des Koordinators, übernommen von Oskar Schaubert
+## 4.4 Grober Projektplan
+Es wird sich größtenteils an die vorgegebenen Meilensteine gehalten:
+- Mitte April: Abgabe der Spezifikationen
+- Ende April: Grundlegende Spiel und Serverlogik implementiert
+- Mitte Mai: Grundlagen der künstlichen Spieler fertig, können selbstständig eine Runde spielen
+- Ende Mai: Fertiger Softwareprototyp und simple künstliche Spieler
+- Mitte Juni: Projektabgabe, Software ausgearbeitet und Spieler kompetent
 # Anhänge
 ## Glossar
 ## Referenzen
