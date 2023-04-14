@@ -17,9 +17,70 @@ Es soll das Kartenspiel "Nope" implementiert werden inklusive simulierte Spieler
 | Benutzer der Software | Name des Spielers |  |  |  |
 | Benutzer der Software | Name der KI |  |  |  |
 ## 2.2 Funktionale Anforderungen
-Aus dem Regelwerk von Nope lassen sich folgende Anforderungen ableiten:
-- Ein Spieler schickt dem Server zur Anmeldung eine Nachricht. Als Antwort bekommt dieser eine Session ID. Anhand der Session ID ist zu erkennen ob der Spieler als erster an der Reiche ist. Alle Spieler mit einer gültigen Session ID können nun dem Server mitteilen dass Sie eine Karten ziehen möchte. Dies erfolgt einzeln für jede Karte. Wenn der erste Spieler genug Karten auf der Hand hat, kann er nun den Server mitteilen dass er die Oberste Karte auf dem Ablagestapel sehen möchte. Der Server schickt daraufhin die entsprechende Information und stoppt dabei die Zeit. Wenn der Spieler mehr als 10 Sekunden für seien Zug braucht ist diese ungültig und der Spieler hat verloren. Wenn der Zug innerhalb der Frist erfolgt dann prüft der Server ob dieser gültig ist. Bei einem ungültigen Zug hat der Spieler ebenfalls verloren. Bei einem gültigen Zug wandert die gelegte Karte auf die oberste Position des Ablagestapels. Dem folgenden Spieler, welcher anhand seiner Session ID im Wartezustand ist, wird nun die Oberste Karte im Ablagestapel mitgeteilt und der Server prüft alle weiteren Züge wie vorher beschrieben.
-## 2.3 Nicht-funktionale Anforderungen
+### STRUKTURIERUNG DER ANFORDERUNGEN IN FUNKTIONALE GRUPPEN
+-	Spielregeln:
+    -  	Festlegung der Regeln & Abläufe
+        - Siegbedingungen
+        - Austeilen der Karten
+        - Reihenfolge des Spielzugs
+        - Etc.
+-	KI-Spieler:
+    -  Algorithmen, die den simulierten Spieler reflektieren
+        - Entwicklung von Strategien
+        - Kartenverteilung
+        - Entscheidungsfindung
+-	Server
+    - Schnittstelle zwischen den KI-Spielern
+        - Verwaltet Kommunikation zwischen Spielern
+        - Stellt sicher, dass die Regeln eingehalten werden
+        - Speichert Spielinformationen in Datenbank
+-	Datenbank
+    - Speichert Daten des Spiels
+        - Informationen zu einem Spielzug 
+            - Welche Karte liegt auf dem Ablagestapel
+            - Welche Karte spielt KI-1
+            - Wie antwortet KI-2
+            - Welche Karten besitzen KI-1 / KI-2 in der Hand
+            - Welche Karten liegen noch im Deck
+            - Gewinner und Verlierer eines Matches
+### AKTEURE
+-	KI-Spieler/Spieler 1: 
+    - Spielersimulation 1, die eine Partie mitspielt
+    - KI-Spieler/Spieler 2:
+    - Spielersimulation 2, die eine Partie mitspielt
+-	Mensch:
+    - Startet das Spiel
+- Server: 
+    - Verbindet Spieler
+    - Steuert das Spiel
+    - Speichert wichtige Informationen in Datenbank
+
+### WEITERE ENTITÄTEN/BEGRIFFE INNERHALB DER FACHDOMÄNE
+-	Spielregeln:
+    - Regeln & Abläufe des Kartenspiels, die von dem Kartenspiel festgelegt und von uns ggf. angepasst wurden (z.B. gibt es keinen Kartengeber)
+-	Karten:
+    - Spielkarten, die die Spielregeln vorgeben und im System umgesetzt wurden
+    - Spielkarten befinden sich entweder im Ablagestapel, Nachziehstapel oder in der Hand eines Spielers
+-	Deck:
+    - Umfasst alle Karten des Spiels
+-	Nachziehstapel:
+    - Sammlung an Karten, die umgedreht bzw. verdeckt übereinander liegen und vom Spieler bei Bedarf gezogen werden können/müssen
+-	Ablagestapel:
+    - Die Sammlung an Karten, die vom Spieler abgeworfen wurden
+    - Zu Anfang des Spiels wird die oberste Karte des Nachziehstapels den Anfang des Ablagestapels bilden
+    - Die oberste Karte definiert eine Menge von Karten, die im Spielzug erlaubt sind
+-	Spielzug:
+    - Die Summe aus
+        - Die oberste Karte des Nachziehstapels
+        - Die abgeworfenen Karten eines Spielers
+-	Spielerhand:
+    - Die Summe der Karten, die eine KI bzw. Spieler in der Hand hält
+-	Spielverlauf:
+    - Wie sich das Spiel über die Spielzüge entwickelt
+-	Gewinnergebnis:
+    - Welcher Spieler gewonnen hat
+
+
 ### 2.3.1 Rahmenbedingungen
 ### 2.3.2 Betriebsbedingungen
 ### 2.3.3 Qualitätsmerkmale
