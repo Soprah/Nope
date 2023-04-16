@@ -96,16 +96,81 @@ Das Auswählen einer Karte erfolgt mit der Angabe der Position auf der Hand. Neu
 | Benutzer | die oberste Karte auf dem Ablagestapel sehen | damit ich meinen Zug planen kann |  |
 | Benutzer | bei der Durchblick-Karte weitere Karten auf dem Ablagestapel einsehen | damit ich meinen Zug planen kann |  |
 | Benutzer | Karten auf dem Ablagestapel ablegen | der folgende Spieler seinen Zug machen kann |  |
-# Technische Beschreibung
-## Systemübersicht
-## Softwarearchitektur
-## Schnittstellen
-### Ereignisse
-## Datenmodell
-## Abläufe
-## Entwurf
-## Fehlerbehandlung
-## Validierung
+# 3 Technische Beschreibung
+## 3.1 Systemübersicht
+![image](https://user-images.githubusercontent.com/16638925/232320881-4d456764-6f20-4220-ae09-21d2f35ec7e5.png)
+
+## 3.2 Softwarearchitektur
+![image](https://user-images.githubusercontent.com/16638925/232320130-c0bc9c59-227b-49a3-9b15-089be27c06ef.png)
+
+## 3.3 Schnittstellen
+"" = nicht sicher ob es gebraucht wird 
+
+GET 
+(Top Card)"letzte offenliegende Karte
+(New Card)
+(Hand Cards)
+"(Opponents Cards number)"
+(Current Player)
+(Standing) "teile der Tabelle des Turniers printen"
+(History)
+(Opponent)
+(Own Player Stats)
+
+POST
+(Playable Cards)
+"(Give Up)"
+"(Start Game)"
+(Player stats) "daten des eigenen Spieler"
+
+## 3.4 Datenmodell
+![image](https://user-images.githubusercontent.com/16638925/232320905-1058536c-f408-4fad-9b08-93b6e4419b67.png)
+
+## 3.5 Abläufe
+![image](https://user-images.githubusercontent.com/16638925/232319950-0b657fda-6b5a-4cce-8d31-021692439868.png)
+![image](https://user-images.githubusercontent.com/16638925/232320009-4600e969-0e75-4b19-9e32-5760fb7e3929.png)
+
+## 3.6 Entwurf
+
+## 3.7 Fehlerbehandlung
+### Mögliche Fehler:
+- Interface
+    - Button funktioniert nicht
+    - Server nicht erreichbar
+    - Authentifizierung schlägt fehl
+    - Es wird zweimal das gleiche Profil authentifiziert
+- Client
+    - Verbindung zum Server wird unterbrochen
+    - Ungültiger Spielzug wird ausgeführt (falsche Anzahl oder Farben)
+    - Offene Karte kann nicht abgerufen werden, oder wird falsch ausgelesen
+    - Handkarten stimmen nicht mit den vom Server gegebenen Karten überein
+    - Spielzug wird ausgeführt, obwohl der andere Spieler an der Reihe ist
+    - Kommunikationsfehler mit dem Server (Fehlerhafte JSON)
+- Server
+    - Verbindung zum Client wird während eines Spiels unterbrochen
+    - Korrekter Spielzug wird als ungültig erkannt - Spieler wird fälschlicherweise disqualifiziert
+    - Ungültiger Spielzug wird nicht erkannt - Spieler kann unbemerkt schummeln
+    - Aktuell offene Karte, aktueller Spieler oder nächste Karte vom Stapel wird nicht korrekt geupdatet oder an Clients weitergegeben
+    - Karte wird gezogen, obwohl der Stapel leer ist
+    - Spieler können verdeckte Karten einsehen
+
+## 3.8 Validierung
+### Mögliche Integrations- und Unit-Tests:
+- Testen der Verbindung zwischen Server und Clients
+- Datenmodell
+    - Test für korrekte Initialisierung und Beibehaltung des Kartendecks
+    - Abspeichern und Auslesen der Spielhistorie
+    - Zuordnung der User (richtige Handkarten / richtige Tabellenplätze)
+    - Korrekte Modellierung der Spielregeln zur Überprüfung 
+- API
+    - Korrektes Generieren und Auslesen von JSON-Dateien
+    - Korrekte Antworten auf API-Anfragen
+    - Autorisierung bei sensiblen Anfragen (eigene Handkarten oder verdeckter Stapel / Identität beim Ausführen eines Zuges)
+    - Fehlerabfangen bei fehlerhaften Anfragen vom Client
+- User Interface
+    - Korrekte Anzeige und Aktualisierung der Handkarten
+    - Übergabe auszuspielender Karten an API
+
 # 4 Projektorganisation
 ## 4.1 Annahmen
 - Verwendete Technologien:
@@ -117,7 +182,7 @@ Das Auswählen einer Karte erfolgt mit der Angabe der Position auf der Hand. Neu
     - Jedes Mitglied arbeitet am eigenen PC, es muss Acht gegeben werden auf Betriebssystemspezifische Fehler und sonstige Eigenarten
 
 - Interne Qualitätsanforderungen:
-    - Ausgibige Tests
+    - Ausgiebige Tests
 ## 4.2 Risiken
 - Gruppenmitglieder könnten spontan wegfallen aus gesundheitlichen oder persönlichen Gründen
 - Der Workload von anderen Modulen kann dazu führen, dass weniger Zeit in das Projekt investiert wird
