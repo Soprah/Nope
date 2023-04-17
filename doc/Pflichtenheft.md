@@ -189,7 +189,7 @@ POST
 - Mitglieder könnten, trotz besten Willens, überfordert mit der Aufgabe sein
 ## 4.3 Verantwortlichkeiten
 Aufgrund der geringen Anzahl an Teammitgliedern werden die Aufgaben größtenteils gemeinsam bearbeitet.
-Somit sind Eric Neppert, Oskar Schaubert, Waldemar Schäfer, Jason Piper und Manuel Wiebe alle beteiligt an der implementierung der Server Logik.
+Somit sind Eric Neppert, Oskar Schaubert, Waldemar Schäfer, Jason Piper, André Ghazaryan und Manuel Wiebe alle beteiligt an der implementierung der Server Logik.
 Zusätzlich implementiert jedes Mitglied eigenständig einen KI-Spieler.
 Sollten weitere Rollen im Verlauf des Implementierens nötig werden, werden einzelne Mitglieder dafür auserkoren.
 Zum aktuellen Zeitpunkt ist dies nur die Rolle des Koordinators, übernommen von Oskar Schaubert
