@@ -2,7 +2,7 @@
 
 # 1 Einführung
 ## 1.1 Beschreibung
-Es soll das Kartenspiel "Nope" implementiert werden inklusive simulierte Spieler die automatisch strategische Züge ausführen
+Es soll das Kartenspiel "Nope" über Verteilte Systeme implementiert werden. Spieler können von verschiedenen Geräte aus einer Partie beitreten die auf einen zentralen Server läuft. Das Kartenspiel selbst wird von simulierten Spielern gesteuert, die automatisch strategische Züge ausführen.
 ## 1.2 Ziele
 - Das Spiel soll über eine Verteilte Systemarchitektur verfügen:
     - Dabei wird es aufgeteilt in Form einer Client-Server-Architektur
