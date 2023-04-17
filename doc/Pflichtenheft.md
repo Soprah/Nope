@@ -125,6 +125,8 @@ POST
 
 ## 3.4 Datenmodell
 ![image](https://user-images.githubusercontent.com/16638925/232320905-1058536c-f408-4fad-9b08-93b6e4419b67.png)
+![image](https://user-images.githubusercontent.com/94369843/232548974-5414b3a7-bfd0-4a57-aa05-b387aaf2d8d7.png)
+
 
 ## 3.5 Abläufe
 ![image](https://user-images.githubusercontent.com/16638925/232319950-0b657fda-6b5a-4cce-8d31-021692439868.png)
