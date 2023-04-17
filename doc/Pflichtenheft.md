@@ -203,8 +203,4 @@ Es wird sich größtenteils an die vorgegebenen Meilensteine gehalten:
 - Mitte Mai: Grundlagen der künstlichen Spieler fertig, können selbstständig eine Runde spielen
 - Ende Mai: Fertiger Softwareprototyp und simple künstliche Spieler
 - Mitte Juni: Projektabgabe, Software ausgearbeitet und Spieler kompetent
-# Anhänge
-## Glossar
-## Referenzen
-## Index
 
