@@ -178,14 +178,14 @@ POST
 ## 4.1 Annahmen
 - Verwendete Technologien:
     - Programmiersprachen: Java, Python
-    - Frameworks: RabbitMQ
+    - Frameworks: Werden noch bestimmt
     - Verwaltung: Github
 
 - Einschränkungen, Betriebsbedingungen und Faktoren, die die Entwicklung beeinflussen:
     - Jedes Mitglied arbeitet am eigenen PC, es muss Acht gegeben werden auf Betriebssystemspezifische Fehler und sonstige Eigenarten
 
 - Interne Qualitätsanforderungen:
-    - Ausgiebige Tests
+    - Ausgiebige Integrationstests
 ## 4.2 Risiken
 - Gruppenmitglieder könnten spontan wegfallen aus gesundheitlichen oder persönlichen Gründen
 - Der Workload von anderen Modulen kann dazu führen, dass weniger Zeit in das Projekt investiert wird
