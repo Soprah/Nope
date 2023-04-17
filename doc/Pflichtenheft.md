@@ -124,7 +124,7 @@ POST
 (Player stats) "daten des eigenen Spieler"
 
 ## 3.4 Datenmodell
-![image](https://user-images.githubusercontent.com/16638925/232320905-1058536c-f408-4fad-9b08-93b6e4419b67.png)
+
 ![image](https://user-images.githubusercontent.com/94369843/232548974-5414b3a7-bfd0-4a57-aa05-b387aaf2d8d7.png)
 
 
@@ -133,6 +133,7 @@ POST
 ![image](https://user-images.githubusercontent.com/16638925/232320009-4600e969-0e75-4b19-9e32-5760fb7e3929.png)
 
 ## 3.6 Entwurf
+![image](https://user-images.githubusercontent.com/16638925/232320905-1058536c-f408-4fad-9b08-93b6e4419b67.png)
 
 ## 3.7 Fehlerbehandlung
 ### Mögliche Fehler:
