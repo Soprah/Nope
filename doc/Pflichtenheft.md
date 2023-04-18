@@ -18,7 +18,8 @@ Es soll das Kartenspiel "Nope" über Verteilte Systeme implementiert werden. Spi
 | Studierende | Eric Neppert, <br>Oskar Schaubert,<br>Waldemar Schäfer,<br>Jason Piper,<br>André Ghazaryan,<br>Manuel Wiebe | gemeinsame Meetings, Discord | Projektmanagement,<br>Softwareentwicklung | Erfüllung der Leistungen für das <br>Studienfach Softwareprojekt<br>Anwendung von Projektmanagementmethoden,<br> Vertiefung in der Softwareentwicklung |
 | Programmierer | Studierende | | Softwareentwicklung | Funktionsfähige Software |
 | Benutzer| Prüfer,<br>Studierende |  | Spielregeln | Teilnahme am Turnier<br>Benutzung einer KI für die Spielzüge |
-| KI |  |  | Spielregeln<br>Algorithmus für gültigen Züge | Berechnung der gültigen Spielzüge<br>innerhalb einer vorgegebenen Zeit |
+| KI Logik|  |  | Spielregeln<br>Algorithmus für gültigen Züge | Berechnung der gültigen Spielzüge<br>innerhalb einer vorgegebenen Zeit |
+| Server Logik |  |  | Spielregeln,<br>Verwaltung eines Turniers | Durchführung eines Turniers |
 ## 2.2 Funktionale Anforderungen
 ### 2.2.1 STRUKTURIERUNG DER ANFORDERUNGEN IN FUNKTIONALE GRUPPEN
 -	Spielregeln:
@@ -92,13 +93,14 @@ Das Auswählen einer Karte erfolgt mit der Angabe der Position auf der Hand. Neu
 ## 2.5 Anforderungen im Detail
 | Als | möchte ich | so dass | Akzeptanz |
 | --- | --- | --- | --- |
-| Benutzer | mich mit dem Server verbinden | in der Warteschlange für Nope warten kann |  |
-| Benutzer | einem Spiel beitreten | mit einem weiteren Spieler Nope spielen kann |  |
-| Benutzer | Karten aus dem Kartenstapel ziehen | sodass ich diese auf meine Hand ablegen kann |  |
-| Benutzer | am Anfang solange Karten ziehen bis meine Hand voll ist | das Spiel beginnen kann |  |
-| Benutzer | die oberste Karte auf dem Ablagestapel sehen | damit ich meinen Zug planen kann |  |
-| Benutzer | bei der Durchblick-Karte weitere Karten auf dem Ablagestapel einsehen | damit ich meinen Zug planen kann |  |
-| Benutzer | Karten auf dem Ablagestapel ablegen | der folgende Spieler seinen Zug machen kann |  |
+| Benutzer | mich mit dem Server verbinden | in der Warteschlange für Nope warten kann | bestätigte Verbindung mit dem Server |
+| Benutzer | einem Spiel beitreten | mit einem weiteren Spieler Nope spielen kann | bestätigte Verbindung einer Session |
+| Benutzer | Karten aus dem Kartenstapel ziehen | sodass ich diese auf meine Hand ablegen kann | Erhöhung der Anzahl meiner Karten auf der Hand |
+| Benutzer | am Anfang solange Karten ziehen bis meine Hand voll ist | das Spiel beginnen kann | höchste Anzahl Karten auf der Hand |
+| Benutzer | die oberste Karte auf dem Ablagestapel sehen | damit ich meinen Zug planen kann | bestätigte Angabe des Servers der angefragten Karte |
+| Benutzer | bei der Durchblick-Karte weitere Karten auf dem Ablagestapel einsehen | damit ich meinen Zug planen kann | bestätigte Angabe des Servers der angefragten Karte |
+| Benutzer | die Anzahl der Karten der Anderen Spieler sehen | eine passende Karte legen kann | bestätigte Angabe des Servers der Anzahl der Karten |
+| Benutzer | Karten auf dem Ablagestapel ablegen | der folgende Spieler seinen Zug machen kann | bestätigte Angabe des Servers meines Zuges und der Angabe der Gültigkeit |
 # 3 Technische Beschreibung
 ## 3.1 Systemübersicht
 ![image](https://user-images.githubusercontent.com/16638925/232320881-4d456764-6f20-4220-ae09-21d2f35ec7e5.png)
