@@ -84,8 +84,50 @@ Es soll das Kartenspiel "Nope" über Verteilte Systeme implementiert werden. Spi
     - Welcher Spieler gewonnen hat
 ## 2.3 Nicht-funktionale Anforderungen
 ### 2.3.1 Rahmenbedingungen
+Normen und Standards
+Netzwerkprotokolle: Um die Kommunikation zwischen den Client-Geräten und dem zentralen Server zu ermöglichen, können Netzwerkprotokolle wie TCP/IP (Transmission Control Protocol/Internet Protocol) oder UDP (User Datagram Protocol) verwendet werden, um die Datenübertragung zu standardisieren.
+Es sollten gängige Netzwerkprotokolle wie TCP/IP oder HTTP verwendet werden, um die Kommunikation zwischen den Client-Geräten und dem zentralen Server zu ermöglichen.
+Sicherheitsstandards: 
+Es können Sicherheitsstandards wie SSL/TLS (Secure Sockets Layer/Transport Layer Security) für die sichere Kommunikation zwischen den Clients und dem Server verwendet werden, um die Vertraulichkeit und Integrität der übertragenen Daten zu gewährleisten.
+Protokolle:
+
+Kommunikationsprotokolle: Es müssen Protokolle für die Kommunikation zwischen den Client-Geräten und dem zentralen Server definiert werden, um die Interaktion und den Austausch von Spielinformationen zu ermöglichen, z.B. für das Anmelden, Verbinden, Abmelden, Übermitteln von Spielzügen und Aktualisieren des Spielstatus.
+Spielregelprotokolle: Es können Protokolle definiert werden, um die Spielregeln und Abläufe festzulegen, z.B. für das Austeilen der Karten, die Reihenfolge des Spielzugs, die Entscheidungsfindung der KI-Spieler und die Überprüfung der Siegbedingungen.
+
+Verteilte Systeme: Es sollten Normen und Standards für verteilte Systeme wie z.B. das Message Passing Interface (MPI) oder das Java Remote Method Invocation (RMI) verwendet werden, um die Kommunikation zwischen den Client- und Serverkomponenten der Software zu ermöglichen.
+
+Hardware
+
+Server-Hardware: Ein leistungsfähiger Server ist erforderlich, um die Spiellogik, die Kommunikation mit den Clients und die Verwaltung der Spielinformationen zu unterstützen. Die Hardware-Anforderungen hängen von der Anzahl der Spieler und der Komplexität des Spiels ab.
+Client-Hardware: Die Client-Geräte, von denen aus die Spieler dem Spiel beitreten, müssen über ausreichende Ressourcen verfügen, um die Spielanwendung auszuführen und die Kommunikation mit dem Server zu bewältigen.
+
+Externe Vorgaben:
+
+Datenschutzbestimmungen: Da Spielinformationen in einer Datenbank gespeichert werden, müssen geltende Datenschutzbestimmungen eingehalten werden, um sicherzustellen, dass die Spielerdaten geschützt und sicher verwaltet werden.
+Netzwerkrichtlinien: Es können Netzwerkrichtlinien vorgegeben sein, die die Verwendung bestimmter Netzwerkprotokolle, Firewall-Konfigurationen oder andere Sicherheitsrichtlinien festlegen, um die Netzwerksicherheit zu gewährleisten.
+Anwendungsrichtlinien: Es können Anwendungsrichtlinien definiert sein, die die Spielregeln, die Verwendung von KI-Spielern und andere Aspekte der Anwendung festlegen, um einheitliche Standards und Erwartungen für die Benutzer einzuhalten.
+
+Mögliche Sicherheitsrisiken und Sicherheitsschwachstellen:
+
+Datenlecks: Unzureichende Sicherheitsmaßnahmen bei der Speicherung von Spielinformationen in der Datenbank können zu Datenlecks führen und die Vertraulichkeit von Spielerdaten gefährden.
+Netzwerkangriffe: Unzureichende Absicherung der Kommunikation zwischen den Clients und dem Server kann zu Netzwerkangriffen wie Man-in-the-Middle-Angriffen oder Denial-of-Service-Angriffen führen, die die Verfügbarkeit und Integrität des Spiels
+
+Unsichere Kommunikation: Wenn die Kommunikation zwischen den Client-Geräten und dem Server nicht ausreichend abgesichert ist, könnten Daten abgefangen oder manipuliert werden. Um dies zu verhindern, sollte eine sichere Kommunikation wie SSL/TLS verwendet werden.
+Unzureichende Authentifizierung: Wenn die Benutzer Identifikation und Authentifizierung nicht ausreichend umgesetzt ist, könnten unbefugte Benutzer auf das Spiel und die Spielinformationen zugreifen. Eine starke Authentifizierung sollte implementiert werden, um sicherzustellen, dass nur autorisierte Benutzer auf das System zugreifen können.
 ### 2.3.2 Betriebsbedingungen
+Hardwareanforderungen:
+
+Server-Hardware: Der zentrale Server, auf dem die Software läuft, sollte über ausreichende Rechenleistung, Speicher und Netzwerkfähigkeiten verfügen, um die Anforderungen des Spiels und der Spielerzahl zu bewältigen.
+Client-Hardware: Die Client-Geräte, von denen aus die Spieler dem Spiel beitreten, sollten über ausreichende Rechenleistung und Netzwerkkonnektivität verfügen, um die Spielanwendung und die Kommunikation mit dem Server effizient auszuführen.
+
+Externe Vorgaben:
+
+Webbrowser-Versionen: Die Software sollte auf gängigen Webbrowsern wie Google Chrome, Mozilla Firefox, Microsoft Edge oder Safari lauffähig sein, wobei die aktuellsten stabilen Versionen bevorzugt werden.
+Betriebssystem-Versionen: Die Software sollte auf gängigen Betriebssystemen wie Windows, macOS oder Linux lauffähig sein, wobei die aktuellsten stabilen Versionen bevorzugt werden.
+
 ### 2.3.3 Qualitätsmerkmale
+<img width="504" alt="image" src="https://user-images.githubusercontent.com/92401495/232754853-a1548f7a-cc3b-40dc-bbe2-8a2fca1982e9.png">
+
 ## 2.4 Graphische Benutzerschnittstelle
 Die Kommunikation mit dem Server soll für den Client zuerst über eine Textbasiert Oberfläche erfolgen. Im späteren Verlauf kann eine Webseite gestaltet werden, welche die Funktionalitäten erweitert.
 Das Anzeizen der Karten auf der Hand erfolgt mit dem Text für die Bezeichnung der Farben gefolgt von der Nummer. Die einzelnen Karten werden mit einem Komma getrennt.
