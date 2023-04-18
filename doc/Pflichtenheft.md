@@ -260,7 +260,8 @@ Zum aktuellen Zeitpunkt ist dies nur die Rolle des Koordinators, übernommen von
 Es wird sich größtenteils an die vorgegebenen Meilensteine gehalten:
 - Mitte April: Abgabe der Spezifikationen
 - Ende April: Grundlegende Spiel und Serverlogik implementiert
-- Mitte Mai: Grundlagen der künstlichen Spieler fertig, können selbstständig eine Runde spielen
+- 02.05.23: Aktueller Stand - Digitales Zoom Meeting (Link im Ilias)
+- Mitte Mai (16.05.2023) : Grundlagen der künstlichen Spieler fertig, können selbstständig eine Runde spielen
 - Ende Mai: Fertiger Softwareprototyp und simple künstliche Spieler
 - Mitte Juni: Projektabgabe, Software ausgearbeitet und Spieler kompetent
 
