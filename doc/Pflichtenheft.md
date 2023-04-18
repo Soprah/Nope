@@ -14,6 +14,9 @@ Es soll das Kartenspiel "Nope" über Verteilte Systeme implementiert werden. Spi
 ## 2.1 Stakeholder
 | Funktion / Relevanz | Name | Kontakt / Verfügbarkeit | Wissen | Interessen / Ziele |
 | --- | --- | --- | --- | --- |
+| Prüfer | Jörg Brunsmann | gemeinsame Meetings für die Angabe,<br>bei Fragestellungen via Mailverkehr | Anforderungen an das Projekt |Nachvollziehbarkeit der Arbeitsschritte,<br>Einsicht in die Produktdokumentation,<br>Leistungsbewertung der Studierenden|
+| Studierende | Eric Neppert, <br>Oskar Schaubert,<br>Waldemar Schäfer,<br>Jason Piper,<br>André Ghazaryan,<br>Manuel Wiebe | gemeinsame Meetings, Discord | Projektmanagement,<br>Softwareentwicklung | Erfüllung der Leistungen für das <br>Studienfach Softwareprojekt<br>Anwendung von Projektmanagementmethoden,<br> Vertiefung in der Softwareentwicklung |
+| Programmierer | Alle Studierende erfüllen die Voraussetzung für die Funktion der Programmierer |
 | Benutzer der Software | Name des Spielers |  |  |  |
 | Benutzer der Software | Name der KI |  |  |  |
 ## 2.2 Funktionale Anforderungen
