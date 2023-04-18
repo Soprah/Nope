@@ -151,24 +151,37 @@ Das Auswählen einer Karte erfolgt mit der Angabe der Position auf der Hand. Neu
 ![image](https://user-images.githubusercontent.com/16638925/232320130-c0bc9c59-227b-49a3-9b15-089be27c06ef.png)
 
 ## 3.3 Schnittstellen
-"" = nicht sicher ob es gebraucht wird 
+"" = nicht sicher ob es gebraucht wird \
 
-GET 
-(Top Card)"letzte offenliegende Karte
-(New Card)
-(Hand Cards)
-"(Opponents Cards number)"
-(Current Player)
-(Standing) "teile der Tabelle des Turniers printen"
-(History)
-(Opponent)
-(Own Player Stats)
+GET \
+(Top Card)"letzte offenliegende Karte\
+(New Card)\
+(Hand Cards)\
+"(Opponents Cards number)"\
+(Current Player)\
+(Standing) "teile der Tabelle des Turniers printen"\
+(History)\
+(Opponent)\
+(Own Player Stats)\
 
-POST
-(Playable Cards)
-"(Give Up)"
-"(Start Game)"
-(Player stats) "daten des eigenen Spieler"
+POST\
+(Playable Cards)\
+"(Give Up)"\
+"(Start Game)"\
+(Player stats) "daten des eigenen Spieler"\
+
+
+JSON:\
+
+Farbe der Karte: (blue, yellow, red, green,blue yellow, blue red, blue green, yellow red,yellow green, red green ,black, multi)\
+multi steht für Zahlen mit allen farben\
+Zahl der Karte(1,2,3,4,5,6) 4 5 6 Ereigniskarten\
+Am Zug( True, False)\
+Anzahl der Handkarten(Int)\
+ (um zu wissen ob man bestimmte Karten legen kann. Wenn der gegner 2 Karten hat kann die 3 nicht mehr gelegt werden)\
+
+Beispiel JSON\
+blue, 2; yellow, 1; green, 1; blue red, 3; red green,3;black, 5; True;\
 
 ## 3.4 Datenmodell
 
