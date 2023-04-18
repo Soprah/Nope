@@ -151,7 +151,7 @@ Das Auswählen einer Karte erfolgt mit der Angabe der Position auf der Hand. Neu
 ![image](https://user-images.githubusercontent.com/16638925/232320130-c0bc9c59-227b-49a3-9b15-089be27c06ef.png)
 
 ## 3.3 Schnittstellen
-"" = nicht sicher ob es gebraucht wird \
+"" = nicht sicher ob es gebraucht wird 
 
 GET \
 (Top Card)"letzte offenliegende Karte\
@@ -162,13 +162,13 @@ GET \
 (Standing) "teile der Tabelle des Turniers printen"\
 (History)\
 (Opponent)\
-(Own Player Stats)\
+(Own Player Stats)
 
 POST\
 (Playable Cards)\
 "(Give Up)"\
 "(Start Game)"\
-(Player stats) "daten des eigenen Spieler"\
+(Player stats) "daten des eigenen Spieler"
 
 
 JSON:\
