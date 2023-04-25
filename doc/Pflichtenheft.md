@@ -18,8 +18,6 @@ Es soll das Kartenspiel "Nope" über Verteilte Systeme implementiert werden. Spi
 | Studierende | Eric Neppert, <br>Oskar Schaubert,<br>Waldemar Schäfer,<br>Jason Piper,<br>André Ghazaryan,<br>Manuel Wiebe | gemeinsame Meetings, Discord | Projektmanagement,<br>Softwareentwicklung | Erfüllung der Leistungen für das <br>Studienfach Softwareprojekt<br>Anwendung von Projektmanagementmethoden,<br> Vertiefung in der Softwareentwicklung |
 | Programmierer | Studierende | | Softwareentwicklung | Funktionsfähige Software |
 | Benutzer| Prüfer,<br>Studierende |  | Spielregeln | Teilnahme am Turnier<br>Benutzung einer KI für die Spielzüge |
-| KI Logik|  |  | Spielregeln<br>Algorithmus für gültigen Züge | Berechnung der gültigen Spielzüge<br>innerhalb einer vorgegebenen Zeit |
-| Server Logik |  |  | Spielregeln,<br>Verwaltung eines Turniers | Durchführung eines Turniers |
 ## 2.2 Funktionale Anforderungen
 ### 2.2.1 STRUKTURIERUNG DER ANFORDERUNGEN IN FUNKTIONALE GRUPPEN
 -	Spielregeln:
@@ -66,6 +64,8 @@ Es soll das Kartenspiel "Nope" über Verteilte Systeme implementiert werden. Spi
     - Spielkarten befinden sich entweder im Ablagestapel, Nachziehstapel oder in der Hand eines Spielers
 -	Deck:
     - Umfasst alle Karten des Spiels
+-   Set:
+    - Anzahl und Farbe der Karten, die abgeworfen werden müssen.
 -	Nachziehstapel:
     - Sammlung an Karten, die umgedreht bzw. verdeckt übereinander liegen und vom Spieler bei Bedarf gezogen werden können/müssen
 -	Ablagestapel:
@@ -143,6 +143,7 @@ Das Auswählen einer Karte erfolgt mit der Angabe der Position auf der Hand. Neu
 | Benutzer | bei der Durchblick-Karte weitere Karten auf dem Ablagestapel einsehen | damit ich meinen Zug planen kann | bestätigte Angabe des Servers der angefragten Karte |
 | Benutzer | die Anzahl der Karten der Anderen Spieler sehen | eine passende Karte legen kann | bestätigte Angabe des Servers der Anzahl der Karten |
 | Benutzer | Karten auf dem Ablagestapel ablegen | der folgende Spieler seinen Zug machen kann | bestätigte Angabe des Servers meines Zuges und der Angabe der Gültigkeit |
+| Benutzer | keine Karte auf dem Ablagestapel ablegen (Nope) wenn ich kein passendes Set habe | der folgende Spieler seinen Zug machen kann | bestätigte Angabe des Servers meines Zuges und der Angabe der Gültigkeit |
 # 3 Technische Beschreibung
 ## 3.1 Systemübersicht
 ![image](https://user-images.githubusercontent.com/16638925/232320881-4d456764-6f20-4220-ae09-21d2f35ec7e5.png)
