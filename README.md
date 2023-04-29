@@ -235,6 +235,11 @@ blue, 2; yellow, 1; green, 1; blue red, 3; red green,3;black, 5; True;\
     - Korrekte Anzeige und Aktualisierung der Handkarten
     - Übergabe auszuspielender Karten an API
 
+## 3.9 Verwendete Technologien
+- Programmiersprachen: Java, Python
+- Frameworks: Werden noch bestimmt
+- Verwaltung: Github
+
 # 4 Projektorganisation
 ## 4.1 Annahmen
 - Verwendete Technologien:
