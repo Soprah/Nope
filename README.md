@@ -237,7 +237,7 @@ blue, 2; yellow, 1; green, 1; blue red, 3; red green,3;black, 5; True;\
 
 ## 3.9 Verwendete Technologien
 - Programmiersprachen: Java, Python
-- Frameworks: Werden noch bestimmt
+- Frameworks: Flask
 - Verwaltung: Github
 
 # 4 Projektorganisation
