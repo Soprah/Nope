@@ -242,14 +242,8 @@ blue, 2; yellow, 1; green, 1; blue red, 3; red green,3;black, 5; True;\
 
 # 4 Projektorganisation
 ## 4.1 Annahmen
-- Verwendete Technologien:
-    - Programmiersprachen: Java, Python
-    - Frameworks: Werden noch bestimmt
-    - Verwaltung: Github
-
 - Einschränkungen, Betriebsbedingungen und Faktoren, die die Entwicklung beeinflussen:
     - Jedes Mitglied arbeitet am eigenen PC, es muss Acht gegeben werden auf Betriebssystemspezifische Fehler und sonstige Eigenarten
-
 - Interne Qualitätsanforderungen:
     - Ausgiebige Integrationstests
 ## 4.2 Risiken
