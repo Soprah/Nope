@@ -1,6 +1,6 @@
 class Card:
 
-    def __init__(self, color_amount, color):
+    def __init__(self, color_amount, color, id):
         allowed_colors = ("red", "blue", "green", "yellow",)
 
         if not isinstance(color, tuple):
@@ -26,3 +26,5 @@ class Card:
             self.color = color
         else:
             raise ValueError("Invalid color amount")
+
+        self.id = id
