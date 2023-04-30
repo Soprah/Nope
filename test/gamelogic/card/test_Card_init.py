@@ -2,7 +2,7 @@ import unittest
 
 from src.gamelogic.card.Card import Card
 
-class MyTestCase(unittest.TestCase):
+class TestCard(unittest.TestCase):
 
 
     def setUp(self):

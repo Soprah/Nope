@@ -3,7 +3,7 @@ import unittest
 from src.gamelogic.card.NumberCard import NumberCard
 
 
-class MyTestCase(unittest.TestCase):
+class TestNumberCard(unittest.TestCase):
     def test_init_valid_number(self):
         ncard1 = NumberCard(1, ("red"), 1, 1)
         ncard2 = NumberCard(1, ("red"), 2, 2)
