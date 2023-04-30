@@ -1,7 +1,6 @@
 from src.gamelogic.card.Card import Card
+from src.gamelogic.deck.Deck import Deck
 
-card1 = Card(1, "red", 1)
-card2 = Card(1, "blue", 1)
-
-print(card1)
-print(card2)
+deck = Deck()
+for c in deck.cards:
+    print(c)
