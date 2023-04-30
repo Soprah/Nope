@@ -28,3 +28,6 @@ class Card:
             raise ValueError("Invalid color amount")
 
         self.id = id
+
+    def __str__(self):
+        return f"ID: {self.id} Anzahl Farben: {self.color_amount} Colors: {self.color}"
