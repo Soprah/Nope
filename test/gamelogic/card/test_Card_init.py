@@ -1,6 +1,6 @@
 import unittest
 
-from src.gamelogic.Card import Card
+from src.gamelogic.card.Card import Card
 
 class MyTestCase(unittest.TestCase):
 
