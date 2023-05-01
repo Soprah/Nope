@@ -1,14 +1,14 @@
 import json
-# examples
-x =  '{ "name":"John", "age":30, "city":"New York"}'
+from flask import Flask, request
 
-# parse
-y = json.loads(x)
+app = Flask(__name__)
 
-# controll
-print(y["age"])
+# Request
 
-# Nope
+@app.route("/login")
+def login():
+	name = request.args.get('name')
+	send_Profile(name)
 
 def send_Info():
 	# TODO ein int gibt an ob der Spieler oder gewonnen oder verloren hat oder
@@ -24,7 +24,8 @@ def send_History():
 	# TODO sendet die gesammt Spiel History
 	return 0
 
+# Respond
 
-def send_Profile():
+def send_Profile(name):
 	# TODO sendet die Bestätigung zu einem Spiel mit der Angabe des Tokens
-	return 0
+	return name + " id: 123456789"
