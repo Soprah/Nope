@@ -162,7 +162,7 @@ Morgen ansprechen:
 - Oskar Schaubert
 - Waldemar Schäfer
 - Manuel Wiebe
-- André Ghazaryan
+- Jason Piper
 
 #### Themen
 - Meetings können Dienstags um 15:30 erst anfangen, ausnahme nächste Woche treffen mit Brunsmann
@@ -177,3 +177,42 @@ Morgen ansprechen:
 
 - Zwischenmeeting Samstag 29.04.23 um 15:00 Uhr
 	- sehr kurze Besprechung über den Progress
+
+-------------------------------------------------------------------
+
+## 02.05.2023
+- 14.30Uhr | 30min
+
+### Teilnehmer
+- Jörg Brunsmann
+- Eric Neppert
+- Oskar Schaubert
+- Waldemar Schäfer
+- Manuel Wiebe
+- André Ghazaryan
+- Jason Piper
+
+#### Inhalt
+- Zukünftige wöchentliche Sprint Meetings am Dienstag finden um 15:30 statt
+
+- Meeting mit Brunsmann über den Fortschritt
+- Spezifikation:
+	- ersichtlich machen, dass wir in 3 Teams aufgeteilt sind
+	- Schichtenmodell in der Spezifikation muss angepasst werden
+	- Schichtenmodell eventuell "auf den Kopf stellen" für das Client-Server System, Netzwerk zuerst
+		- Spiellogik ist fest und größtenteils unveränderlich, Netzwerk kann sich mehr ändern
+		- Schnittstelle zwischen Spiellogik / Spielerverwaltung können mit Unit Tests getestet werden
+	- unseren Workflow für die Source Code Verwaltung einfügen
+	- readMe unbenennen zu Spezifikation
+
+- bis zum 16.05:
+	- Clients können sich mit dem Server verbunden
+	- Clients können Spielzüge durchführen
+- bis zum 13.06 muss das Turnier durchgeführt sein
+- zwei wochen später Abgabe der individuellen Projektdokumentation
+
+- sobald vorhanden, die Repos der Clients im Repo des Servers verlinken
+
+- das Deployment des Servers automatisieren
+
+- Meeting am 16.05 ist in präsenz
