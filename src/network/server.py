@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 # Request
 
-@app.route('/login', methods=['GET'])
+@app.route('/login', methods=['POST'])
 def login():
 	name = request.args.get('name')
 	response = send_Profile(name)
