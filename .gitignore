@@ -1,2 +1,5 @@
-# ignire python virtuell environment
-/nopeenv
+.idea/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
