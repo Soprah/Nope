@@ -66,6 +66,8 @@ Es soll das Kartenspiel "Nope" über Verteilte Systeme implementiert werden. Spi
     - Umfasst alle Karten des Spiels
 -   Set:
     - Anzahl und Farbe der Karten, die abgeworfen werden müssen.
+-   Session:
+    - zwei Spieler die mit dem Server verbunden sind und gegeneinander spielen
 -	Nachziehstapel:
     - Sammlung an Karten, die umgedreht bzw. verdeckt übereinander liegen und vom Spieler bei Bedarf gezogen werden können/müssen
 -	Ablagestapel:
