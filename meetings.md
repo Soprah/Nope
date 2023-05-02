@@ -1,6 +1,7 @@
 # Scrum Meetings
 
 ## 11.04.2023
+- 14.30Uhr | 90min
 
 ### Teilnehmer
 - Eric Neppert
@@ -46,3 +47,24 @@ Außerdem werden wir Prinzipien von CI und CD anwenden.
 Im Repo wird Englisch geschrieben.
 
 Für die individuellen KIs legt jeder nochmal sein eigenes Repo an.
+
+-------------------------------------------------------------------
+
+## 17.04.2023
+- 18.00Uhr | 90min
+
+### Teilnehmer
+- Eric Neppert
+- Oskar Schaubert
+- Waldemar Schäfer
+- Jason Piper
+- Manuel Wiebe
+- André Ghazaryan
+
+### Themen
+
+Wir gingen die Spezifikation ein letztes mal gemeinsam durch um sie für die Abgabe fertig zu stellen.
+
+Morgen ansprechen:
+-André ist dem Team beigetreten, Aufgaben wurden für ihn verteilt
+-Frage: Läuft das Turnier nur innerhalb der Teams ab oder auch Teamübergreifend?
