@@ -5,14 +5,17 @@ app = Flask(__name__)
 
 # Request
 
-@app.route("/login")
+@app.route('/login', methods=['GET'])
 def login():
 	name = request.args.get('name')
-	send_Profile(name)
+	response = send_Profile(name)
+	return response
+
+
 
 def send_Info():
 	# TODO ein int gibt an ob der Spieler oder gewonnen oder verloren hat oder
-	return 0
+	return 
 
 
 def send_State():
@@ -24,8 +27,9 @@ def send_History():
 	# TODO sendet die gesammt Spiel History
 	return 0
 
+
 # Respond
 
 def send_Profile(name):
 	# TODO sendet die Bestätigung zu einem Spiel mit der Angabe des Tokens
-	return name + " id: 123456789"
+	return "<p>" + str(name) + " id: 123456789<p>"
