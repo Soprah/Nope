@@ -106,3 +106,74 @@ Morgen ansprechen:
 - Die Ausgabe der Spielverlauf ist Pflicht und keine Option für die Grafische Oberfläche. Diese Sollte gut getestet werden.
 - Der Spielablauf sollte gut automatisiert werden, sodass der Server nicht unnötig auf die Spieler warten soll
 - Der Server kennt alle Daten des Clients sodass dieser mit einer gültigen Identifikation neu Starten kann und das Spiel fortsetzen kann
+
+-------------------------------------------------------------------
+
+## 24.04.2023
+- 18.00Uhr | 80min
+
+### Teilnehmer
+- Eric Neppert
+- Oskar Schaubert
+- Waldemar Schäfer
+- Manuel Wiebe
+- André Ghazaryan
+
+#### Themen
+
+- Oskar ist vorraussichtlich vom 04.05 - 08.05 abwesend
+
+- Die Software in Module zu unterteilen, dass wir das Team auf die Module aufteilen:
+	- Schichten aufteilen, TCPIP Protokoll:
+		- unterste Schicht: Netzwerk (Web Sockets)
+		- drüber: Authentifizierung (Überprüfung der Authentizität einer Nachricht)
+		- drüber: Spielerverwaltung (Zuweisung von Daten zu Spieler und Session)
+		- drüber: Spiellogik
+	- Schnittstellen abklären, dann kann Individuell an den Modulen gearbeitet werden
+	- Waldemar zeichnet eine Skizze um den Aufbau zu verdeutlichen
+		- link: (wird noch hinzugefügt)
+
+- Es wurde sich entschieden den Server lieber in Python zu implementieren
+	- Als Framework wurde SQLalchemy und Flask vorgeschlagen
+	- Waldemar hat bischer keine Erfahrung mit Python, ist bereit die Sprache zu lernen
+
+- Die Spezifierung muss noch mit den neuen Änderungen angepasst werden
+
+- Die Spieleranzahl pro Partie ist maximal 2
+
+- Polling verhindern, alternative finden
+	- link: https://discord.com/channels/1092803319166160937/1094255471789092884/1100105018650136586
+
+- Nächstes Meeting: 25.04.23 Dienstag 14:30 Uhr
+	- Agenda:
+		- Dienstag Meetings eventuell später anfangen
+		- Die Spiellogik muss als erstes besprochen werden
+		- TDD, Test Driven Development. Ein Team schreibt Code, das andere die Tests
+		- Konsistente Begriffe gemeinsam definieren und in die Spezifizierung ergänzen
+		- Github: Issues gemeinsam bestimmen und aufteilen
+
+-------------------------------------------------------------------
+
+## 25.04.2023
+- 14.30Uhr | 80min
+
+### Teilnehmer
+- Eric Neppert
+- Oskar Schaubert
+- Waldemar Schäfer
+- Manuel Wiebe
+- André Ghazaryan
+
+#### Themen
+- Meetings können Dienstags um 15:30 erst anfangen, ausnahme nächste Woche treffen mit Brunsmann
+
+- Diskussion zur Implementierung
+	- Einzelheiten der Spiellogik werden besprochen
+		- Eric zeichnet Diagramme
+	- Untergruppen um mit der Implementierung anzufangen:
+		- Spiellogik: Eric und Oskar
+		- JSON: Waldemar und Manuel
+		- Jason und André sind momentan abwesend, aber werden sich auf diese Teams aufteilen
+
+- Zwischenmeeting Samstag 29.04.23 um 15:00 Uhr
+	- sehr kurze Besprechung über den Progress
