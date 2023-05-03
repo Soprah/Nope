@@ -1,3 +1,4 @@
+from src.gamelogic.card.Card import Card
 from src.gamelogic.card.NumberCard import NumberCard
 
 import random
@@ -63,3 +64,13 @@ class Deck:
 
     def draw_card(self):
         return self.draw_stack.pop()
+
+    def discard_card(self, card):
+        if not isinstance(card, Card):
+            raise TypeError("The discarded item must be a card!")
+        elif card not in self.cards:
+            raise ValueError("The discarded card does not exist in the deck!")
+        else:
+            self.discard_stack.append(card)
+        return card
+
