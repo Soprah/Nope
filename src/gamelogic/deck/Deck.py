@@ -63,6 +63,12 @@ class Deck:
         self.draw_stack = self.cards.copy()
 
     def draw_card(self):
+        if len(self.draw_stack) == 0:
+            top_item = self.discard_stack.pop()
+            self.draw_stack = self.discard_stack.copy()
+            self.discard_stack.clear()
+            self.discard_stack.append(top_item)
+            random.shuffle(self.draw_stack)
         return self.draw_stack.pop()
 
     def discard_card(self, card):
@@ -73,4 +79,10 @@ class Deck:
         else:
             self.discard_stack.append(card)
         return card
+
+    def shuffle(self):
+        if len(self.cards) != 86:
+            raise ValueError("The deck is not complete and therefore not ready to shuffle!")
+        random.shuffle(self.cards)
+        return self.cards
 
