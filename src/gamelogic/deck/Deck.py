@@ -60,3 +60,6 @@ class Deck:
 
         # self.shuffle()
         self.draw_stack = self.cards.copy()
+
+    def draw_card(self):
+        return self.draw_stack.pop()
