@@ -154,6 +154,8 @@ Das Auswählen einer Karte erfolgt mit der Angabe der Position auf der Hand. Neu
 ![image](https://user-images.githubusercontent.com/16638925/232320130-c0bc9c59-227b-49a3-9b15-089be27c06ef.png)
 
 ## 3.3 Schnittstellen
+![image](https://user-images.githubusercontent.com/16638925/236433638-c420ac50-7d61-4c79-8512-ed2a801e0519.png)
+
 "" = nicht sicher ob es gebraucht wird 
 
 GET \
