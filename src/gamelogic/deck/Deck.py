@@ -30,33 +30,33 @@ class Deck:
         for number in n:
             for farbe in f1:
                 if number == 3:
-                    self.cards.append(NumberCard(1, farbe, id_count, number))
+                    self.cards.append(NumberCard(id_count, farbe, number))
                     id_count = id_count + 1
                 else:
                     for i in range(2):
-                        self.cards.append(NumberCard(1, farbe, id_count, number))
+                        self.cards.append(NumberCard(id_count, farbe, number))
                         id_count = id_count + 1
 
         # Zweifarbige Karten: 66 Stück
         for i in range(2):
             for farbe in f2:
                 # 24Karten für Zahl 1
-                self.cards.append(NumberCard(2, (farbe[0], farbe[1]), id_count, 1))
+                self.cards.append(NumberCard(id_count, (farbe[0], farbe[1]), 1))
                 id_count = id_count + 1
-                self.cards.append(NumberCard(2, (farbe[1], farbe[0]), id_count, 1))
+                self.cards.append(NumberCard(id_count, (farbe[1], farbe[0]), 1))
                 id_count = id_count + 1
                 # 24Karten für Zahl 2
-                self.cards.append(NumberCard(2, (farbe[0], farbe[1]), id_count, 2))
+                self.cards.append(NumberCard(id_count, (farbe[0], farbe[1]), 2))
                 id_count = id_count + 1
-                self.cards.append(NumberCard(2, (farbe[1], farbe[0]), id_count, 2))
+                self.cards.append(NumberCard(id_count, (farbe[1], farbe[0]), 2))
                 id_count = id_count + 1
         for farbe in f2:
             # 18 Karten für Zahl 3
-            self.cards.append(NumberCard(2, (farbe[0], farbe[1]), id_count, 3))
+            self.cards.append(NumberCard(id_count, (farbe[0], farbe[1]), 3))
             id_count = id_count + 1
-            self.cards.append(NumberCard(2, (farbe[1], farbe[0]), id_count, 3))
+            self.cards.append(NumberCard(id_count, (farbe[1], farbe[0]), 3))
             id_count = id_count + 1
-            self.cards.append(NumberCard(2, (farbe[0], farbe[1]), id_count, 3))
+            self.cards.append(NumberCard(id_count, (farbe[0], farbe[1]), 3))
             id_count = id_count + 1
 
         # self.shuffle()

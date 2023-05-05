@@ -16,7 +16,7 @@ class TestDeckDiscardCard(unittest.TestCase):
 
     def test_discard_card_exists(self):
         # Gültige Karte, aber gibt es nicht im Deck
-        card = NumberCard(1, ("red"), 1, 3)
+        card = NumberCard(47, ("red"), 3)
         with self.assertRaises(ValueError):
             self.deck.discard_card(card)
 
