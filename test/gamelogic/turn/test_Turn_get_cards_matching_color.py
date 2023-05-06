@@ -19,7 +19,6 @@ class TestTurnGetCardsMatchingColor(unittest.TestCase):
     def setUp(self):
         self.deck = Deck()
         self.player = Player(self.deck, "eric")
-        self.first_top_card = self.deck.initialize_discard_stack()
 
     """ Spieler hat keine Karten in der geforderten Farbe """
     def test_get_cards_matching_color_one_color_no_list(self):

@@ -21,7 +21,6 @@ class TestTurnHasSufficientMatchingCards(unittest.TestCase):
     def setUp(self):
         self.deck = Deck()
         self.player = Player(self.deck, "eric")
-        self.first_top_card = self.deck.initialize_discard_stack()
 
     """ Spieler hat genügend Karten einer Farbe für einen validen Zug """
     def test_has_sufficient_matching_cards_two_color_one_list_true(self):
