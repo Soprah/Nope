@@ -26,7 +26,7 @@ class Deck:
         f2 = [("red", "blue"), ("red", "green"), ("red", "yellow"), ("blue", "green"), ("blue", "yellow"),
               ("green", "yellow")]
 
-        #Einfarbige Karten: 20 Stück
+        # Einfarbige Karten: 20 Stück
         for number in n:
             for farbe in f1:
                 if number == 3:
@@ -59,7 +59,7 @@ class Deck:
             self.cards.append(NumberCard(id_count, (farbe[0], farbe[1]), 3))
             id_count = id_count + 1
 
-        # self.shuffle()
+        self.shuffle()
         self.draw_stack = self.cards.copy()
 
     def draw_card(self):
@@ -79,6 +79,11 @@ class Deck:
         else:
             self.discard_stack.append(card)
         return card
+
+    def initialize_discard_stack(self):
+        first_card = self.draw_card()
+        self.discard_stack.append(first_card)
+        return first_card
 
     def shuffle(self):
         if len(self.cards) != 86:
