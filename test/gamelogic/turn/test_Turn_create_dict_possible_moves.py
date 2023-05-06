@@ -82,6 +82,17 @@ class TestTurnCreateDictPossibleMoves(unittest.TestCase):
         actual_possible_moves = turn.create_dict_possible_moves()
         self.assertEqual(expected_possible_moves, actual_possible_moves)
 
+    def test_create_dict_possible_moves_two_colors_two_lists_v2(self):
+        card = NumberCard(49, ("green", "red"), 2)
+        turn = Turn(self.player, card)
+        card1 = NumberCard(2, ("blue", "red"), 1)
+        card2 = NumberCard(8, ("red", "green"), 1)
+        card3 = NumberCard(9, ("green"), 1)
+        self.player.hand = [card1, card2, card3]
+        expected_possible_moves = {"green": [card2, card3], "red": [card1, card2]}
+        actual_possible_moves = turn.create_dict_possible_moves()
+        self.assertEqual(expected_possible_moves, actual_possible_moves)
+
 
 if __name__ == '__main__':
     unittest.main()

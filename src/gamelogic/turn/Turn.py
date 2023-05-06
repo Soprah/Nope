@@ -71,5 +71,34 @@ class Turn:
             self.possible_moves.pop(key)
         return self.possible_moves
 
+    def is_color_consistent(self, color, selected_cards):
+        """
+        Überprüft, ob eine Farbe in jeder Karte der Liste vorhanden ist
+
+        :param color: Farbe, die gesucht / verglichen wird
+        :param selected_cards: Liste an Karten, die mit Farbe durchsucht wird
+        :return: boolean
+        """
+        flag = True
+        for card in selected_cards:
+            if color not in card.color:
+                flag = False
+        return flag
+
     def is_valid(self, selected_cards):
-        pass
+        """
+        Überprüft, ob die übergebenen Karten einen gültigen Spielzug darstellen
+
+        :param selected_cards: Liste an Karten, die der Spieler für einen Spielzug ausgesucht hat
+        :return: boolean
+        """
+        self.possible_moves = self.create_dict_possible_moves()
+        if len(selected_cards) == 0:
+            return len(self.possible_moves) == 0 and len(selected_cards) == 0
+        elif len(selected_cards) > 0:
+            if isinstance(self.top_card, NumberCard):
+                flag = []
+                for color in self.possible_moves.keys():
+                    color_and_len_flag = self.is_color_consistent(color, selected_cards) and len(selected_cards) == self.top_card.number
+                    flag.append(color_and_len_flag)
+                return True in flag
