@@ -14,16 +14,10 @@ class Turn:
         self.top_card = top_card
         self.selected_cards = []
         """ Hilfsattribute: """
-        #
+        # (key=color, value=cards) Dictionary. Mögliche, valide Züge
         self.possible_moves = {}
-
-    # Man bekommt eine Liste von Karten, die der Spieler abwerfen MÖCHTE
-    # is_valid() prüft, ob das zulässig ist
-            # A: leere Liste
-                    # Was: Schauen, ob tatsächlich kein Zug vom Spieler notwendig war
-                    # Wie: Die Handkarten des Spielers mit der top_card vergleichen
-                        # Wenn von einer Farbe genügend Karten gibt (genügend >= top_card.number), dann hätte es klappen können
-
+        # Anzahl der Versuche einen Spielzug auszuführen
+        self.turn_attempt = 1
 
     def get_cards_matching_color(self):
         """
