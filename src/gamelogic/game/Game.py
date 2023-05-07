@@ -6,7 +6,17 @@ class Game:
 
     def __init__(self, player_1_name, player_2_name):
         self.setup(player_1_name, player_2_name)
-
+        '''
+        self.deck = Deck()
+        self.player_1 = Player(self.deck, player_1_name)
+        self.player_2 = Player(self.deck, player_2_name)
+        self.active_player = None
+        self.turns = []
+        self.deck.initialize_discard_stack()
+        self.pass_first_cards()
+        self.set_active_player()
+        '''
+    # '''
     def setup(self, player_1_name, player_2_name):
         self.turns = []
         self.deck = Deck()
@@ -15,6 +25,7 @@ class Game:
         self.deck.initialize_discard_stack()
         self.pass_first_cards()
         self.set_active_player()
+    # '''
 
     def set_active_player(self):
         if len(self.turns) == 0:
@@ -30,7 +41,7 @@ class Game:
             self.player_1.draw_card()
             self.player_2.draw_card()
 
-    '''
+    # '''
     def send_turn_data(self, current_turn):
         turn_data = {}
         if len(self.turns) == 0:
@@ -38,18 +49,20 @@ class Game:
             turn_data = {
                 "previous_selected_cards": self.deck.discard_stack[-1],
                 "amount_opponent_cards": len(opponent.hand),
-                "own_hand_cards": [card for card in current_turn.player.hand]
+                "own_hand_cards": current_turn.player.hand
             }
+        '''
         elif len(self.turns) > 0:
             previous_turn = self.turns[-1]
             if isinstance(previous_turn, Turn) and isinstance(current_turn, Turn):
                 turn_data = {
-                    "previous_selected_cards": [card for card in previous_turn.selected_cards],
+                    "previous_selected_cards": previous_turn.selected_cards,
                     "amount_opponent_cards": len(previous_turn.player.hand),
-                    "own_hand_cards": [card for card in current_turn.player.hand]
+                    "own_hand_cards": current_turn.player.hand
                 }
+        '''
         return turn_data
-    '''
+    # '''
 
 
 

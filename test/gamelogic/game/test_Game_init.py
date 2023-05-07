@@ -19,6 +19,7 @@ class TestGameInit(unittest.TestCase):
         self.assertEqual(game.player_2.name, self.player_2_name)
         self.assertEqual(game.active_player.name, self.player_1_name)
         self.assertEqual(len(game.player_1.hand), 8)
+        # self.assertEqual(len(game.active_player), 8)
         self.assertEqual(len(game.player_2.hand), 8)
 
 
