@@ -3,7 +3,7 @@ import unittest
 from src.gamelogic.deck.Deck import Deck
 
 
-class MyTestCase(unittest.TestCase):
+class TestDeckCreateDictCopy(unittest.TestCase):
     def setUp(self):
         self.deck = Deck()
 
