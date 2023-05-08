@@ -15,6 +15,8 @@ class TestGameSendTurnData(unittest.TestCase):
         self.assertEqual(actual_turn_data.get("amount_opponent_cards"), len(self.game.player_2.hand))
         self.assertEqual(actual_turn_data.get("own_hand_cards"), self.game.player_1.hand)
 
+    def test_send_turn_data_mid_game(self):
+        pass
 
 if __name__ == '__main__':
     unittest.main()

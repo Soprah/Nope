@@ -64,6 +64,9 @@ class Game:
         return turn_data
     # '''
 
+    def receive_turn_data(self):
+        pass
+
 
 
 

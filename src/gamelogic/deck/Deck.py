@@ -13,6 +13,7 @@ class Deck:
         return cls._instance
 
     def __init__(self):
+        self.cards_dict = {}
         self.cards = []
         self.draw_stack = []
         self.discard_stack = []
@@ -59,6 +60,7 @@ class Deck:
             self.cards.append(NumberCard(id_count, (farbe[0], farbe[1]), 3))
             id_count = id_count + 1
 
+        self.cards_dict = self.create_dict_deck_copy(self.cards)
         self.shuffle()
         self.draw_stack = self.cards.copy()
 
@@ -90,4 +92,12 @@ class Deck:
             raise ValueError("The deck is not complete and therefore not ready to shuffle!")
         random.shuffle(self.cards)
         return self.cards
+
+    def create_dict_deck_copy(self, card_list):
+        deck_dict = {}
+        for card in card_list:
+            deck_dict[card.id] = card
+        return deck_dict
+
+
 
