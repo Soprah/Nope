@@ -1,5 +1,5 @@
 from flask import Flask, request
-import authentication.authetification as au
+import src.authentification.authetification as au
 
 app = Flask(__name__)
 
