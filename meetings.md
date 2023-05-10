@@ -216,3 +216,35 @@ Morgen ansprechen:
 - das Deployment des Servers automatisieren
 
 - Meeting am 16.05 ist in präsenz
+
+-------------------------------------------------------------------
+
+## 09.05.2023
+- 15.30Uhr | 60min
+
+### Teilnehmer
+- Eric Neppert
+- Oskar Schaubert
+- Waldemar Schäfer
+- Manuel Wiebe
+- Jason Piper
+
+#### Inhalt:
+
+- Datenbank
+	- Grundlegend fertig
+	- Tabellen müssen noch erstellt werden mit Daten, die die anderen Teams noch absprechen werden
+
+- Spiellogik
+	- Arbeit läuft gut
+	- Einfach Funktionen zum senden und empfangen von Daten sind vorhanden
+	- Daten müssen mit dem Netzwerk Team abgesprochen werden
+
+- Netzwerk
+	- Grundlegend am laufen
+	- Testen ist ein Problem da die Clients noch nicht vorhanden sind
+	- Daten müssen mit Eric abgesprochen werden
+
+- Spiellogik und Netzwerk Team werden in den nächsten Tagen sich zusammensetzen
+- danach hat das Datenbank Team die nötigen Daten für die Tabellen
+- Die einzelnen Komponenten werden in den nächsten Tagen zusammen
