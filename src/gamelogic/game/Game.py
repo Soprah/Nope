@@ -68,10 +68,10 @@ class Game:
         """
         Prüft, ob die vom Spieler ausgewählten Karten im Spiel existieren.
 
-        :param selected_cards: Liste von ids der übergebenen Karten
+        :param dict_selected_cards: Liste von ids der übergebenen Karten
         :return: Liste der entsprechenden Karten, die tatsächlich existieren
         """
-        selected_cards = dict_selected_cards.get("id")
+        selected_cards = dict_selected_cards.get("selected_cards")
         checked_list = []
         if len(selected_cards) == 0:
             return checked_list
