@@ -18,6 +18,8 @@ class Turn:
         self.possible_moves = {}
         # Anzahl der Versuche einen Spielzug auszuführen
         self.turn_attempt = 1
+        # Gibt an, ob der vom Spieler gemachte Spielzug gültig ist
+        self.is_turn_valid = None
 
     def get_cards_matching_color(self):
         """
@@ -86,13 +88,25 @@ class Turn:
         :param selected_cards: Liste an Karten, die der Spieler für einen Spielzug ausgesucht hat
         :return: boolean
         """
+        self.turn_attempt = self.turn_attempt + 1
+        self.selected_cards = selected_cards
         self.possible_moves = self.create_dict_possible_moves()
         if len(selected_cards) == 0:
-            return len(self.possible_moves) == 0 and len(selected_cards) == 0
+            self.is_turn_valid = len(self.possible_moves) == 0 and len(selected_cards) == 0
+            return self.is_turn_valid
         elif len(selected_cards) > 0:
             if isinstance(self.top_card, NumberCard):
                 flag = []
                 for color in self.possible_moves.keys():
                     color_and_len_flag = self.is_color_consistent(color, selected_cards) and len(selected_cards) == self.top_card.number
                     flag.append(color_and_len_flag)
-                return True in flag
+                self.is_turn_valid = True in flag
+                return self.is_turn_valid
+
+    def is_another_attempt_necessary(self):
+        """
+        Überprüft, ob ein Spieler noch einen Spielzug ausführen darf/muss
+
+        :return: boolean
+        """
+        return len(self.selected_cards) == 0 and self.turn_attempt == 2 and self.is_turn_valid

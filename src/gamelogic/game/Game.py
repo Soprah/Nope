@@ -36,7 +36,7 @@ class Game:
             self.active_player = self.player_1
 
     def pass_first_cards(self):
-        amount_start_cards = 8
+        amount_start_cards = 3
         for i in range(amount_start_cards):
             self.player_1.draw_card()
             self.player_2.draw_card()
@@ -92,4 +92,10 @@ class Game:
                     checked_list.append(card_to_check)
         return checked_list
     def is_duplicate_ids(self, list_of_ids):
+        """
+        Überprüft, ob in der Liste doppelte Werte vorkommen
+
+        :param list_of_ids: Liste von ids, die jeweils eine Karte repräsentieren
+        :return: boolean
+        """
         return len(list_of_ids) != len(set(list_of_ids))
