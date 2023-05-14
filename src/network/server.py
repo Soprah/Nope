@@ -7,8 +7,8 @@ app = Flask(__name__)
 def connect():
 	return au.connect()
 
-@app.route('/drawcard', methods=['POST'])
-def draw_card():
+@app.route('/add_player_to_game', methods=['POST'])
+def add_player_to_game():
 	data = request.get_json()
 	return au.draw_card(data)
 
