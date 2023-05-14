@@ -1,21 +1,24 @@
+import uuid
+
 from src.gamelogic.deck.Deck import Deck
 from src.gamelogic.player.Player import Player
 from src.gamelogic.turn.Turn import Turn
 
 class Game:
 
-    def __init__(self, player_1_name, player_2_name):
-        self.setup(player_1_name, player_2_name)
+    def __init__(self, p1, p2):
+        self.setup(p1, p2)
         self.active_player = self.player_1
         self.winner = None
 
-    def setup(self, player_1_name, player_2_name):
+    def setup(self, p1, p2):
+        self.id = uuid.uuid4()
         self.turns = []
         self.deck = Deck()
-        self.player_1 = Player(self.deck, player_1_name)
-        self.player_2 = Player(self.deck, player_2_name)
+        self.player_1 = p1
+        self.player_2 = p2
         self.deck.initialize_discard_stack()
-        self.pass_first_cards()
+        # self.pass_first_cards()
         self.active_player = self.player_1
 
     def switch_active_player(self):
@@ -217,5 +220,5 @@ class Game:
                     print("Karte: ", c)
 
 
-
-
+    def __str__(self) -> str:
+        return f"Game ID: {self.id}, ID von Player 1: {self.player_1.get_id()}, ID von Player 2: {self.player_2.get_id()}"

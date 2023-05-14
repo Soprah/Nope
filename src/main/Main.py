@@ -13,3 +13,16 @@ PLACEHOLDER
 # print(game.active_player.name)
 # game.switch_active_player()
 # print(game.active_player.name)
+
+game_list = {}
+p1_id = 1
+p2_id = 2
+game_id = 10
+game_id_2 = 20
+
+game_list = {
+    "p1_id": game_id,
+    "p7_id": game_id_2
+}
+
+print(game_list.get("p1_id"))

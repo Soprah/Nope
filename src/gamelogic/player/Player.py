@@ -5,15 +5,23 @@ from src.gamelogic.player.client_simulation.ClientSimulation import ClientSimula
 
 class Player:
 
-    def __init__(self, deck, name):
-        self.id = uuid.uuid4()
+    def __init__(self, name, authentication_id):
+        self.id = authentication_id
         self.name = name
-        self.deck = deck
+        self.deck = None
         self.hand = []
         self.is_disqualified = False
         ''' Client Simulation Attribute: '''
-        # Placeholder
         self.client_simulation = ClientSimulation()
+
+    # def set_id(self, new_id):
+    #     self.id = new_id
+
+    def get_id(self):
+        return self.id
+
+    def set_deck(self, deck):
+        self.deck = deck
 
     def draw_card(self):
         drawn_card = self.deck.draw_card()

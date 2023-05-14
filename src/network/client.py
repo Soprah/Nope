@@ -1,7 +1,7 @@
 import requests
 from src.gamelogic.player.Player import Player
 
-myPlayer = Player("TestPlayer", -1)
+myPlayer = Player("TestPlayer")
 
 def connect():
 	url = "http://127.0.0.1:5000/connect"

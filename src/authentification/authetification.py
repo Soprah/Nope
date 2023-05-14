@@ -1,7 +1,7 @@
 from flask import jsonify
 import uuid
 import time
-import src.gamemanegement.gamemanegement as gm
+import src.gamemanagement.GameManagement as gm
 
 sessions = {}
 session_timeout = 1000
