@@ -7,3 +7,9 @@ from src.gamelogic.turn.Turn import Turn
 """
 PLACEHOLDER
 """
+
+# game = Game("Eric", "Marc")
+# game.turns.append(game.next_turn())
+# print(game.active_player.name)
+# game.switch_active_player()
+# print(game.active_player.name)

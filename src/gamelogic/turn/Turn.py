@@ -93,7 +93,6 @@ class Turn:
         self.possible_moves = self.create_dict_possible_moves()
         if len(selected_cards) == 0:
             self.is_turn_valid = len(self.possible_moves) == 0 and len(selected_cards) == 0
-            return self.is_turn_valid
         elif len(selected_cards) > 0:
             if isinstance(self.top_card, NumberCard):
                 flag = []
@@ -101,7 +100,9 @@ class Turn:
                     color_and_len_flag = self.is_color_consistent(color, selected_cards) and len(selected_cards) == self.top_card.number
                     flag.append(color_and_len_flag)
                 self.is_turn_valid = True in flag
-                return self.is_turn_valid
+        if self.is_turn_valid == False:
+            self.player.is_disqualified = True
+        return self.is_turn_valid
 
     def is_another_attempt_necessary(self):
         """
