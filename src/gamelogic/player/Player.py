@@ -10,6 +10,7 @@ class Player:
         self.name = name
         self.deck = deck
         self.hand = []
+        self.is_disqualified = False
         ''' Client Simulation Attribute: '''
         # Placeholder
         self.client_simulation = ClientSimulation()
