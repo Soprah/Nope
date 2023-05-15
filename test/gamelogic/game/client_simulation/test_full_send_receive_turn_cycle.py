@@ -2,13 +2,16 @@ import unittest
 
 from src.gamelogic.card.Card import Card
 from src.gamelogic.game.Game import Game
+from src.gamelogic.player.Player import Player
 from src.gamelogic.turn.Turn import Turn
 
 
 class TestSendReceiveTurnCycle(unittest.TestCase):
 
     def setUp(self):
-        self.game = Game("eric", "marc")
+        p1 = Player("Eric", 1)
+        p2 = Player("Marc", 2)
+        self.game = Game(p1, p2)
 
     def test_game_start_full_cycle_valid_cards(self):
         first_turn = Turn(self.game.active_player, self.game.deck.discard_stack[-1])

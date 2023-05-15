@@ -8,8 +8,6 @@ class Game:
 
     def __init__(self, p1, p2):
         self.setup(p1, p2)
-        self.active_player = self.player_1
-        self.winner = None
 
     def setup(self, p1, p2):
         self.id = uuid.uuid4()
@@ -18,8 +16,10 @@ class Game:
         self.player_1 = p1
         self.player_2 = p2
         self.deck.initialize_discard_stack()
-        # self.pass_first_cards()
+        self.assign_deck_to_players()
+        self.pass_first_cards()
         self.active_player = self.player_1
+        self.winner = None
 
     def switch_active_player(self):
         if self.active_player == self.player_1:
@@ -35,8 +35,12 @@ class Game:
     #     else:
     #         self.active_player = self.player_1
 
+    def assign_deck_to_players(self):
+        self.player_1.set_deck(self.deck)
+        self.player_2.set_deck(self.deck)
+
     def pass_first_cards(self):
-        amount_start_cards = 3
+        amount_start_cards = 8
         for i in range(amount_start_cards):
             self.player_1.draw_card()
             self.player_2.draw_card()

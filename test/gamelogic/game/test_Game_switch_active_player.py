@@ -1,11 +1,14 @@
 import unittest
 
 from src.gamelogic.game.Game import Game
+from src.gamelogic.player.Player import Player
 
 
 class TestGameSwitchActivePlayer(unittest.TestCase):
     def setUp(self):
-        self.game = Game("Eric", "Marc")
+        p1 = Player("Eric", 1)
+        p2 = Player("Marcc", 2)
+        self.game = Game(p1, p2)
 
 
     def test_switch_active_player_game_start(self):

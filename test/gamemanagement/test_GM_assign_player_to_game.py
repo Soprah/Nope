@@ -45,5 +45,27 @@ class GameManagementAssignPlayerToGame(unittest.TestCase):
         self.assertIsNotNone(game_2)
         self.assertIs(game_1, game_2)
 
+    def test_assign_player_to_game_duplicate_id(self):
+        player_1_id = 1
+        player_2_id = 1
+        player_1_name = "Eric"
+        player_2_name = "Marc"
+        with self.assertRaises(ValueError):
+            self.gm.assign_player_to_game(player_1_id, player_1_name, player_2_id, player_2_name)
+
+        player_1_id = 1
+        player_2_id = 2
+        player_1_name = "Eric"
+        player_2_name = "Marc"
+        self.gm.assign_player_to_game(player_1_id, player_1_name, player_2_id, player_2_name)
+
+        player_3_id = 3
+        player_4_id = 1
+        player_3_name = "Sabine"
+        player_4_name = "Rainer"
+        with self.assertRaises(ValueError):
+            self.gm.assign_player_to_game(player_3_id, player_3_name, player_4_id, player_4_name)
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -44,3 +44,6 @@ class Player:
                 cards_id.append(card.id)
         player_turn_data = {"selected_cards": cards_id, "token": self.id}
         return player_turn_data
+
+    def __str__(self):
+        return f"Spieler ID: {self.id}, Spieler Name: {self.name}"

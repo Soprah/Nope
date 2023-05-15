@@ -3,26 +3,16 @@ from src.gamelogic.deck.Deck import Deck
 from src.gamelogic.game.Game import Game
 from src.gamelogic.player.Player import Player
 from src.gamelogic.turn.Turn import Turn
+from src.gamemanagement.GameManagement import GameManagement
 
 """
 PLACEHOLDER
 """
 
-# game = Game("Eric", "Marc")
-# game.turns.append(game.next_turn())
-# print(game.active_player.name)
-# game.switch_active_player()
-# print(game.active_player.name)
-
-game_list = {}
-p1_id = 1
-p2_id = 2
-game_id = 10
-game_id_2 = 20
-
-game_list = {
-    "p1_id": game_id,
-    "p7_id": game_id_2
-}
-
-print(game_list.get("p1_id"))
+gm = GameManagement()
+gm.assign_player_to_game(1, "Eric", 2, "Marc")
+gm.assign_player_to_game(3, "Eric", 4, "Marc")
+game = gm.get_game(1)
+print(game.active_player)
+print(game.player_1)
+print(game.player_2)
