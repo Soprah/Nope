@@ -14,7 +14,7 @@ class TestSendReceiveTurnCycle(unittest.TestCase):
         self.game = Game(p1, p2)
 
     def test_game_start_full_cycle_valid_cards(self):
-        first_turn = Turn(self.game.active_player, self.game.deck.discard_stack[-1])
+        first_turn = self.game.next_turn()
         self.assertEqual(first_turn.top_card, self.game.deck.discard_stack[-1])
         self.assertEqual(len(self.game.deck.discard_stack), 1)
         self.assertEqual(len(self.game.active_player.hand), 8)

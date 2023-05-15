@@ -44,14 +44,3 @@ if turn_valid and another_attempt_necessary:
     second_turn_valid = first_turn.is_valid(second_checked_list)
     print("Ist der Spielzug gültig?", second_turn_valid)
 """
-
-# game = Game("Eric", "Marc")
-# game_sent_turn_data = game.send_turn_data(game.next_turn())
-# for card in game_sent_turn_data.get("own_hand_cards"):
-#     print(f"Spielerkarte: {card}")
-# print("********")
-# print("Top Karte:   ", game_sent_turn_data.get("previous_selected_cards"))
-# print("********")
-# client_processed_turn_data = game.active_player.CS_select_cards(game_sent_turn_data)
-# game = Game("Eric", "Marc")
-# game.run()
