@@ -15,7 +15,8 @@ class TestGameSendTurnData(unittest.TestCase):
         # turn = Turn(self.game.active_player, self.game.deck.discard_stack[-1])
         turn = self.game.next_turn()
         actual_turn_data = self.game.send_turn_data(current_turn=turn)
-        self.assertEqual(actual_turn_data.get("previous_selected_cards"), self.game.deck.discard_stack[-1])
+        self.assertEqual(actual_turn_data.get("previous_selected_cards"), [])
+        self.assertEqual(actual_turn_data.get("top_card"), self.game.deck.discard_stack[-1])
         self.assertEqual(actual_turn_data.get("amount_opponent_cards"), len(self.game.player_2.hand))
         self.assertEqual(actual_turn_data.get("own_hand_cards"), self.game.player_1.hand)
 

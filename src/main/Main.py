@@ -8,3 +8,6 @@ from src.gamemanagement.GameManagement import GameManagement
 """
 PLACEHOLDER
 """
+
+game = Game(Player("Eric", 3), Player("Marc", 19))
+game.run()

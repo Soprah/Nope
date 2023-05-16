@@ -23,8 +23,9 @@ class TestSendReceiveTurnCycle(unittest.TestCase):
 
         turn_data = self.game.send_turn_data(first_turn)
         self.assertIsInstance(turn_data, dict)
-        self.assertEqual(len(turn_data), 3)
-        self.assertEqual(turn_data.get("previous_selected_cards"), first_turn.top_card)
+        self.assertEqual(len(turn_data), 4)
+        self.assertEqual(turn_data.get("previous_selected_cards"), [])
+        self.assertEqual(turn_data.get("top_card"), first_turn.top_card)
         self.assertEqual(turn_data.get("amount_opponent_cards"), 8)
         self.assertEqual(turn_data.get("own_hand_cards"), self.game.active_player.hand)
 
@@ -47,3 +48,4 @@ if __name__ == '__main__':
     #     print("Durchlauf Nr.", i + 1)
     #     unittest.TextTestRunner().run(suite)
     #     print()
+

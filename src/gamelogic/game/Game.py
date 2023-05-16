@@ -57,7 +57,8 @@ class Game:
         if len(self.turns) == 1:
             opponent = self.player_2
             turn_data = {
-                "previous_selected_cards": self.deck.discard_stack[-1],
+                "previous_selected_cards": [],
+                "top_card": self.deck.discard_stack[-1],
                 "amount_opponent_cards": len(opponent.hand),
                 "own_hand_cards": current_turn.player.hand
             }
@@ -67,6 +68,7 @@ class Game:
             if isinstance(previous_turn, Turn) and isinstance(current_turn, Turn):
                 turn_data = {
                     "previous_selected_cards": previous_turn.selected_cards,
+                    "top_card": previous_turn.top_card,
                     "amount_opponent_cards": len(previous_turn.player.hand),
                     "own_hand_cards": current_turn.player.hand
                 }
@@ -150,36 +152,46 @@ class Game:
         return "GAME END"
 
     def run(self):
-        for i in range(2):
+        while self.is_game_over() == False:
             print("**********************")
-            print(f"Turn Nr. {len(self.turns) + 1}")
-            print("Spielzug von: ", self.active_player.name)
             # 1. Turnobjekt erstellen
             new_turn = self.next_turn()
+            print(f"Turn Nr. {len(self.turns)}")
+            print("Spielzug von: ", self.active_player.name)
             game_sent_turn_data = self.send_turn_data(new_turn)
+
             # 1-b. Daten ausgeben (Spielerhand, Top Karte)
+            print("Anzahl der Karten in Spielerhand", len(self.active_player.hand))
             for card in game_sent_turn_data.get("own_hand_cards"):
                 print(f"Spielerkarte: {card}")
             print(f"Top Karte des aktuellen Turns {self.turns[-1].top_card}")
+
             # 2. Client empfängt und verarbeitet Daten
             client_processed_turn_data = self.active_player.CS_select_cards(game_sent_turn_data)
+
             # 2-b. Ausgewählte Karten des Clients ausgeben
             print("Das Dictionary vom Client: ", client_processed_turn_data)
             if len(client_processed_turn_data .get("selected_cards")) != 0:
                 for card in client_processed_turn_data .get("selected_cards"):
                     print("Ausgewählte Karte/ID: ", card)
+
             # 3. Server empfängt Daten vom Client
             checked_list = self.receive_turn_data(client_processed_turn_data)
+
             # 3-b. Die IDs der ausgewählten Karten ausgeben
             print("Länge der gecheckten Liste: ", len(checked_list))
             for item in checked_list:
                 print(item)
+
             # 4. Spielzug nach Validität prüfen
             turn_valid = self.turns[-1].is_valid(checked_list)
+
             # 4-b. Validität ausgeben
             print(f"War der Zug vom Spieler valide? {turn_valid}")
+
             # 5. Prüfen, ob der Spieler noch einen Spielzug ausführen muss
             another_attempt_necessary = self.turns[-1].is_another_attempt_necessary()
+
             # 5-b. Validität ausgeben
             print(f"Muss der Spieler noch einen Spielzug machen? {another_attempt_necessary}")
             if turn_valid and another_attempt_necessary:
@@ -187,12 +199,14 @@ class Game:
                 # X-1: Spieler zieht zwei Karten
                 self.active_player.draw_card()
                 self.active_player.draw_card()
+
                 # X-2: Daten verpacken zum Senden
                 second_game_sent_turn_data = self.send_turn_data(self.turns[-1])
+
                 # X-2-b: Neuen Daten ausgeben (Neue Spielerhand)
                 for card in self.active_player.hand:
                     print(f"Spielerkarte: {card}")
-                second_client_processed_turn_data = self.active_player.CS_select_cards(game_sent_turn_data)
+                second_client_processed_turn_data = self.active_player.CS_select_cards(second_game_sent_turn_data)
                 print("Der Spieler versucht es erneut")
                 print("Das Dictionary vom Client: ", second_client_processed_turn_data)
                 if len(second_client_processed_turn_data.get("selected_cards")) != 0:
@@ -210,6 +224,7 @@ class Game:
                     if len(discarded_cards) > 0:
                         for c in discarded_cards:
                             print("Abgelegte Karte: ", c)
+                        print("Anzahl der Karten in Spielerhand nach Ablegen", len(self.active_player.hand))
                         print("Spielerhand nach Ablegen:")
                         for c in self.active_player.hand:
                             print("Karte: ", c)
@@ -219,10 +234,15 @@ class Game:
                 if len(discarded_cards) > 0:
                     for c in discarded_cards:
                         print("Abgelegte Karte: ", c)
+
+                print("Anzahl der Karten in Spielerhand nach Ablegen", len(self.active_player.hand))
                 print("Spielerhand nach Ablegen:")
                 for c in self.active_player.hand:
                     print("Karte: ", c)
-
+        print("\n")
+        print("\n")
+        self.finish_game()
+        print("WINNER: ", self.winner)
 
     def __str__(self) -> str:
         return f"Game ID: {self.id}, ID von Player 1: {self.player_1.get_id()}, ID von Player 2: {self.player_2.get_id()}"
