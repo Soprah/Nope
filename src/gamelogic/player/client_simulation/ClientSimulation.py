@@ -68,7 +68,7 @@ class ClientSimulation:
         :param dict_turn_data: Informationen über einen Spielzug als Dictionary
         :return: Liste an Karten, die der Spieler für einen Spielzug auswählt
         """
-        self.top_card = dict_turn_data.get("previous_selected_cards")
+        self.top_card = dict_turn_data.get("top_card")
         self.player_hand = dict_turn_data.get("own_hand_cards")
         self.create_dict_possible_moves()
         self.selected_cards = self.execute_lazy(self.possible_moves, self.top_card.number)

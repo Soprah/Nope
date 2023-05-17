@@ -8,7 +8,8 @@ class TestPlayerDrawCard(unittest.TestCase):
 
     def setUp(self):
         self.deck = Deck()
-        self.player = Player(self.deck, "Eric")
+        self.player = Player("Eric", 1)
+        self.player.set_deck(self.deck)
 
     def test_player_empty_hand_before_start(self):
         self.assertEqual(len(self.player.hand), 0)
