@@ -8,7 +8,8 @@ class TestPlayerDiscardCard(unittest.TestCase):
 
     def setUp(self):
         self.deck = Deck()
-        self.player = Player(self.deck, "Eric")
+        self.player = Player("Eric", 1)
+        self.player.set_deck(self.deck)
 
     def test_player_discard_card_exists(self):
         with self.assertRaises(ValueError):

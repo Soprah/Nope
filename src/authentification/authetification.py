@@ -1,46 +1,33 @@
-from flask import jsonify
-import random
+from flask import Response, jsonify, json
+import uuid
 import time
+import src.gamemanagement.GameManagement as gm
 
 sessions = {}
 session_timeout = 1000
 
-#for development
-def test_draw_card(session_id):
-    return jsonify({'card' : 'b2'})
-
-def test_make_move(session_id, move):
-    return 1
-################
-
 def connect():
-    session_id = int(random.random()*(10**16))
+    player_authentication_id = uuid.uuid4().__str__()
     global sessions
     global session_timeout
-    sessions[session_id] = time.time() + session_timeout
-    return jsonify({'session_id' : session_id})
+    sessions[player_authentication_id] = time.time() + session_timeout
+    return jsonify({'authentication_id' : player_authentication_id})
 
-def verify(session_id):
+def verify(player_authentication_id):
     global sessions
-    if session_id in sessions:
-        if (time.time() < sessions[session_id]):
+    if player_authentication_id in sessions:
+        if (time.time() < sessions[player_authentication_id]):
             return True
     return False
 
-def draw_card(data):
-    session_id = data['session']
-    if (verify(session_id)):   
-        res = test_draw_card(session_id)
-        return res
-    return -1
-
-def make_move(data):
-    session_id = data['session']
-    if (verify(session_id)):
-        move = data['move']
-        res = test_make_move(session_id, move)
-        return res
-    return -1
+def add_player_to_game(data):
+    player_data = json.loads(data)
+    player_authentication_id = player_data['authentication_id']
+    if (verify(player_authentication_id)):   
+        return gm.assign_player_to_game(player_authentication_id, player_data['name'])
+    else:
+        return Response("not valide authentication id", status=404)
+        
 
             
     

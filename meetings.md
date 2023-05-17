@@ -248,3 +248,66 @@ Morgen ansprechen:
 - Spiellogik und Netzwerk Team werden in den nächsten Tagen sich zusammensetzen
 - danach hat das Datenbank Team die nötigen Daten für die Tabellen
 - Die einzelnen Komponenten werden in den nächsten Tagen zusammen
+
+-------------------------------------------------------------------
+
+## 15.05.2023
+- 16.30Uhr | 60min
+
+### Teilnehmer
+- Eric Neppert
+- Oskar Schaubert
+- Waldemar Schäfer
+- Jason Piper
+
+#### Inhalt:
+- Meeting bezüglich der morgigen Abgabe
+
+- Waldemar:
+- im Makefile muss der Pfad zum Projekt angegeben werden
+- Spiel kann noch nicht starten, weil der zweite Spieler nicht der Partie beitreten kann
+
+- Eric:
+- Spiellogik fast komplett fertig
+- Konnte einen ersten Spielzug simulieren (mit vorgemachter JSON)
+- jedoch klappte es nur mit einer älteren Version vom Code
+- die aktuellste Version wurde mit dem Backend verbunden, dieser Funktioniert jedoch noch nicht ganz
+
+- Wir merken an, dass unsere kleine Teamgröße die Aufgabenteilung sehr schwierig macht
+- Dadurch, dass jeder am Server und am Client arbeitet, ist es schwer uns intensiv auf ein Modul zu konzentrieren im Gegensatz zu den größeren Gruppen
+
+- Eric schlägt vor, dass das Datenbankteam dem Netzwerkteam aushilft
+- Das Datenbankteam hat sonst nicht viel zu tun, bis das Netzwerkteam bereit ist
+- Das Thema bei dem das Netzwerkteam helfen soll: Bilaterale Kommunikation in Flask mit Websockets
+- Zeit bis zum 23.05 zum einlesen
+
+-------------------------------------------------------------------
+
+## 16.05.2023
+- 14.30Uhr | 60min
+
+### Teilnehmer
+- Eric Neppert
+- Oskar Schaubert
+- Waldemar Schäfer
+- Jason Piper
+
+#### Inhalt:
+- Wir präsentieren unseren Fortschritt
+
+- die Spiellogik ist soweit fertig
+- wir haben aber noch Schwierigkeiten die Schnittstellen zu verbinden
+
+- der Code wird durchgegangen und erklärt
+
+- Arbeit wird in der nächsten Arbeitsphase neu verteilt, damit das Netzwerkteam mehr Unterstützung hat um die Schnittstellen bereit zu machen
+
+- wir erläutern die Probleme, auf die wir gestoßen sind und wie wir planen sie zu beheben
+
+- Ab hier schlechte Verbindung:
+	- Brunsmann spricht über Websockets(?)
+	- Brunsmann fragt wegen den KI Clients(?)
+	- Brunsmann spricht über die Kommunikationsschicht(?)
+	- Brunsmann spricht an wie wichtig es ist, dass das Turnier am Ende durchführbar ist(?)
+	- Brunsmann spricht über das Format der Tournierergebnisse(?)
+	- Brunsmann ist wichtig, dass das Tournier stattfinden kann und jeder eine fertige KI Logik hat(?)

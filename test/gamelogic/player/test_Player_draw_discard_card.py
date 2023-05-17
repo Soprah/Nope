@@ -7,7 +7,8 @@ from src.gamelogic.player.Player import Player
 class TestPlayerDrawAndDiscardCard(unittest.TestCase):
     def setUp(self):
         self.deck = Deck()
-        self.player = Player(self.deck, "Eric")
+        self.player = Player("Eric", 1)
+        self.player.set_deck(self.deck)
 
     def test_draw_and_discard_card(self):
         drawn_card = self.player.draw_card()
