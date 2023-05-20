@@ -3,6 +3,11 @@ from src.gamelogic.card.NumberCard import NumberCard
 
 import random
 
+from src.gamelogic.card.RestartCard import RestartCard
+from src.gamelogic.card.SelectionCard import SelectionCard
+from src.gamelogic.card.ViewCard import ViewCard
+
+
 class Deck:
 
     _instance = None
@@ -26,6 +31,8 @@ class Deck:
         f1 = [("red"), ("blue"), ("green"), ("yellow")]
         f2 = [("red", "blue"), ("red", "green"), ("red", "yellow"), ("blue", "green"), ("blue", "yellow"),
               ("green", "yellow")]
+
+    # Zahlenkarten
 
         # Einfarbige Karten: 20 Stück
         for number in n:
@@ -60,9 +67,30 @@ class Deck:
             self.cards.append(NumberCard(id_count, (farbe[0], farbe[1]), 3))
             id_count = id_count + 1
 
+    # Aktionskarten
+
+        # Neustart / Restart: 4 Stück
+        for i in range(4):
+            self.cards.append(RestartCard(id_count, (("red"), ("blue"), ("yellow"), ("green"))))
+            id_count = id_count + 1
+
+        # Durchblick / View: 4 Stück
+        for color in f1:
+            self.cards.append(ViewCard(id_count, color))
+            id_count = id_count + 1
+
+        # Auswahl / Selection: 6 Stück
+        for color in f1:
+            self.cards.append(SelectionCard(id_count, color))
+            id_count = id_count + 1
+        for i in range(2):
+            self.cards.append(SelectionCard(id_count, (("red"), ("blue"), ("yellow"), ("green"))))
+            id_count = id_count + 1
+
         self.cards_dict = self.create_dict_deck_copy(self.cards)
-        self.shuffle()
+        # self.shuffle()
         self.draw_stack = self.cards.copy()
+
 
     def draw_card(self):
         if len(self.draw_stack) == 0:
