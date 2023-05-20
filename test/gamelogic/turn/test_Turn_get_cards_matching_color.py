@@ -1,5 +1,6 @@
 import unittest
 
+from src.gamelogic.card.ActionCard import ActionCard
 from src.gamelogic.card.NumberCard import NumberCard
 from src.gamelogic.deck.Deck import Deck
 from src.gamelogic.player.Player import Player
@@ -21,11 +22,25 @@ class TestTurnGetCardsMatchingColor(unittest.TestCase):
         self.player = Player(self.deck, "eric")
 
     """ Spieler hat keine Karten in der geforderten Farbe """
-    def test_get_cards_matching_color_one_color_no_list(self):
+
+    # NumberCards
+    def test_get_cards_matching_color_one_color_no_list_NC(self):
         card = NumberCard(1, ("green"), 2)
         turn = Turn(self.player, card)
         card1 = NumberCard(2, ("blue", "red"), 1)
         card2 = NumberCard(2, ("red", "blue"), 1)
+        card3 = NumberCard(2, ("red", "yellow"), 1)
+        self.player.hand = [card1, card2, card3]
+        expected_dict = {"green": []}
+        turn.possible_moves = turn.get_cards_matching_color()
+        self.assertEqual(turn.possible_moves, expected_dict)
+
+    # ActionCards & NumberCards
+    def test_get_cards_matching_color_one_color_no_list_AC(self):
+        card = ActionCard(1, ("green"), "RESTART")
+        turn = Turn(self.player, card)
+        card1 = NumberCard(2, ("blue", "red"), 1)
+        card2 = ActionCard(2, ("red"), "SELECTION")
         card3 = NumberCard(2, ("red", "yellow"), 1)
         self.player.hand = [card1, card2, card3]
         expected_dict = {"green": []}
