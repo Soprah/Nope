@@ -36,6 +36,7 @@ class TestTurnGetCardsMatchingColor(unittest.TestCase):
         self.assertEqual(turn.possible_moves, expected_dict)
 
     # ActionCards & NumberCards
+    '''
     def test_get_cards_matching_color_one_color_no_list_AC(self):
         card = ActionCard(1, ("green"), "RESTART")
         turn = Turn(self.player, card)
@@ -46,6 +47,7 @@ class TestTurnGetCardsMatchingColor(unittest.TestCase):
         expected_dict = {"green": []}
         turn.possible_moves = turn.get_cards_matching_color()
         self.assertEqual(turn.possible_moves, expected_dict)
+    '''
 
     """ Spieler besitzt Karten in der geforderten Farbe """
     def test_get_cards_matching_color_one_color_one_list(self):

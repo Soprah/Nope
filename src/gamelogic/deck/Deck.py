@@ -1,4 +1,5 @@
 from src.gamelogic.card.Card import Card
+from src.gamelogic.card.JokerCard import JokerCard
 from src.gamelogic.card.NumberCard import NumberCard
 
 import random
@@ -85,6 +86,12 @@ class Deck:
             id_count = id_count + 1
         for i in range(2):
             self.cards.append(SelectionCard(id_count, (("red"), ("blue"), ("yellow"), ("green"))))
+            id_count = id_count + 1
+
+     # Jokerkarten
+
+        for i in range(4):
+            self.cards.append(JokerCard(id_count, (("red"), ("blue"), ("yellow"), ("green"))))
             id_count = id_count + 1
 
         self.cards_dict = self.create_dict_deck_copy(self.cards)
