@@ -134,5 +134,7 @@ class Deck:
             deck_dict[card.id] = card
         return deck_dict
 
-
-
+    ''' NUR FÜR ENTWICKLUNGSZWECKE '''
+    # Eine Methode, um bestimmte Karten für Testzwecke in der Hand des Spielers zu haben
+        # draw_card_by_id(id)
+            # Gibt mir eine bestimmte Karte

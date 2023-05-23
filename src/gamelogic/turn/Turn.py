@@ -92,14 +92,9 @@ class Turn:
         self.selected_cards = selected_cards
         self.possible_moves = self.create_dict_possible_moves()
         if len(selected_cards) == 0:
-            self.is_turn_valid = len(self.possible_moves) == 0 and len(selected_cards) == 0
+            self.is_turn_valid = self.player_has_set() == False and len(selected_cards) == 0
         elif len(selected_cards) > 0:
-            if isinstance(self.top_card, NumberCard):
-                flag = []
-                for color in self.possible_moves.keys():
-                    color_and_len_flag = self.is_color_consistent(color, selected_cards) and len(selected_cards) == self.top_card.number
-                    flag.append(color_and_len_flag)
-                self.is_turn_valid = True in flag
+            self.is_turn_valid = self.selected_cards_represent_set(selected_cards)
         if self.is_turn_valid == False:
             self.player.is_disqualified = True
         return self.is_turn_valid
@@ -111,3 +106,16 @@ class Turn:
         :return: boolean
         """
         return len(self.selected_cards) == 0 and self.turn_attempt == 2 and self.is_turn_valid
+
+    def player_has_set(self):
+        return len(self.possible_moves) != 0
+
+    def selected_cards_represent_set(self, selected_cards):
+        # if isinstance(self.top_card, NumberCard):
+        flag = []
+        for color in self.possible_moves.keys():
+            color_and_len_flag = self.is_color_consistent(color, selected_cards) and len(
+                selected_cards) == self.top_card.number
+            flag.append(color_and_len_flag)
+        return True in flag
+
