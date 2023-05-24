@@ -181,7 +181,7 @@ class TestTurnGetCardsMatchingColor(unittest.TestCase):
         turn = Turn(self.player, card)
         card1 = NumberCard(2, ("blue", "red"), 1)
         card2 = RestartCard(9, (("red"), ("blue"), ("yellow"), ("green")))
-        card3 = JokerCard(2, (("red"), ("blue"), ("yellow"), ("green")))
+        card3 = JokerCard(2)
         self.player.hand = [card1, card2, card3]
         expected_dict = {"blue": [card1, card2, card3], "green": [card3]}
         turn.possible_moves = turn.get_cards_matching_color()
