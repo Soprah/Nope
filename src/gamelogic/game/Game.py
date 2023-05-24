@@ -1,5 +1,6 @@
 import uuid
 
+from src.gamelogic.card.ViewCard import ViewCard
 from src.gamelogic.deck.Deck import Deck
 from src.gamelogic.player.Player import Player
 from src.gamelogic.turn.Turn import Turn
@@ -58,7 +59,7 @@ class Game:
             opponent = self.player_2
             turn_data = {
                 "previous_selected_cards": [],
-                "top_card": self.deck.discard_stack[-1],
+                "top_card": current_turn.top_card,
                 "amount_opponent_cards": len(opponent.hand),
                 "own_hand_cards": current_turn.player.hand
             }
@@ -103,6 +104,17 @@ class Game:
                 else:
                     checked_list.append(card_to_check)
         return checked_list
+
+    def get_last_none_viewcard_top_card(self):
+        """
+        Durchsucht den Ablagestapel nach der letzten Karte, die keine ViewCard ist.
+
+        :return: Karte oder None
+        """
+        for i in range(len(self.deck.discard_stack) - 1, -1, -1):
+            if not isinstance(self.deck.discard_stack[i], ViewCard):
+                return self.deck.discard_stack[i]
+        return None
 
     def is_duplicate_ids(self, list_of_ids):
         """
