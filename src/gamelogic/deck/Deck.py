@@ -72,7 +72,7 @@ class Deck:
 
         # Neustart / Restart: 4 Stück
         for i in range(4):
-            self.cards.append(RestartCard(id_count, (("red"), ("blue"), ("yellow"), ("green"))))
+            self.cards.append(RestartCard(id_count))
             id_count = id_count + 1
 
         # Durchblick / View: 4 Stück
@@ -91,7 +91,7 @@ class Deck:
      # Jokerkarten
 
         for i in range(4):
-            self.cards.append(JokerCard(id_count, (("red"), ("blue"), ("yellow"), ("green"))))
+            self.cards.append(JokerCard(id_count))
             id_count = id_count + 1
 
         self.cards_dict = self.create_dict_deck_copy(self.cards)

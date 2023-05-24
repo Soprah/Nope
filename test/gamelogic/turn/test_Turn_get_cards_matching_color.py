@@ -97,7 +97,7 @@ class TestTurnGetCardsMatchingColor(unittest.TestCase):
         card1 = SelectionCard(5, ("blue"))
         card2 = NumberCard(2, ("red", "blue"), 1)
         card3 = NumberCard(2, ("green", "yellow"), 1)
-        card4 = RestartCard(9, (("red"), ("blue"), ("yellow"), ("green")))
+        card4 = RestartCard(9)
         self.player.hand = [card1, card2, card3, card4]
         expected_dict = {"blue": [card1, card2, card4]}
         turn.possible_moves = turn.get_cards_matching_color()
@@ -179,33 +179,63 @@ class TestTurnGetCardsMatchingColor(unittest.TestCase):
     def test_get_cards_matching_color_two_colors_two_lists_AC_v1(self):
         card = NumberCard(2, ("blue", "green"), 2)
         turn = Turn(self.player, card)
-        card1 = NumberCard(2, ("blue", "red"), 1)
-        card2 = RestartCard(9, (("red"), ("blue"), ("yellow"), ("green")))
-        card3 = JokerCard(2)
+        card1 = NumberCard(3, ("blue", "red"), 1)
+        card2 = RestartCard(9)
+        card3 = NumberCard(3, ("blue", "red"), 1)
         self.player.hand = [card1, card2, card3]
-        expected_dict = {"blue": [card1, card2, card3], "green": [card3]}
+        expected_dict = {
+            "blue": [card1, card2, card3],
+            "green": [card2]
+        }
         turn.possible_moves = turn.get_cards_matching_color()
         self.assertEqual(turn.possible_moves, expected_dict)
 
-    # """ Spieler besitzt bei einer vierfarbigen top_card Karten
-    #                     von jeder Farbe """
-    #
-    # # ActionCards & NumberCards mixed | JokerCard top card
-    # def test_get_cards_matching_color_two_colors_two_lists_AC_v1(self):
-    #     card = JokerCard(2, (("red"), ("blue"), ("yellow"), ("green")))
-    #     turn = Turn(self.player, card)
-    #     card1 = NumberCard(2, ("blue", "red"), 1)
-    #     card2 = RestartCard(9, (("red"), ("blue"), ("yellow"), ("green")))
-    #     card3 = NumberCard(2, ("green", "yellow"), 1)
-    #     self.player.hand = [card1, card2, card3]
-    #     expected_dict = {
-    #         "red": [card1],
-    #         "blue": [card1, card2],
-    #         "yellow": [card2, card3],
-    #         "green": [card3]
-    #     }
-    #     turn.possible_moves = turn.get_cards_matching_color()
-    #     self.assertEqual(turn.possible_moves, expected_dict)
+    """ Spieler besitzt bei einer vierfarbigen top_card Karten
+                        von jeder Farbe """
+
+    # ActionCards & NumberCards mixed | JokerCard top card
+    def test_get_cards_matching_color_four_colors_four_lists_AC(self):
+        card = JokerCard(2)
+        turn = Turn(self.player, card)
+        card1 = NumberCard(2, ("blue", "red"), 1)
+        card2 = RestartCard(9)
+        card3 = NumberCard(2, ("green", "yellow"), 1)
+        self.player.hand = [card1, card2, card3]
+        expected_dict = {
+            "red": [card1, card2],
+            "blue": [card1, card2],
+            "yellow": [card2, card3],
+            "green": [card2, card3]
+        }
+        turn.possible_moves = turn.get_cards_matching_color()
+        self.assertCountEqual(turn.possible_moves, expected_dict)
+        for key in turn.possible_moves.keys():
+            for card in turn.possible_moves.get(key):
+                self.assertIn(card, expected_dict.get(key))
+
+    """ Spieler besitzt bei einer vierfarbigen top_card Karten
+                        von NICHT jeder Farbe """
+
+    # ActionCards & NumberCards mixed | JokerCard top card
+    def test_get_cards_matching_color_four_colors_three_lists_AC(self):
+        card = JokerCard(2)
+        turn = Turn(self.player, card)
+        card1 = NumberCard(2, ("blue", "red"), 1)
+        card2 = ViewCard(9, ("blue"))
+        card3 = NumberCard(2, ("green"), 1)
+        self.player.hand = [card1, card2, card3]
+        expected_dict = {
+            "blue": [card1, card2],
+            "red": [card1],
+            "green": [card3],
+            "yellow": []
+        }
+        turn.possible_moves = turn.get_cards_matching_color()
+        self.assertCountEqual(turn.possible_moves, expected_dict)
+        for key in turn.possible_moves.keys():
+            for card in turn.possible_moves.get(key):
+                self.assertIn(card, expected_dict.get(key))
+
 
 if __name__ == '__main__':
     unittest.main()
