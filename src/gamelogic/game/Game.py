@@ -1,5 +1,9 @@
 import uuid
 
+from src.gamelogic.card.JokerCard import JokerCard
+from src.gamelogic.card.NumberCard import NumberCard
+from src.gamelogic.card.RestartCard import RestartCard
+from src.gamelogic.card.SelectionCard import SelectionCard
 from src.gamelogic.card.ViewCard import ViewCard
 from src.gamelogic.deck.Deck import Deck
 from src.gamelogic.player.Player import Player
@@ -28,14 +32,6 @@ class Game:
         else:
             self.active_player = self.player_1
 
-    # def set_active_player(self):
-    #     if len(self.turns) == 0:
-    #         self.active_player = self.player_1
-    #     elif self.active_player == self.player_1:
-    #         self.active_player = self.player_2
-    #     else:
-    #         self.active_player = self.player_1
-
     def assign_deck_to_players(self):
         self.player_1.set_deck(self.deck)
         self.player_2.set_deck(self.deck)
@@ -57,12 +53,38 @@ class Game:
         turn_data = {}
         if len(self.turns) == 1:
             opponent = self.player_2
-            turn_data = {
-                "previous_selected_cards": [],
-                "top_card": current_turn.top_card,
-                "amount_opponent_cards": len(opponent.hand),
-                "own_hand_cards": current_turn.player.hand
-            }
+            if isinstance(current_turn.top_card, (NumberCard, JokerCard, RestartCard)):
+                turn_data = {
+                    "previous_selected_cards": [],
+                    "top_card": current_turn.top_card,
+                    "amount_opponent_cards": len(opponent.hand),
+                    "own_hand_cards": current_turn.player.hand
+                }
+            elif isinstance(current_turn.top_card, ViewCard):
+                turn_data = {
+                    "previous_selected_cards": [],
+                    "top_card": current_turn.top_card,
+                    "amount_opponent_cards": len(opponent.hand),
+                    "own_hand_cards": current_turn.player.hand,
+                    "under_top_card": self.get_last_none_viewcard_top_card()
+                }
+            elif isinstance(current_turn.top_card, SelectionCard) and len(current_turn.top_card.color) == 1:
+                turn_data = {
+                    "previous_selected_cards": [],
+                    "top_card": self.get_last_none_viewcard_top_card(),
+                    "amount_opponent_cards": len(opponent.hand),
+                    "own_hand_cards": current_turn.player.hand,
+                    "choice_number": None,
+                }
+            else:
+                turn_data = {
+                    "previous_selected_cards": [],
+                    "top_card": self.get_last_none_viewcard_top_card(),
+                    "amount_opponent_cards": len(opponent.hand),
+                    "own_hand_cards": current_turn.player.hand,
+                    "choice_number": None,
+                    "choice_single_color": None,
+                }
         # '''
         elif len(self.turns) > 1:
             previous_turn = self.turns[-1]

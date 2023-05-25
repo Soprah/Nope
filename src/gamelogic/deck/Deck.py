@@ -95,7 +95,7 @@ class Deck:
             id_count = id_count + 1
 
         self.cards_dict = self.create_dict_deck_copy(self.cards)
-        # self.shuffle()
+        self.shuffle()
         self.draw_stack = self.cards.copy()
 
 
@@ -123,7 +123,7 @@ class Deck:
         return first_card
 
     def shuffle(self):
-        if len(self.cards) != 86:
+        if len(self.cards) != 104:
             raise ValueError("The deck is not complete and therefore not ready to shuffle!")
         random.shuffle(self.cards)
         return self.cards
