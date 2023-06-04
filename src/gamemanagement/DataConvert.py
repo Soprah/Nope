@@ -11,23 +11,28 @@ class DataConvert:
         :param input_dict: Liste von ids der übergebenen Karten
         :return: Liste der entsprechenden Karten, die tatsächlich existieren
         """
-        selected_cards = dict.get("selected_cards")
+        player = game.get_player_via_id(input_dict.get("token"))
+        selected_cards = input_dict.get("selected_cards")
         checked_list = []
         output_dict = {"token": input_dict.get("token")}
         if len(selected_cards) == 0:
             return checked_list
         if any(not isinstance(x, int) for x in selected_cards):
-            raise TypeError("Es dürfen nur Zahlen als IDs übergeben werden!")
+            game.set_disqualified_player(player)
+            game.set_reason_of_disqualification("Es dürfen nur Zahlen als IDs übergeben werden")
+            return output_dict
         if self.is_duplicate_ids(selected_cards):
-            raise ValueError("Die IDs enthalten Duplikate")
+            game.set_disqualified_player(player)
+            game.set_reason_of_disqualification("Die IDs enthalten Duplikate")
+            return output_dict
         else:
             for s_id in selected_cards:
                 # Wenn eine der übergebenen IDs nicht in der Hand des Spielers vorkommen, der die IDs geschickt hat,
                 # ... ist die übergebene Liste ungültig
                 card_to_check = game.deck.cards_dict.get(s_id)
                 if card_to_check not in game.active_player.hand:
-                    raise ValueError(f"Die Karte mit der id {s_id} existiert nicht "
-                                     f"in der Hand des Spielers, der die Karte geschickt hat")
+                    game.set_disqualified_player(player)
+                    game.set_reason_of_disqualification(f"Die Karte mit der id {s_id} existiert nicht in der Hand des Spielers, der die Karte geschickt hat")
                 # Wenn die übergebene Liste gültig ist, werden die Karten mit den entsprechenden IDs returnt
                 else:
                     checked_list.append(card_to_check)

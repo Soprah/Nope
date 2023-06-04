@@ -22,6 +22,7 @@ class Game:
         self.pass_first_cards()
         self.active_player = self.player_1
         self.winner = None
+        self.reason_of_disqualification = None
 
     '''
     def setup(self, p1, p2):
@@ -47,6 +48,21 @@ class Game:
             self.active_player = self.player_2
         else:
             self.active_player = self.player_1
+
+    def set_disqualified_player(self, disqualified_player):
+        if disqualified_player == self.player_1 or disqualified_player == self.player_2 and isinstance(disqualified_player, Player):
+            disqualified_player.is_disqualified = True
+
+    def set_reason_of_disqualification(self, reason):
+        self.reason_of_disqualification = reason
+
+    def get_player_via_id(self, id):
+        if self.player_1.id == id:
+            return self.player_1
+        elif self.player_2.id == id:
+            return self.player_2
+        else:
+            raise ValueError("Es gibt keinen Spieler in dem Spiel mit dieser ID !")
 
     def assign_deck_to_players(self):
         self.player_1.set_deck(self.deck)
@@ -115,36 +131,6 @@ class Game:
         return turn_data
     # '''
 
-    '''
-    def receive_turn_data(self, dict_selected_cards):
-        """
-        Prüft, ob die vom Spieler ausgewählten Karten im Spiel existieren.
-
-        :param dict_selected_cards: Liste von ids der übergebenen Karten
-        :return: Liste der entsprechenden Karten, die tatsächlich existieren
-        """
-        selected_cards = dict_selected_cards.get("selected_cards")
-        checked_list = []
-        if len(selected_cards) == 0:
-            return checked_list
-        if any(not isinstance(x, int) for x in selected_cards):
-            raise TypeError("Es dürfen nur Zahlen als IDs übergeben werden!")
-        if self.is_duplicate_ids(selected_cards) == True:
-            raise ValueError("Die IDs enthalten Duplikate")
-        else:
-            for s_id in selected_cards:
-                # Wenn eine der übergebenen IDs nicht in der Hand des Spielers vorkommen, der die IDs geschickt hat,
-                # ... ist die übergebene Liste ungültig
-                card_to_check = self.deck.cards_dict.get(s_id)
-                if card_to_check not in self.active_player.hand:
-                    raise ValueError(f"Die Karte mit der id {s_id} existiert nicht "
-                                     f"in der Hand des Spielers, der die Karte geschickt hat")
-                # Wenn die übergebene Liste gültig ist, werden die Karten mit den entsprechenden IDs returnt
-                else:
-                    checked_list.append(card_to_check)
-        return checked_list
-    '''
-
     def get_last_none_viewcard_top_card(self):
         """
         Durchsucht den Ablagestapel nach der letzten Karte, die keine ViewCard ist.
@@ -155,17 +141,6 @@ class Game:
             if not isinstance(self.deck.discard_stack[i], ViewCard):
                 return self.deck.discard_stack[i]
         return None
-
-    '''
-    def is_duplicate_ids(self, list_of_ids):
-        """
-        Überprüft, ob in der Liste doppelte Werte vorkommen
-
-        :param list_of_ids: Liste von ids, die jeweils eine Karte repräsentieren
-        :return: boolean
-        """
-        return len(list_of_ids) != len(set(list_of_ids))
-    '''
 
     def next_turn(self):
         if self.is_game_over():
