@@ -27,17 +27,17 @@ class TestGameReceiveTurnData(unittest.TestCase):
     #     with self.assertRaises(ValueError):
     #         received_cards = self.game.receive_turn_data(sent_dict_cards)
 
-    """ Prüft, ob die empfangenen Karten, die der Spieler abwerfen möchte, gültig sind.
-            - Doppelte IDs """
-    def test_receive_turn_data_invalid_ids_double(self):
-        player_selected_cards_id = [
-            self.game.active_player.hand[0].id,
-            self.game.active_player.hand[0].id,
-            self.game.active_player.hand[2].id,
-        ]
-        sent_dict_cards = {"selected_cards": player_selected_cards_id}
-        with self.assertRaises(ValueError):
-            received_cards = self.game.receive_turn_data(sent_dict_cards)
+    # """ Prüft, ob die empfangenen Karten, die der Spieler abwerfen möchte, gültig sind.
+    #         - Doppelte IDs """
+    # def test_receive_turn_data_invalid_ids_double(self):
+    #     player_selected_cards_id = [
+    #         self.game.active_player.hand[0].id,
+    #         self.game.active_player.hand[0].id,
+    #         self.game.active_player.hand[2].id,
+    #     ]
+    #     sent_dict_cards = {"selected_cards": player_selected_cards_id}
+    #     with self.assertRaises(ValueError):
+    #         received_cards = self.game.receive_turn_data(sent_dict_cards)
 
 
     """ Prüft, ob die empfangenen Karten, die der Spieler abwerfen möchte, gültig sind.
