@@ -12,8 +12,18 @@ from src.gamelogic.turn.Turn import Turn
 class Game:
 
     def __init__(self, p1, p2):
-        self.setup(p1, p2)
+        self.id = uuid.uuid4()
+        self.turns = []
+        self.deck = Deck()
+        self.player_1 = p1
+        self.player_2 = p2
+        self.deck.initialize_discard_stack()
+        self.assign_deck_to_players()
+        self.pass_first_cards()
+        self.active_player = self.player_1
+        self.winner = None
 
+    '''
     def setup(self, p1, p2):
         self.id = uuid.uuid4()
         self.turns = []
@@ -25,6 +35,12 @@ class Game:
         self.pass_first_cards()
         self.active_player = self.player_1
         self.winner = None
+    '''
+
+    '''
+    def get_active_player(self):
+        return self.active_player
+    '''
 
     def switch_active_player(self):
         if self.active_player == self.player_1:
@@ -99,6 +115,7 @@ class Game:
         return turn_data
     # '''
 
+    '''
     def receive_turn_data(self, dict_selected_cards):
         """
         Prüft, ob die vom Spieler ausgewählten Karten im Spiel existieren.
@@ -126,6 +143,7 @@ class Game:
                 else:
                     checked_list.append(card_to_check)
         return checked_list
+    '''
 
     def get_last_none_viewcard_top_card(self):
         """
@@ -138,6 +156,7 @@ class Game:
                 return self.deck.discard_stack[i]
         return None
 
+    '''
     def is_duplicate_ids(self, list_of_ids):
         """
         Überprüft, ob in der Liste doppelte Werte vorkommen
@@ -146,6 +165,7 @@ class Game:
         :return: boolean
         """
         return len(list_of_ids) != len(set(list_of_ids))
+    '''
 
     def next_turn(self):
         if self.is_game_over():
