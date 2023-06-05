@@ -34,12 +34,12 @@ class SelectionCard(ActionCard):
         """
         Creates a dictionary with the 'theoretical' attributes when the given card is a top_card
 
+        local_color: Default value if the game starts
+        local_number: Default value if the game starts
         :return: dict
         """
+
         local_color = self.color
-        # TODO:
-        #   * number = 1 is just a filler
-        #   * Still need to think about the case when a selection card is the first top_card
         local_number = 1
         if self.theoretical_card is not None:
             local_number = self.theoretical_card.number
