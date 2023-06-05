@@ -8,3 +8,21 @@ class RestartCard(ActionCard):
 
     def __str__(self):
         return super().__str__() + f" Effect: Restart"
+
+    def to_dict_top_card(self):
+        return {
+            "id": self.id,
+            "color_amount": len(self.color),
+            "color": self.color,
+            "type": "number",
+            "content": 1
+        }
+
+    def to_dict_actual_card(self):
+        return {
+            "id": self.id,
+            "color_amount": len(self.color),
+            "color": self.color,
+            "type": "action",
+            "content": "restart"
+        }
