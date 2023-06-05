@@ -18,8 +18,11 @@ class SelectionCard(ActionCard):
         :param number: choice of the client for a single color selection card
         :param color: choice of the client for a four color selection card
         """
-        client_choice = TheoreticalCard(number, color)
-        self.theoretical_card = client_choice
+        if self.theoretical_card is None:
+            client_choice = TheoreticalCard(number, color)
+            self.theoretical_card = client_choice
+        else:
+            raise ValueError("A theoretical card has already been set.")
 
     def clear_theoretical_card(self):
         """
