@@ -30,6 +30,45 @@ class SelectionCard(ActionCard):
         """
         self.theoretical_card = None
 
+    # TODO | Spezialfall: Zweite Karte, die gelegt wird, ist eine ViewCard
+    #   * Bisher:
+    #       * Bei dem Fall, wo eine SelectionCard keinen theoretical_card Verweis besitzt,
+    #       * ... werden default werte bei "to_dict_actual_card()" zurückgegeben
+    #           * local_number = 1
+    #   * Problem:
+    #       *  Wenn die Methode, die die letzte Karte unter der ViewCard zurückgibt, die
+    #       * ... Selection Card zurückgibt, die beim Spielstart als erstes auf dem
+    #       * ... Ablagestapel lag, weiß die Funktion nicht, welche Werte sie von der
+    #       * ... Selection Card nehmen soll, da der theoretical Card Verweis 'None' ist.
+    #   * Lösung 1:
+    #       * Diesen Spezialfall in der jeweiligen Methode hard coden
+    #       => redundanter Code
+    #   * Lösung 2:
+    #       * Selection Card anders gestalten
+    #       * Sie besitzt immer default-werte
+    #       => Macht aber keinen Sinn, oder?
+    #   * Lösung 3:
+    #       * eine Methode bauen, die "get_theoretical_card_values" heißt
+    #       * Wenn die Selection Card TC-Werte hat, gibt er die zurück
+    #       * Ansonsten: Die festgelegten Werte
+    #           * Bei einer single color: number=1
+    #           * Bei einer four color: number=1, color= die 4 farben
+    #       * Vorteil dieser Lösung:
+    #       * Das kann man sowohl in "to_dict_top_card()", als auch bei dem ViewCard-Fall, nutzen
+    #       => Macht am meisten Sinn !!!
+
+    def get_number(self):
+        if self.theoretical_card is not None:
+            return self.theoretical_card.number
+        else:
+            return 1
+
+    def get_color(self):
+        if self.theoretical_card is not None and self.theoretical_card.color is not None:
+            return self.theoretical_card.color
+        else:
+            return self.color
+
     def to_dict_top_card(self):
         """
         Creates a dictionary with the 'theoretical' attributes when the given card is a top_card
@@ -39,12 +78,8 @@ class SelectionCard(ActionCard):
         :return: dict
         """
 
-        local_color = self.color
-        local_number = 1
-        if self.theoretical_card is not None:
-            local_number = self.theoretical_card.number
-            if self.theoretical_card.color is not None:
-                local_color = self.theoretical_card.color
+        local_color = self.get_color()
+        local_number = self.get_number()
         return {
             "id": -1,
             "color_amount": len(local_color),
