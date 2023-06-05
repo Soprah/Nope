@@ -26,3 +26,40 @@ class SelectionCard(ActionCard):
         Clears the reference to the theoretical card
         """
         self.theoretical_card = None
+
+    def to_dict_top_card(self):
+        """
+        Creates a dictionary with the 'theoretical' attributes when the given card is a top_card
+
+        :return: dict
+        """
+        local_color = self.color
+        # TODO:
+        #   * number = 1 is just a filler
+        #   * Still need to think about the case when a selection card is the first top_card
+        local_number = 1
+        if self.theoretical_card is not None:
+            local_number = self.theoretical_card.number
+            if self.theoretical_card.color is not None:
+                local_color = self.theoretical_card.color
+        return {
+            "id": -1,
+            "color_amount": len(local_color),
+            "color": local_color,
+            "type": "number",
+            "content": local_number
+        }
+
+    def to_dict_actual_card(self):
+        """
+        Creates a dictionary with the 'actual' card attributes when the given card is not a top_card
+
+        :return: dict
+        """
+        return {
+            "id": self.id,
+            "color_amount": len(self.color),
+            "color": self.color,
+            "type": "action",
+            "content": "selection"
+        }
