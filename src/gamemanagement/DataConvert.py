@@ -1,7 +1,35 @@
+from src.gamelogic.card.JokerCard import JokerCard
+from src.gamelogic.card.NumberCard import NumberCard
+from src.gamelogic.card.RestartCard import RestartCard
 from src.gamelogic.game.Game import Game
 
 
 class DataConvert:
+
+    def gamelogic_to_net(self, game):
+
+        turn_data = {}
+        current_turn = game.turns[-1]
+        if len(game.turns) == 1:
+            opponent = game.player_2
+            if isinstance(current_turn.top_card, (NumberCard, JokerCard, RestartCard)):
+                turn_data = {
+                    "previous_selected_cards": [],
+                    "top_card": current_turn.top_card,
+                    "amount_opponent_cards": len(opponent.hand),
+                    "own_hand_cards": current_turn.player.hand
+                }
+        # elif len(self.turns) > 1:
+        #     previous_turn = game.turns[-2]
+        #     turn_data = {
+        #         "previous_selected_cards": previous_turn.selected_cards,
+        #         "top_card": previous_turn.top_card,
+        #         "amount_opponent_cards": len(previous_turn.player.hand),
+        #         "own_hand_cards": current_turn.player.hand
+        #     }
+        return turn_data
+
+
 
     def net_to_gamelogic(self, input_dict, game):
         """

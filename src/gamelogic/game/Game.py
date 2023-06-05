@@ -92,31 +92,6 @@ class Game:
                     "amount_opponent_cards": len(opponent.hand),
                     "own_hand_cards": current_turn.player.hand
                 }
-            elif isinstance(current_turn.top_card, ViewCard):
-                turn_data = {
-                    "previous_selected_cards": [],
-                    "top_card": current_turn.top_card,
-                    "amount_opponent_cards": len(opponent.hand),
-                    "own_hand_cards": current_turn.player.hand,
-                    "under_top_card": self.get_last_none_viewcard_top_card()
-                }
-            elif isinstance(current_turn.top_card, SelectionCard) and len(current_turn.top_card.color) == 1:
-                turn_data = {
-                    "previous_selected_cards": [],
-                    "top_card": self.get_last_none_viewcard_top_card(),
-                    "amount_opponent_cards": len(opponent.hand),
-                    "own_hand_cards": current_turn.player.hand,
-                    "choice_number": None,
-                }
-            else:
-                turn_data = {
-                    "previous_selected_cards": [],
-                    "top_card": self.get_last_none_viewcard_top_card(),
-                    "amount_opponent_cards": len(opponent.hand),
-                    "own_hand_cards": current_turn.player.hand,
-                    "choice_number": None,
-                    "choice_single_color": None,
-                }
         # '''
         elif len(self.turns) > 1:
             previous_turn = self.turns[-1]
