@@ -8,3 +8,12 @@ class JokerCard(NumberCard):
 
     def __str__(self):
         return super().__str__() + f" Typ: Joker"
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "color_amount": len(self.color),
+            "color": self.color,
+            "type": "number",
+            "content": self.number
+        }
