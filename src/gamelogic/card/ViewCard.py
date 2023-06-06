@@ -36,3 +36,34 @@ class ViewCard(ActionCard):
         Clears the reference to the theoretical card
         """
         self.theoretical_card = None
+
+    def get_number(self):
+        if self.theoretical_card is not None:
+            return self.theoretical_card.number
+        else:
+            return 1
+
+    def get_color(self):
+        if self.theoretical_card is not None and self.theoretical_card.color is not None:
+            return self.theoretical_card.color
+        else:
+            return self.color
+
+    def to_dict_top_card(self):
+        """
+        Creates a dictionary with the 'theoretical' attributes when the given card is a top_card
+
+        local_color: Default value if the game starts
+        local_number: Default value if the game starts
+        :return: dict
+        """
+
+        local_color = self.get_color()
+        local_number = self.get_number()
+        return {
+            "id": -1,
+            "color_amount": len(local_color),
+            "color": local_color,
+            "type": "number",
+            "content": local_number
+        }
