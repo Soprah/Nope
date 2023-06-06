@@ -11,15 +11,6 @@ class NumberCard(Card):
     def __str__(self):
         return super().__str__() + f" Number: {self.number}"
 
-    def to_dict_top_card(self):
-        return {
-            "id": self.id,
-            "color_amount": len(self.color),
-            "colors": self.color,
-            "type": "number",
-            "content": self.number
-        }
-
     def to_dict(self):
         return {
             "id": self.id,

@@ -1,24 +1,31 @@
+from src.gamelogic.card.Card import Card
 from src.gamelogic.card.JokerCard import JokerCard
 from src.gamelogic.card.NumberCard import NumberCard
 from src.gamelogic.card.RestartCard import RestartCard
+from src.gamelogic.card.SelectionCard import SelectionCard
+from src.gamelogic.card.ViewCard import ViewCard
 from src.gamelogic.game.Game import Game
 
 
 class DataConvert:
 
     def gamelogic_to_net(self, game):
-
         turn_data = {}
         current_turn = game.turns[-1]
         if len(game.turns) == 1:
             opponent = game.player_2
-            if isinstance(current_turn.top_card, (NumberCard, JokerCard, RestartCard)):
-                turn_data = {
-                    "previous_selected_cards": [],
-                    "top_card": current_turn.top_card,
-                    "amount_opponent_cards": len(opponent.hand),
-                    "own_hand_cards": current_turn.player.hand
-                }
+            if isinstance(current_turn.top_card, (SelectionCard, ViewCard)):
+                top_card_dict = current_turn.top_card.to_dict_top_card()
+            else:
+                top_card_dict = current_turn.top_card.to_dict()
+            turn_data = {
+                "previous_selected_cards": [],
+                "top_card": top_card_dict,
+                "amount_opponent_cards": len(opponent.hand),
+                "own_hand_cards": current_turn.player.hand
+            }
+
+
         # elif len(self.turns) > 1:
         #     previous_turn = game.turns[-2]
         #     turn_data = {
@@ -31,6 +38,10 @@ class DataConvert:
 
 
 
+    # TODO
+    #   * Fall: Es wird nur eine SelectionCard als KartenID übergeben
+    #   * Dann müssen auch die Wahlwerte mit übergeben werden
+    #   * Wahlwerte wurden von Manuel in #server definiert
     def net_to_gamelogic(self, input_dict, game):
         """
         Prüft, ob die vom Spieler ausgewählten Karten im Spiel existieren.

@@ -106,16 +106,17 @@ class Game:
         return turn_data
     # '''
 
-    def get_last_none_viewcard_top_card(self):
-        """
-        Durchsucht den Ablagestapel nach der letzten Karte, die keine ViewCard ist.
-
-        :return: Karte oder None
-        """
-        for i in range(len(self.deck.discard_stack) - 1, -1, -1):
-            if not isinstance(self.deck.discard_stack[i], ViewCard):
-                return self.deck.discard_stack[i]
-        return None
+    # def get_top_card(self):
+    #     """
+    #     Liefert die oberste Karte des Ablagestapels
+    #
+    #     :return:
+    #     """
+    #     top_card = self.deck.discard_stack[-1]
+    #     if isinstance(top_card, ViewCard):
+    #         if self.deck.discard_stack[-2] is not None:
+    #             top_card = self.deck.discard_stack[-2]
+    #     return top_card
 
     def next_turn(self):
         if self.is_game_over():
