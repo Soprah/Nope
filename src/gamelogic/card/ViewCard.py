@@ -82,3 +82,17 @@ class ViewCard(ActionCard):
             "type": "number",
             "content": local_number
         }
+
+    def to_dict_actual_card(self):
+        """
+        Creates a dictionary with the 'actual' card attributes when the given card is not a top_card
+
+        :return: dict
+        """
+        return {
+            "id": self.id,
+            "color_amount": len(self.color),
+            "color": self.color,
+            "type": "action",
+            "content": "view"
+        }
