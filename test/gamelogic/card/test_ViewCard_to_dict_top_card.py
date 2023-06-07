@@ -152,11 +152,10 @@ class TestViewCardToDictTopCard(unittest.TestCase):
         actual_dict = second_top_card.to_dict_top_card()
         self.assertDictEqual(expected_dict, actual_dict)
 
-"""
     # Erste Karte im Ablagestapel: ViewCard
     # Zweite Karte im Ablagestapel: ViewCard
     # Dritte Karte im Ablagestapel: ViewCard
-    def test_to_dict_top_card_mid_game_v6(self):
+    def test_to_dict_top_card_mid_game_v7(self):
         first_top_card = ViewCard(4, ("blue"))
         second_top_card = ViewCard(2, ("green"))
         second_top_card.set_theoretical_card(first_top_card)
@@ -165,14 +164,34 @@ class TestViewCardToDictTopCard(unittest.TestCase):
         expected_dict = {
             "id": -1,
             "color_amount": 1,
-            "color": ("blue",),
+            "color": ("green",),
             "type": "number",
             "content": 1
         }
         actual_dict = third_top_card.to_dict_top_card()
         self.assertDictEqual(expected_dict, actual_dict)
-"""
 
+    # Erste Karte im Ablagestapel: NumberCard
+    # Zweite Karte im Ablagestapel: ViewCard
+    # Dritte Karte im Ablagestapel: ViewCard
+    # Vierte Karte im Ablagestapel: ViewCard
+    def test_to_dict_top_card_mid_game_v6(self):
+        start_card = NumberCard(22, ("yellow"), 3)
+        first_top_card = ViewCard(4, ("blue"))
+        first_top_card.set_theoretical_card(start_card)
+        second_top_card = ViewCard(2, ("green"))
+        second_top_card.set_theoretical_card(first_top_card)
+        third_top_card = ViewCard(2, ("red"))
+        third_top_card.set_theoretical_card(second_top_card)
+        expected_dict = {
+            "id": -1,
+            "color_amount": 1,
+            "color": ("green",),
+            "type": "number",
+            "content": 1
+        }
+        actual_dict = third_top_card.to_dict_top_card()
+        self.assertDictEqual(expected_dict, actual_dict)
 
 if __name__ == '__main__':
     unittest.main()

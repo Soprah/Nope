@@ -39,8 +39,8 @@ class ViewCard(ActionCard):
             number = card_underneath.get_number()
             color = card_underneath.get_color()
         else:
-            number = card_underneath.get_number()
-            color = card_underneath.get_color()
+            number = 1
+            color = card_underneath.color
         if self.theoretical_card is None:
             self.theoretical_card = TheoreticalCard(number, color)
         else:

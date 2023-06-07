@@ -51,18 +51,3 @@ cards = [
 cards_data = [card.to_dict() for card in cards]
 json_data = json.dumps(cards_data)
 '''
-
-# first_top_card = ViewCard(4, ("blue"))
-# second_top_card = ViewCard(2, ("green"))
-# second_top_card.set_theoretical_card(first_top_card)
-# third_top_card = ViewCard(2, ("red"))
-# third_top_card.set_theoretical_card(second_top_card)
-# expected_dict = {
-#     "id": -1,
-#     "color_amount": 1,
-#     "color": ("blue",),
-#     "type": "number",
-#     "content": 1
-# }
-# actual_dict = third_top_card.to_dict_top_card()
-# print(actual_dict)
