@@ -11,6 +11,9 @@ class NumberCard(Card):
     def __str__(self):
         return super().__str__() + f" Number: {self.number}"
 
+    def get_number(self):
+        return self.number
+
     def to_dict(self):
         return {
             "id": self.id,
