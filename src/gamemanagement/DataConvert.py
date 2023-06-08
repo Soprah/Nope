@@ -40,7 +40,7 @@ class DataConvert:
 # TODO / WIP
 
     # TODO: Mittels "game.active_player" prüfen, ob es das Client-Paket vom aktiven Spieler ist
-    '''
+    # '''
     def net_to_gamelogic(self, input_dict, game):
         """
         Prüft die KartenIDs & Zusatzdaten, die der Client schickt
@@ -89,7 +89,7 @@ class DataConvert:
                 game.disqualify_player(player, "ID existiert nicht in der Spielerhand")
         output_dict["selected_cards"] = checked_list
         return output_dict
-    '''
+    # '''
 
     def execute_steps_for_selection_card(self, modified_input_dict, game):
         """
@@ -125,16 +125,22 @@ class DataConvert:
                 game.disqualify_player(player, "Der Schlüssel 'chosen_number' befand sich nicht im dictionary")
 
         # Vierfarbig
-        elif len(selection_card.color) == 4 and "chosen_number" in modified_input_dict and "chosen_color" in modified_input_dict:
-            if modified_input_dict.get("chosen_number") in allowed_numbers and modified_input_dict.get("chosen_color") in allowed_colors:
-                # Theoretical Card setzen
-                number = modified_input_dict.get("chosen_number")
-                color = modified_input_dict.get("chosen_color")
-                selection_card.set_theoretical_card(number, color)
+        elif len(selection_card.color) == 4:
+            # Dict besitzt Wahlwerte
+            if "chosen_number" in modified_input_dict and "chosen_color" in modified_input_dict:
+                if modified_input_dict.get("chosen_number") in allowed_numbers and modified_input_dict.get("chosen_color") in allowed_colors:
+                    # Theoretical Card setzen
+                    number = modified_input_dict.get("chosen_number")
+                    color = modified_input_dict.get("chosen_color")
+                    selection_card.set_theoretical_card(number, color)
+                    modified_input_dict.__delitem__("chosen_number")
+                    modified_input_dict.__delitem__("chosen_color")
+                else:
+                    # Spieler wegen falschen Wahlwerten disqualifizieren
+                    game.disqualify_player(player, "Es wurden falsche Wahlwerte für die vierfarbige SelectionCard übergeben")
+            # Dict besitzt nicht Wahlwerte
             else:
-                # Spieler wegen falschen Wahlwerten disqualifizieren
-                game.disqualify_player(player, "Es wurden falsche Wahlwerte für die vierfarbige SelectionCard übergeben")
-
+                game.disqualify_player(player, "Einer oder beide Schlüssel 'chosen_number', 'chosen_color' befanden sich nicht im dictionary")
         return modified_input_dict
 
     def is_data_from_active_player(self, token, game):
