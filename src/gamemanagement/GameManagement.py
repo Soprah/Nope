@@ -13,9 +13,6 @@ class GameManagement:
                 ⇾ GM sucht passendes Spiel für die empfangenen Daten.
                 ⇾ GM weist die empfangenen Daten der gesuchten Spielsitzung zu
     """
-
-		
-
 	"""
 	def __init__(self):
 		self.game_sessions = {}
@@ -36,17 +33,41 @@ class GameManagement:
 		return game
 	"""
 
-	# TODO: Empfängt Spielerdaten (name=string, token=string, room=string)
+	rooms = {}
+	sessions = {}
+
+	# TODO: Empfängt Spielerdaten (name=string, token=string, room=string) und weist Spieler einem Raum zu
 	def receive_player_data(self, player_data):
-		pass
+		self.set_room(player_data)
 
-	# TODO: Sucht einen room mit der id
-	def seek_room(self, room_id):
-		pass
 
-	# TODO: Baut einen room zum Spielen, wenn es einen room mit dem übergebenen string noch nicht gibt
-	def build_room(self, room_id):
-		pass
+	# TODO: Baut einen neuen room mit der id oder ergänzt spieler zu bestehenden room
+	def set_room(self, player_data):
+		room_id = player_data.get("room")
+		player_id = player_data.get("token")
+		player_name = player_data.get("name")
+		player = Player(player_name, player_id)
+		if self.does_room_exist(room_id):
+			self.rooms[room_id] = {
+				"game": None,
+				"player_2": player,
+				"player_2": None
+			}
+		elif self.does_room_need_just_one_player(room_id):
+			self.rooms[room_id] = {
+
+
+			}
+
+	def get_room(self, room_id):
+		return self.rooms[room_id]
+
+	def does_room_exist(self, room_id):
+		return self.get_room(room_id) is not None
+
+	def does_room_need_just_one_player(self, room_id):
+		room = self.get_room(room_id)
+		return room["player_1"] is not None and room["player_2"] is None
 
 	# TODO: Startet das Spiel
 	def start_game(self):
