@@ -33,8 +33,15 @@ class GameManagement:
 		return game
 	"""
 
-	rooms = {}
-	sessions = {}
+	_instance = None
+	def __init__(self):
+		self.rooms = {}
+		self.sessions = {}
+
+	def get_instance(self):
+		if GameManagement._instance is None:
+			GameManagement._instance = GameManagement()
+		return GameManagement._instance
 
 	def receive_player_data(self, player_data):
 		self.set_room(player_data)
