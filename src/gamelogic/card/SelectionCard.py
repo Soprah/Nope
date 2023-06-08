@@ -9,7 +9,10 @@ class SelectionCard(ActionCard):
         self.theoretical_card = None
 
     def __str__(self):
-        return super().__str__() + f" Effect: Selection"
+        if self.theoretical_card is None:
+            return super().__str__() + f" Effect: Selection Chosen_Number: None Chosen_Color: None"
+        else:
+            return super().__str__() + f" Chosen_number: {self.get_number()} Chosen_color: {self.get_color()}"
 
     def set_theoretical_card(self, number, color=None):
         """
@@ -29,33 +32,6 @@ class SelectionCard(ActionCard):
         Clears the reference to the theoretical card
         """
         self.theoretical_card = None
-
-    # TODO | Spezialfall: Zweite Karte, die gelegt wird, ist eine ViewCard
-    #   * Bisher:
-    #       * Bei dem Fall, wo eine SelectionCard keinen theoretical_card Verweis besitzt,
-    #       * ... werden default werte bei "to_dict_actual_card()" zurückgegeben
-    #           * local_number = 1
-    #   * Problem:
-    #       *  Wenn die Methode, die die letzte Karte unter der ViewCard zurückgibt, die
-    #       * ... Selection Card zurückgibt, die beim Spielstart als erstes auf dem
-    #       * ... Ablagestapel lag, weiß die Funktion nicht, welche Werte sie von der
-    #       * ... Selection Card nehmen soll, da der theoretical Card Verweis 'None' ist.
-    #   * Lösung 1:
-    #       * Diesen Spezialfall in der jeweiligen Methode hard coden
-    #       => redundanter Code
-    #   * Lösung 2:
-    #       * Selection Card anders gestalten
-    #       * Sie besitzt immer default-werte
-    #       => Macht aber keinen Sinn, oder?
-    #   * Lösung 3:
-    #       * eine Methode bauen, die "get_theoretical_card_values" heißt
-    #       * Wenn die Selection Card TC-Werte hat, gibt er die zurück
-    #       * Ansonsten: Die festgelegten Werte
-    #           * Bei einer single color: number=1
-    #           * Bei einer four color: number=1, color= die 4 farben
-    #       * Vorteil dieser Lösung:
-    #       * Das kann man sowohl in "to_dict_top_card()", als auch bei dem ViewCard-Fall, nutzen
-    #       => Macht am meisten Sinn !!!
 
     def get_number(self):
         if self.theoretical_card is not None:

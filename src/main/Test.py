@@ -2,6 +2,7 @@ from src.gamelogic.card.NumberCard import NumberCard
 from src.gamelogic.card.ViewCard import ViewCard
 from src.gamelogic.game.Game import Game
 from src.gamelogic.player.Player import Player
+from src.gamemanagement.DataConvert import DataConvert
 
 # game = Game(Player("Eric", 3), Player("Marc", 19))
 # print("Karte vorher", game.deck.discard_stack[-1])
@@ -51,3 +52,31 @@ cards = [
 cards_data = [card.to_dict() for card in cards]
 json_data = json.dumps(cards_data)
 '''
+p1 = Player("Eric", 33)
+p2 = Player("Marc", 19)
+game = Game(p1, p2)
+# for c in game.deck.cards:
+#     print(c)
+
+dc = DataConvert()
+card = game.deck.cards_dict.get(97)
+p1.hand = [card]
+client_dict = {
+    "token": 33,
+    "selected_cards": [card.id],
+    "chosen_number": 2,
+    "chosen_color": ("blue",)
+}
+
+id_list = client_dict.get("selected_cards")
+if dc.is_list_in_player_hand(id_list, game):
+    cards = dc.build_card_objects(id_list, game)
+client_dict["selected_cards"] = cards
+
+# checked_dict = dc.execute_steps_for_selection_card(client_dict, game)
+# edited_card = checked_dict.get("selected_cards")[0]
+raw_card = client_dict.get("selected_cards")[0]
+print(raw_card)
+edited_card = raw_card
+raw_card.set_theoretical_card(client_dict.get("chosen_number"), client_dict.get("chosen_color"))
+print(edited_card)

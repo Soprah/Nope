@@ -9,6 +9,8 @@ from src.gamelogic.game.Game import Game
 
 class DataConvert:
 
+# TODO / WIP
+    '''
     def gamelogic_to_net(self, game):
         turn_data = {}
         current_turn = game.turns[-1]
@@ -24,8 +26,6 @@ class DataConvert:
                 "amount_opponent_cards": len(opponent.hand),
                 "own_hand_cards": current_turn.player.hand
             }
-
-
         # elif len(self.turns) > 1:
         #     previous_turn = game.turns[-2]
         #     turn_data = {
@@ -35,19 +35,23 @@ class DataConvert:
         #         "own_hand_cards": current_turn.player.hand
         #     }
         return turn_data
+    '''
 
+# TODO / WIP
 
-
-    # TODO
-    #   * Fall: Es wird nur eine SelectionCard als KartenID übergeben
-    #   * Dann müssen auch die Wahlwerte mit übergeben werden
-    #   * Wahlwerte wurden von Manuel in #server definiert
+    # TODO: Mittels "game.active_player" prüfen, ob es das Client-Paket vom aktiven Spieler ist
+    '''
     def net_to_gamelogic(self, input_dict, game):
         """
-        Prüft, ob die vom Spieler ausgewählten Karten im Spiel existieren.
+        Prüft die KartenIDs & Zusatzdaten, die der Client schickt
 
         :param game: Das Spiel, welches die Daten bekommt
-        :param input_dict: Vom Client erstellte Dictionary mit token/card ids
+        :param input_dict: Vom Client erstellte Dictionary
+            "token": player id
+            "selected_cards": card ids
+            ggf. Wahlwerte bei SelectionCard:
+                "chosen_number": zahl
+                "chosen_color": farbe
         :return: Dictionary inklusive der entsprechenden Karten, die tatsächlich existieren
         """
         player = game.get_player_via_id(input_dict.get("token"))
@@ -58,32 +62,98 @@ class DataConvert:
             "game": game,
             "selected_cards": selected_cards
         }
+        # Leer
         if len(selected_cards) == 0:
             return output_dict
+
+        # Alle Werte Typ int
         if any(not isinstance(x, int) for x in selected_cards):
-            game.set_disqualified_player(player)
-            game.set_reason_of_disqualification("Es dürfen nur Zahlen als IDs übergeben werden")
+            game.disqualify_player(player, "Es dürfen nur Zahlen als IDs übergeben werden")
             return output_dict
+
+        # Doppelte IDs
         if self.is_duplicate_ids(selected_cards):
-            game.set_disqualified_player(player)
-            game.set_reason_of_disqualification("Die IDs enthalten Duplikate")
+            game.disqualify_player(player, "Die IDs enthalten Duplikate")
             return output_dict
         else:
-            for s_id in selected_cards:
-                # Wenn eine der übergebenen IDs nicht in der Hand des
-                # Spielers vorkommen, der die IDs geschickt hat,
-                # ... ist die übergebene Liste ungültig
-                card_to_check = game.deck.cards_dict.get(s_id)
-                if card_to_check not in game.active_player.hand:
-                    game.set_disqualified_player(player)
-                    game.set_reason_of_disqualification(f"Die Karte mit der id {s_id} "
-                                    f"existiert nicht in der Hand des Spielers, der die Karte geschickt hat")
-                # Wenn die übergebene Liste gültig ist, werden die Karten
-                # mit den entsprechenden IDs returnt
-                else:
-                    checked_list.append(card_to_check)
+            # ID in Spielerhand
+            if self.is_list_in_player_hand(selected_cards, game):
+                build_cards_list = self.build_card_objects(selected_cards, game)
+                input_dict["selected_cards"] = build_cards_list
+                # Nur SelectionCard
+                if self.is_only_selection_card(input_dict.get("selected_cards")):
+                    self.execute_steps_for_selection_card(input_dict, game)
+            # ID nicht in Spielerhand
+            else:
+                # Spieler wegen falscher ID disqualifizieren
+                game.disqualify_player(player, "ID existiert nicht in der Spielerhand")
         output_dict["selected_cards"] = checked_list
         return output_dict
+    '''
+
+    def execute_steps_for_selection_card(self, modified_input_dict, game):
+        """
+        Führt notwendige Checks und Zuweisungen für eine einzeln gelegte SelectionCard aus
+
+        :param modified_input_dict: Besteht aus
+            "selected_cards": Liste aus gebauten Kartenobjekten
+        :param game: Spielobjekt
+        """
+        selected_cards = modified_input_dict.get("selected_cards")
+        player_id = modified_input_dict.get("token")
+        player = game.get_player_via_id(player_id)
+        selection_card = selected_cards[0]
+
+        allowed_colors = (("red",), ("blue",), ("green",), ("yellow",))
+        allowed_numbers = [1, 2, 3]
+
+        # Einfarbig
+        if len(selection_card.color) == 1:
+            # Dict besitzt Wahlwert
+            if "chosen_number" in modified_input_dict:
+                # Richtige Zahl
+                if modified_input_dict.get("chosen_number") in allowed_numbers:
+                    # Theoretical Card setzen
+                    number = modified_input_dict.get("chosen_number")
+                    selection_card.set_theoretical_card(number)
+                    modified_input_dict.__delitem__("chosen_number")
+                else:
+                    # Spieler wegen falschen Wahlwerten disqualifizieren
+                    game.disqualify_player(player, "Es wurden falsche Wahlwerte für die einfarbige SelectionCard übergeben")
+            # Dict besitzt nicht Wahlwert
+            else:
+                game.disqualify_player(player, "Der Schlüssel 'chosen_number' befand sich nicht im dictionary")
+
+        # Vierfarbig
+        elif len(selection_card.color) == 4 and "chosen_number" in modified_input_dict and "chosen_color" in modified_input_dict:
+            if modified_input_dict.get("chosen_number") in allowed_numbers and modified_input_dict.get("chosen_color") in allowed_colors:
+                # Theoretical Card setzen
+                number = modified_input_dict.get("chosen_number")
+                color = modified_input_dict.get("chosen_color")
+                selection_card.set_theoretical_card(number, color)
+            else:
+                # Spieler wegen falschen Wahlwerten disqualifizieren
+                game.disqualify_player(player, "Es wurden falsche Wahlwerte für die vierfarbige SelectionCard übergeben")
+
+        return modified_input_dict
+
+    def is_data_from_active_player(self, token, game):
+        return game.active_player.id == token
+
+
+    def is_list_in_player_hand(self, list, game):
+        for id in list:
+            c = game.deck.cards_dict.get(id)
+            if c not in game.active_player.hand:
+                return False
+        return True
+
+    def build_card_objects(self, list, game):
+        cards = []
+        for id in list:
+            c = game.deck.cards_dict.get(id)
+            cards.append(c)
+        return cards
 
     def is_duplicate_ids(self, list_of_ids):
         """
@@ -93,3 +163,6 @@ class DataConvert:
         :return: boolean
         """
         return len(list_of_ids) != len(set(list_of_ids))
+
+    def is_only_selection_card(self, list):
+        return len(list) == 0 and isinstance(list[0], SelectionCard)

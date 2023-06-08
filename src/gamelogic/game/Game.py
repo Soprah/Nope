@@ -49,6 +49,10 @@ class Game:
         else:
             self.active_player = self.player_1
 
+    def disqualify_player(self, player, reason):
+        self.set_disqualified_player(player)
+        self.set_reason_of_disqualification(reason)
+
     def set_disqualified_player(self, disqualified_player):
         if disqualified_player == self.player_1 or disqualified_player == self.player_2 and isinstance(disqualified_player, Player):
             disqualified_player.is_disqualified = True
