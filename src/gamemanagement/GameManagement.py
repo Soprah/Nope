@@ -36,27 +36,34 @@ class GameManagement:
 	rooms = {}
 	sessions = {}
 
-	# TODO: Empfängt Spielerdaten (name=string, token=string, room=string) und weist Spieler einem Raum zu
 	def receive_player_data(self, player_data):
 		self.set_room(player_data)
 
-
-	# TODO: Baut einen neuen room mit der id oder ergänzt spieler zu bestehenden room
 	def set_room(self, player_data):
+		"""
+		Baut einen neuen Room oder weist Spieler einen bestehenden Raum zu
+
+		:param player_data: Dictionary der Spielerdaten (token, name, room)
+		"""
 		room_id = player_data.get("room")
 		player_id = player_data.get("token")
 		player_name = player_data.get("name")
-		player = Player(player_name, player_id)
+		# Room existiert
 		if self.does_room_exist(room_id):
+			room = self.get_room(room_id)
+			player_1 = room.get("player_1")
+			player_2 = Player(player_name, player_id)
+			game = Game(player_1, player_2)
+			self.add_game_to_sessions(game, player_1.id, player_2)
+			room["game"] = game
+			room["player_2"] = player_2
+		# Room existiert nicht
+		else:
+			player = Player(player_name, player_id)
 			self.rooms[room_id] = {
 				"game": None,
-				"player_2": player,
+				"player_1": player,
 				"player_2": None
-			}
-		elif self.does_room_need_just_one_player(room_id):
-			self.rooms[room_id] = {
-
-
 			}
 
 	def get_room(self, room_id):
@@ -65,9 +72,13 @@ class GameManagement:
 	def does_room_exist(self, room_id):
 		return self.get_room(room_id) is not None
 
-	def does_room_need_just_one_player(self, room_id):
-		room = self.get_room(room_id)
-		return room["player_1"] is not None and room["player_2"] is None
+	def get_game(self, p_id):
+		game = self.sessions.get(p_id)
+		return game
+
+	def add_game_to_sessions(self, game, p1_id, p2_id):
+		self.sessions[p1_id] = game
+		self.sessions[p2_id] = game
 
 	# TODO: Startet das Spiel
 	def start_game(self):
