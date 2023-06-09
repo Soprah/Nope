@@ -67,12 +67,6 @@ class GameManagement:
 
 	def is_player_in_room(self, room_id, p_id):
 		room = self.rooms.get(room_id)
-		p1 = room.get("player_1")
-		p2 = room.get("player_2")
-		return p1.id == p_id or p2.id == p_id
-
-	def is_player_in_room(self, room_id, p_id):
-		room = self.rooms.get(room_id)
 		if room:
 			p1 = room.get("player_1")
 			p2 = room.get("player_2")
