@@ -78,16 +78,22 @@ class DataConvert:
         else:
             # ID in Spielerhand
             if self.is_list_in_player_hand(selected_cards, game):
-                build_cards_list = self.build_card_objects(selected_cards, game)
-                built_cards = build_cards_list
-                input_dict["selected_cards"] = build_cards_list
+
+                # Baut Kartenobjekte
+                built_cards = self.build_card_objects(selected_cards, game)
+                input_dict["selected_cards"] = built_cards
+
                 # Nur SelectionCard
                 if self.is_only_selection_card(input_dict.get("selected_cards")):
-                    self.execute_steps_for_selection_card(input_dict, game)
+                    # TODO | Keine variable speichert das ergebnis folgender funktion:
+                    s_dict = self.execute_steps_for_selection_card(input_dict, game)
+                    return s_dict
+
             # ID nicht in Spielerhand
             else:
                 # Spieler wegen falscher ID disqualifizieren
                 game.disqualify_player(player, "ID existiert nicht in der Spielerhand")
+
         output_dict["selected_cards"] = built_cards
         return output_dict
     # '''

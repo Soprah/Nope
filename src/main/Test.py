@@ -58,9 +58,29 @@ p2 = Player("Marc", 19)
 game = Game(p1, p2)
 # for c in game.deck.cards:
 #     print(c)
-hand = [
-    game.active_player.hand[0].id,
-    game.active_player.hand[0].id,
-    game.active_player.hand[2].id,
-]
+c = game.deck.cards_dict.get(97)
+# hand = [
+#     game.active_player.hand[0].id,
+#     game.active_player.hand[0].id,
+#     game.active_player.hand[2].id,
+# ]
+hand = [c.id]
+
+dc = DataConvert()
+input = {
+    "token": p1.id,
+    "selected_cards": hand,
+}
+output = dc.net_to_gamelogic(input, game)
+output_cards = output.get("selected_cards")
 print(hand)
+for id in output_cards:
+    print(id)
+
+game_copy = output.get("game")
+if game_copy == game:
+    print("Same game object")
+
+id_copy = output.get("token")
+if id_copy == p1.id:
+    print("Same player object")

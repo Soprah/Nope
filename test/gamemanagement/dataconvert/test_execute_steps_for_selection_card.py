@@ -43,6 +43,8 @@ class TestDataConvertExecuteStepsForSelectionCard(unittest.TestCase):
         # Baut die Kartenobjekte
         cards = self.dc.build_card_objects(id_list, self.game)
 
+        #############
+
         # Modifiziert das client dict für die übergabe
         client_dict["selected_cards"] = cards
         checked_dict = self.dc.execute_steps_for_selection_card(client_dict, self.game)
