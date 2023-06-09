@@ -1,5 +1,7 @@
 from src.gamelogic.player.Player import Player
 from src.gamelogic.game.Game import Game
+from src.gamemanagement.DataConvert import DataConvert
+
 
 class GameManagement:
 
@@ -95,6 +97,30 @@ class GameManagement:
 	def add_game_to_sessions(self, game, p1_id, p2_id):
 		self.sessions[p1_id] = game
 		self.sessions[p2_id] = game
+
+	def assign_turn_data(self, turn_data):
+		dc = DataConvert()
+		p_id = turn_data.get("token")
+		game = self.get_game(p_id)
+		# Game existiert mit token
+		if game is not None:
+			# Richtiger Spieler?
+			if game.active_player.id == p_id:
+				# Daten übergeben
+				dc.net_to_gamelogic(turn_data, game)
+				return None
+			# Nicht aktiver Spieler
+			else:
+				return f"Der Spieler mit der ID {p_id} war nicht am Zug !"
+		# Kein Game existiert mit token
+		else:
+			return f"Es gibt kein laufendes Spiel mit der Spieler ID {p_id} !"
+
+
+
+		# Abbruchbedingung - Kein laufendes Spiel mit token
+
+
 
 	# TODO: Startet das Spiel
 	def start_game(self):
