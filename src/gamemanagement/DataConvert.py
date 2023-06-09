@@ -38,8 +38,6 @@ class DataConvert:
     '''
 
 # TODO / WIP
-
-    # TODO: Mittels "game.active_player" prüfen, ob es das Client-Paket vom aktiven Spieler ist
     # '''
     def net_to_gamelogic(self, input_dict, game):
         """
@@ -145,7 +143,6 @@ class DataConvert:
 
     def is_data_from_active_player(self, token, game):
         return game.active_player.id == token
-
 
     def is_list_in_player_hand(self, list, game):
         for id in list:

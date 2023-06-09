@@ -16,11 +16,10 @@ class ViewCard(ActionCard):
         self.theoretical_card = None
 
     def __str__(self):
-        return super().__str__() + f" Effect: View"
-
-    # TODO "Was muss der Verweis 'theoretical_card' speziell bei einer ViewCard speichern?"
-    #   * Immer: number, color
-    #   * Gibt es eine Fallunterscheidung zwischen 'actual_card' und 'top_card' ?
+        if self.theoretical_card is None:
+            return super().__str__() + f" Effect: View Previous_Number: None Previous_Color: None"
+        else:
+            return super().__str__() + f" Previous_Number: {self.get_number()} Previous_Color: {self.get_color()}"
 
     def set_theoretical_card(self, card_underneath):
         """

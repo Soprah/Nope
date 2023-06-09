@@ -26,6 +26,12 @@ class GameManagement:
 		return GameManagement._instance
 
 	def receive_player_data(self, player_data):
+		"""
+		Schnittstelle zwischen Netzwerk und GameManagement, wenn sich ein Spieler verbindet
+
+		:param player_data: name, token, room
+		:return:
+		"""
 		self.set_room(player_data)
 
 	def set_room(self, player_data):
@@ -98,6 +104,15 @@ class GameManagement:
 		self.sessions[p1_id] = game
 		self.sessions[p2_id] = game
 
+	# TODO: Sind Tests notwendig?
+	def receive_turn_data(self, turn_data):
+		"""
+		Schnittstelle zwischen Netzwerk und GameManagement, wenn die Spielzugdaten gesendet werden
+
+		:param turn_data: Spielzugdaten des Clients
+		"""
+		self.assign_turn_data(turn_data)
+
 	def assign_turn_data(self, turn_data):
 		dc = DataConvert()
 		p_id = turn_data.get("token")
@@ -122,8 +137,4 @@ class GameManagement:
 
 	# TODO: Verschickt die Spielzugdaten, welches von DataConvert bereitgestellt wurde
 	def send_turn_data(self):
-		pass
-
-	# TODO: Empfängt die Spielzugdaten, welches von Network geliefert wird
-	def receive_turn_data(self):
 		pass
