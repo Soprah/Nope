@@ -104,7 +104,7 @@ class GameManagement:
 		game = self.get_game(p_id)
 		# Game existiert mit token
 		if game is not None:
-			# Richtiger Spieler?
+			# Richtiger Spieler
 			if game.active_player.id == p_id:
 				# Daten übergeben
 				dc.net_to_gamelogic(turn_data, game)
@@ -115,12 +115,6 @@ class GameManagement:
 		# Kein Game existiert mit token
 		else:
 			return f"Es gibt kein laufendes Spiel mit der Spieler ID {p_id} !"
-
-
-
-		# Abbruchbedingung - Kein laufendes Spiel mit token
-
-
 
 	# TODO: Startet das Spiel
 	def start_game(self):
