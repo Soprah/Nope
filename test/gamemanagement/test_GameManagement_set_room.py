@@ -18,7 +18,10 @@ class TestGameManagementSetRoom(unittest.TestCase):
             "name": "rainer"
         }
 
-        self.gm.set_room(player_data)
+        s = self.gm.set_room(player_data)
+
+        # richtige string ausgabe
+        self.assertEqual("Successfully created a new room !", s)
 
         # 'rooms' besitzt nur einen room
         self.assertTrue(len(self.gm.rooms) == 1)
@@ -42,7 +45,10 @@ class TestGameManagementSetRoom(unittest.TestCase):
             "name": "sabine"
         }
         self.gm.set_room(player_1_data)
-        self.gm.set_room(player_2_data)
+        s = self.gm.set_room(player_2_data)
+
+        # richtige string ausgabe
+        self.assertEqual("Successfully assigned a player to an existing room !", s)
 
         # 'rooms' besitzt zwei rooms
         self.assertTrue(len(self.gm.rooms) == 1)
@@ -58,11 +64,24 @@ class TestGameManagementSetRoom(unittest.TestCase):
         game_2 = self.gm.get_game(61)
         self.assertEqual(game_1, game_2)
 
-
 # Fehlerquellen
-# Spieler ist schon Teil des Room
-# Spieler ist schon Teil eines laufenden Spiels
-# Der Room ist voll
+
+    # Spieler ist schon Teil des Room
+    def test_set_room_player_already_in_room(self):
+        player_1_data = {
+            "room": "r1",
+            "token": 24,
+            "name": "rainer"
+        }
+        self.gm.set_room(player_1_data)
+        s = self.gm.set_room(player_1_data)
+
+        player_id = player_1_data.get("token")
+        room_id = player_1_data.get("room")
+        self.assertFalse(self.gm.is_room_full(room_id))
+        self.assertEqual(f"The player with the id {player_id} is already part of the desired room {room_id} !", s)
+
+    # Der Room ist voll
 
 if __name__ == '__main__':
     unittest.main()

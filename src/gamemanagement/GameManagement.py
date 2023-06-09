@@ -13,6 +13,7 @@ class GameManagement:
     """
 
 	_instance = None
+
 	def __init__(self):
 		self.rooms = {}
 		self.sessions = {}
@@ -31,9 +32,18 @@ class GameManagement:
 
 		:param player_data: Dictionary der Spielerdaten (token, name, room)
 		"""
+
 		room_id = player_data.get("room")
 		player_id = player_data.get("token")
 		player_name = player_data.get("name")
+
+		# # Abbruchbedingung 1
+		if self.is_room_full(room_id):
+			return f"The room {room_id} is already full !"
+		# # Abbruchbedingung 2
+		elif self.is_player_in_room(room_id, player_id):
+			return f"The player with the id {player_id} is already part of the desired room {room_id} !"
+
 		# Room existiert
 		if self.does_room_exist(room_id):
 			room = self.get_room(room_id)
@@ -43,6 +53,8 @@ class GameManagement:
 			self.add_game_to_sessions(game, player_1.id, player_2.id)
 			room["game"] = game
 			room["player_2"] = player_2
+			return "Successfully assigned a player to an existing room !"
+
 		# Room existiert nicht
 		else:
 			player = Player(player_name, player_id)
@@ -51,6 +63,30 @@ class GameManagement:
 				"player_1": player,
 				"player_2": None
 			}
+			return "Successfully created a new room !"
+
+	def is_player_in_room(self, room_id, p_id):
+		room = self.rooms.get(room_id)
+		p1 = room.get("player_1")
+		p2 = room.get("player_2")
+		return p1.id == p_id or p2.id == p_id
+
+	def is_player_in_room(self, room_id, p_id):
+		room = self.rooms.get(room_id)
+		if room:
+			p1 = room.get("player_1")
+			p2 = room.get("player_2")
+			return p1 and p1.id == p_id or p2 and p2.id == p_id
+		return False
+
+	def is_room_full(self, room_id):
+		if room_id in self.rooms:
+			room = self.rooms.get(room_id)
+			p1 = room.get("player_1")
+			p2 = room.get("player_2")
+			return p1 and p2 is not None
+		else:
+			return False
 
 	def get_room(self, room_id):
 		return self.rooms[room_id]
