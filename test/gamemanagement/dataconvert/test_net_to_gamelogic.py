@@ -18,9 +18,25 @@ class TestNetToGamelogic(unittest.TestCase):
 
         self.dc = DataConvert()
 
+    """ Spieler schickt leere Liste """
+    def test_net_to_gamelogic_empty_id_list(self):
+        player_selected_cards_id = []
+        sent_dict_cards = {
+            "selected_cards": player_selected_cards_id,
+            "token": self.player_1_id
+        }
+        expected_output_dict = {
+            "selected_cards": player_selected_cards_id,
+            "token": self.player_1_id,
+            "game": self.game
+        }
+
+        actual_output_dict = self.dc.net_to_gamelogic(sent_dict_cards, self.game)
+        self.assertDictEqual(expected_output_dict, actual_output_dict)
+
     """ Prüft, ob die empfangenen Karten, die der Spieler abwerfen möchte, gültig sind.
             - Nicht vorhandene IDs """
-    def test_net_to_gamelogic_invalid_ids_not_exist(self):
+    def test_net_to_gamelogic_invalid_ids_not_exist_in_game(self):
         player_selected_cards_id = [
             self.game.active_player.hand[0].id,
             123,
@@ -28,12 +44,12 @@ class TestNetToGamelogic(unittest.TestCase):
         ]
         sent_dict_cards = {
             "selected_cards": player_selected_cards_id,
-            "token": self.player_1_id
+            "token": self.player_1_id,
         }
-        output_dict = self.dc.net_to_gamelogic(sent_dict_cards, self.game)
+
+        actual_output = self.dc.net_to_gamelogic(sent_dict_cards, self.game)
         self.assertTrue(self.game.player_1.is_disqualified)
-        self.assertEqual(self.game.reason_of_disqualification, f"Die Karte mit der id 123 existiert nicht"
-                                            f" in der Hand des Spielers, der die Karte geschickt hat")
+        self.assertEqual("ID existiert nicht in der Spielerhand", self.game.reason_of_disqualification)
 
     """ Prüft, ob die empfangenen Karten, die der Spieler abwerfen möchte, gültig sind.
             - Doppelte IDs """
@@ -48,8 +64,9 @@ class TestNetToGamelogic(unittest.TestCase):
             "token": self.player_1_id
         }
         output_dict = self.dc.net_to_gamelogic(sent_dict_cards, self.game)
-        self.assertTrue(self.game.player_1.is_disqualified or self.game.player_2.is_disqualified)
-        self.assertEqual(self.game.reason_of_disqualification, "Die IDs enthalten Duplikate")
+        self.assertTrue(self.game.player_1.is_disqualified)
+        self.assertEqual("Die IDs enthalten Duplikate", self.game.reason_of_disqualification)
+
 
     """ Prüft, ob die empfangenen Karten, die der Spieler abwerfen möchte, gültig sind.
         - Gültige IDs """
@@ -60,38 +77,34 @@ class TestNetToGamelogic(unittest.TestCase):
             self.game.active_player.hand[1].id,
             self.game.active_player.hand[2].id,
         ]
+
         sent_dict_cards = {
             "selected_cards": player_selected_cards_id,
             "token": self.player_1_id
         }
+
         # Funktion ordnet die ids den Deck-karten zu und erstellt eine Liste aus den Deck-karten
         output_dict = self.dc.net_to_gamelogic(sent_dict_cards, self.game)
         received_cards = output_dict.get("selected_cards")
+
         # Prüfen, ob es die Karte im Deck gibt
         for card in received_cards:
+
             # Gibt es die karte überhaupt im Deck
             self.assertIn(card, self.game.deck.cards)
+
             # Gibt/Gab es die Karte in der Spielerhand
             self.assertIn(card, self.game.active_player.hand)
+
         expected_cards = [
             self.game.active_player.hand[0],
             self.game.active_player.hand[1],
             self.game.active_player.hand[2],
         ]
+
         self.assertEqual(len(received_cards), 3)
         self.assertEqual(received_cards, expected_cards)
 
-    """ Prüft, ob die empfangenen Karten, die der Spieler abwerfen möchte, gültig sind.
-        - Keine IDs """
-    def test_receive_turn_data_no_ids(self):
-        player_selected_cards_id = []
-        sent_dict_cards = {
-            "selected_cards": player_selected_cards_id,
-            "token": self.player_1_id
-        }
-        output_dict = self.dc.net_to_gamelogic(sent_dict_cards, self.game)
-        received_cards = output_dict.get("selected_cards")
-        self.assertEqual(len(received_cards), 0)
 
 if __name__ == '__main__':
     unittest.main()

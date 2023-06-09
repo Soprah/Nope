@@ -41,7 +41,7 @@ class DataConvert:
     # '''
     def net_to_gamelogic(self, input_dict, game):
         """
-        Prüft die KartenIDs & Zusatzdaten, die der Client schickt
+        Prüft KartenIDs / Zusatzdaten
 
         :param game: Das Spiel, welches die Daten bekommt
         :param input_dict: Vom Client erstellte Dictionary
@@ -52,31 +52,34 @@ class DataConvert:
                 "chosen_color": farbe
         :return: Dictionary inklusive der entsprechenden Karten, die tatsächlich existieren
         """
+        # Welcher Spieler schickt die Data
         player = game.get_player_via_id(input_dict.get("token"))
+        # IDs der Karten
         selected_cards = input_dict.get("selected_cards")
-        checked_list = []
+        built_cards = []
+        # Nicht-finale Version des Dicts, was returnt wird
         output_dict = {
             "token": input_dict.get("token"),
             "game": game,
             "selected_cards": selected_cards
         }
-        # Leer
-        if len(selected_cards) == 0:
+
+        if self.is_empty(selected_cards):
             return output_dict
 
-        # Alle Werte Typ int
-        if any(not isinstance(x, int) for x in selected_cards):
+        if not self.are_all_integers(selected_cards):
             game.disqualify_player(player, "Es dürfen nur Zahlen als IDs übergeben werden")
             return output_dict
 
-        # Doppelte IDs
-        if self.is_duplicate_ids(selected_cards):
+        if self.are_duplicate_ids(selected_cards):
             game.disqualify_player(player, "Die IDs enthalten Duplikate")
             return output_dict
+
         else:
             # ID in Spielerhand
             if self.is_list_in_player_hand(selected_cards, game):
                 build_cards_list = self.build_card_objects(selected_cards, game)
+                built_cards = build_cards_list
                 input_dict["selected_cards"] = build_cards_list
                 # Nur SelectionCard
                 if self.is_only_selection_card(input_dict.get("selected_cards")):
@@ -85,7 +88,7 @@ class DataConvert:
             else:
                 # Spieler wegen falscher ID disqualifizieren
                 game.disqualify_player(player, "ID existiert nicht in der Spielerhand")
-        output_dict["selected_cards"] = checked_list
+        output_dict["selected_cards"] = built_cards
         return output_dict
     # '''
 
@@ -141,6 +144,12 @@ class DataConvert:
                 game.disqualify_player(player, "Einer oder beide Schlüssel 'chosen_number', 'chosen_color' befanden sich nicht im dictionary")
         return modified_input_dict
 
+    def are_all_integers(self, cards):
+        return not any(not isinstance(x, int) for x in cards)
+
+    def is_empty(self, cards):
+        return len(cards) == 0
+
     def is_data_from_active_player(self, token, game):
         return game.active_player.id == token
 
@@ -158,13 +167,7 @@ class DataConvert:
             cards.append(c)
         return cards
 
-    def is_duplicate_ids(self, list_of_ids):
-        """
-        Überprüft, ob in der Liste doppelte Werte vorkommen
-
-        :param list_of_ids: Liste von ids, die jeweils eine Karte repräsentieren
-        :return: boolean
-        """
+    def are_duplicate_ids(self, list_of_ids):
         return len(list_of_ids) != len(set(list_of_ids))
 
     def is_only_selection_card(self, list):
