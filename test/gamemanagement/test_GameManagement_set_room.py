@@ -7,6 +7,10 @@ class TestGameManagementSetRoom(unittest.TestCase):
 
     def setUp(self):
         self.gm = GameManagement.get_instance(self=GameManagement)
+        self.gm.rooms = {}
+
+    def tearDown(self):
+        self.gm.rooms = {}
 
 # Soll-Funktion
 
@@ -82,6 +86,31 @@ class TestGameManagementSetRoom(unittest.TestCase):
         self.assertEqual(f"The player with the id {player_id} is already part of the desired room {room_id} !", s)
 
     # Der Room ist voll
+    def test_set_room_room_is_already_full(self):
+        player_1_data = {
+            "room": "r1",
+            "token": 24,
+            "name": "rainer"
+        }
+        player_2_data = {
+            "room": "r1",
+            "token": 61,
+            "name": "sabine"
+        }
+        player_3_data = {
+            "room": "r1",
+            "token": 8,
+            "name": "christina"
+        }
+
+        self.gm.set_room(player_1_data)
+        self.gm.set_room(player_2_data)
+        s = self.gm.set_room(player_3_data)
+        room_id = "r1"
+        player_id = 8
+
+        self.assertEqual(f"The room {room_id} is already full !", s)
+
 
 if __name__ == '__main__':
     unittest.main()
