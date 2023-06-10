@@ -1,6 +1,6 @@
 from src.gamelogic.game.Game import Game
 from src.gamelogic.player.Player import Player
-from src.gamelogic.dataconvert.DataConvert import DataConvert
+from src.dataconvert.DataConvert import DataConvert
 
 # game = Game(Player("Eric", 3), Player("Marc", 19))
 # print("Karte vorher", game.deck.discard_stack[-1])

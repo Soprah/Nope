@@ -2,7 +2,7 @@ import unittest
 
 from src.gamelogic.game.Game import Game
 from src.gamelogic.player.Player import Player
-from src.gamelogic.dataconvert.DataConvert import DataConvert
+from src.dataconvert.DataConvert import DataConvert
 
 class TestDataConvertExecuteStepsForSelectionCard(unittest.TestCase):
 
