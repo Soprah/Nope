@@ -13,7 +13,9 @@ class TestDataConvertExecuteStepsForSelectionCard(unittest.TestCase):
         self.p2 = Player("Marc", 99)
         self.game = Game(self.p1, self.p2)
 
-    # Einfarbige SelectionCard - (Richtige) Werte vorhanden
+# EINFARBIG
+
+    # GÜLTIG
     def test_execute_steps_for_singlecolor_selection_card_correct_chosen_values(self):
         # SelectionCard: id=97, color=("green",)
         card = self.game.deck.cards_dict.get(97)
@@ -25,7 +27,8 @@ class TestDataConvertExecuteStepsForSelectionCard(unittest.TestCase):
         }
         expected_output_dict = {
             "token": 33,
-            "selected_cards": [card]
+            "selected_cards": [card],
+            "game": self.game
         }
 
         # Entspricht die ID dem Spieler?
@@ -54,12 +57,13 @@ class TestDataConvertExecuteStepsForSelectionCard(unittest.TestCase):
         self.assertEqual(number, 2)
 
         # Wurde "chosen_number" aus dem dict gelöscht?
-        self.assertEqual(len(client_dict), 2)
+        self.assertTrue("chosen_number" not in checked_dict)
+        self.assertEqual(len(checked_dict), 3)
 
         # Ist das neue dict wie gewünscht?
-        self.assertDictEqual(client_dict, expected_output_dict)
+        self.assertDictEqual(checked_dict, expected_output_dict)
 
-    # Einfarbige SelectionCard - (Falsche) Werte vorhanden
+    # UNGÜLTIG
     def test_execute_steps_for_singlecolor_selection_card_wrong_chosen_values(self):
         # SelectionCard: id=97, color=("green",)
         card = self.game.deck.cards_dict.get(97)
@@ -95,7 +99,7 @@ class TestDataConvertExecuteStepsForSelectionCard(unittest.TestCase):
         # Richtiger Grund für die Disqualifizierung?
         self.assertEqual(self.game.reason_of_disqualification , "Es wurden falsche Wahlwerte für die einfarbige SelectionCard übergeben")
 
-    # Einfarbige SelectionCard - Werte nicht vorhanden
+    # FEHLT
     def test_execute_steps_for_singlecolor_selection_card_missing_chosen_values(self):
         # SelectionCard: id=97, color=("green",)
         card = self.game.deck.cards_dict.get(97)
@@ -131,8 +135,9 @@ class TestDataConvertExecuteStepsForSelectionCard(unittest.TestCase):
         # Richtiger Grund für die Disqualifizierung?
         self.assertEqual(self.game.reason_of_disqualification , "Der Schlüssel 'chosen_number' befand sich nicht im dictionary")
 
+# MEHRFARBIG
 
-    # Mehrfarbige SelectionCard - (Richtige) Werte vorhanden
+    # GÜLTIG
     def test_execute_steps_for_multicolor_selection_card_correct_chosen_values(self):
         # SelectionCard: id=100, color=(("red"), ("blue"), ("yellow"), ("green"))
         card = self.game.deck.cards_dict.get(100)
@@ -145,7 +150,8 @@ class TestDataConvertExecuteStepsForSelectionCard(unittest.TestCase):
         }
         expected_output_dict = {
             "token": 33,
-            "selected_cards": [card]
+            "selected_cards": [card],
+            "game": self.game
         }
 
         # Entspricht die ID dem Spieler?
@@ -177,13 +183,16 @@ class TestDataConvertExecuteStepsForSelectionCard(unittest.TestCase):
         self.assertEqual(("blue",), color)
 
         # Wurde "chosen_number" aus dem dict gelöscht?
-        self.assertEqual(len(client_dict), 2)
+        self.assertTrue("chosen_number" not in checked_dict)
+
+        # Wurde "chosen_color" aus dem dict gelöscht?
+        self.assertTrue("chosen_color" not in checked_dict)
 
         # Ist das neue dict wie gewünscht?
-        self.assertDictEqual(client_dict, expected_output_dict)
+        self.assertEqual(len(checked_dict), 3)
+        self.assertDictEqual(checked_dict, expected_output_dict)
 
-    # Mehrfarbige SelectionCard - (Falsche) Werte vorhanden
-
+    # UNGÜLTIG
     def test_execute_steps_for_multicolor_selection_card_wrong_chosen_values(self):
         # SelectionCard: id=100, color=(("red"), ("blue"), ("yellow"), ("green"))
         card = self.game.deck.cards_dict.get(100)
@@ -198,7 +207,8 @@ class TestDataConvertExecuteStepsForSelectionCard(unittest.TestCase):
             "token": 33,
             "selected_cards": [card],
             "chosen_number": 21,
-            "chosen_color": ("purple",)
+            "chosen_color": ("purple",),
+            "game": self.game
         }
 
         # Entspricht die ID dem Spieler?
@@ -231,9 +241,9 @@ class TestDataConvertExecuteStepsForSelectionCard(unittest.TestCase):
         self.assertEqual(self.game.reason_of_disqualification, "Es wurden falsche Wahlwerte für die vierfarbige SelectionCard übergeben")
 
         # Ist das neue dict wie gewünscht?
-        self.assertDictEqual(client_dict, expected_output_dict)
+        self.assertDictEqual(checked_dict, expected_output_dict)
 
-    # Mehrfarbige SelectionCard - Werte nicht vorhanden
+    # FEHLT
     def test_execute_steps_for_multicolor_selection_card_missing_chosen_values(self):
         # SelectionCard: id=100, color=(("red"), ("blue"), ("yellow"), ("green"))
         card = self.game.deck.cards_dict.get(100)
@@ -249,6 +259,7 @@ class TestDataConvertExecuteStepsForSelectionCard(unittest.TestCase):
             "selected_cards": [card],
             # "chosen_number": 21,
             # "chosen_color": ("purple",)
+            "game": self.game
         }
 
         # Entspricht die ID dem Spieler?
@@ -281,7 +292,7 @@ class TestDataConvertExecuteStepsForSelectionCard(unittest.TestCase):
         self.assertEqual(self.game.reason_of_disqualification, "Einer oder beide Schlüssel 'chosen_number', 'chosen_color' befanden sich nicht im dictionary")
 
         # Ist das neue dict wie gewünscht?
-        self.assertDictEqual(client_dict, expected_output_dict)
+        self.assertDictEqual(checked_dict, expected_output_dict)
 
 if __name__ == '__main__':
     unittest.main()

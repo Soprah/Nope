@@ -38,8 +38,9 @@ class TestGameGetPlayerViaId(unittest.TestCase):
 
     # Player 2 - random ID  - Falsch
     def test_get_player_via_id_player2_random_id(self):
-        player = self.game.get_player_via_id(888)
-        self.assertNotEqual(self.p2, player)
+        with self.assertRaises(ValueError):
+            player = self.game.get_player_via_id(888)
+
 
 if __name__ == '__main__':
     unittest.main()
