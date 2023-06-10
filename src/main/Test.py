@@ -1,9 +1,6 @@
-from src.gamelogic.card.NumberCard import NumberCard
-from src.gamelogic.card.ViewCard import ViewCard
 from src.gamelogic.game.Game import Game
 from src.gamelogic.player.Player import Player
-from src.gamemanagement.DataConvert import DataConvert
-from src.gamemanagement.GameManagement import GameManagement
+from src.gamelogic.dataconvert.DataConvert import DataConvert
 
 # game = Game(Player("Eric", 3), Player("Marc", 19))
 # print("Karte vorher", game.deck.discard_stack[-1])

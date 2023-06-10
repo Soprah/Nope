@@ -1,10 +1,8 @@
 import unittest
 
-from src.gamelogic.card.NumberCard import NumberCard
-from src.gamelogic.card.SelectionCard import SelectionCard
 from src.gamelogic.game.Game import Game
 from src.gamelogic.player.Player import Player
-from src.gamemanagement.DataConvert import DataConvert
+from src.gamelogic.dataconvert.DataConvert import DataConvert
 
 
 class TestDataConvertIsListInPlayerHand(unittest.TestCase):

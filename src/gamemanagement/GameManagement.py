@@ -1,6 +1,6 @@
 from src.gamelogic.player.Player import Player
 from src.gamelogic.game.Game import Game
-from src.gamemanagement.DataConvert import DataConvert
+from src.gamelogic.dataconvert.DataConvert import DataConvert
 
 
 class GameManagement:

@@ -2,7 +2,7 @@ import unittest
 
 from src.gamelogic.game.Game import Game
 from src.gamelogic.player.Player import Player
-from src.gamemanagement.DataConvert import DataConvert
+from src.gamelogic.dataconvert.DataConvert import DataConvert
 
 
 class TestDataConvertIsDataFromActivePlayer(unittest.TestCase):
