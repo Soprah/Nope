@@ -10,6 +10,41 @@ from src.gamelogic.game.Game import Game
 class DataConvert:
 
 # TODO / WIP
+
+    def gamelogic_to_net(self, game):
+        previous_selected_cards = self.to_dict_previous_selected_cards(game)
+        top_card = self.to_dict_top_card(game)
+        amount_opponent_hand = self.to_dict_amount_opponent_hand(game)
+        own_hand_cards = self.to_dict_own_hand_cards(game)
+        turn_data = {
+            "previous_selected_cards": previous_selected_cards,
+            "top_card": top_card,
+            "amount_opponent_hand": amount_opponent_hand,
+            "own_hand_cards": own_hand_cards,
+        }
+        return turn_data
+
+    # TODO
+    def to_dict_previous_selected_cards(self, game):
+        data = {}
+        return data
+
+    # TODO
+    def to_dict_top_card(self, game):
+        data = {}
+        return data
+
+    # TODO
+    def to_dict_amount_opponent_hand(self, game):
+        data = {}
+        return data
+
+    # TODO
+    def to_dict_own_hand_cards(self, game):
+        data = {}
+        return data
+
+
     '''
     def gamelogic_to_net(self, game):
         turn_data = {}
@@ -36,6 +71,8 @@ class DataConvert:
         #     }
         return turn_data
     '''
+    def is_game_start(self, game):
+        return len(game.turns) == 1
 
     def net_to_gamelogic(self, input_dict, game):
         """
