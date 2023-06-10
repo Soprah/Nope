@@ -9,8 +9,7 @@ from src.gamelogic.game.Game import Game
 
 class DataConvert:
 
-# TODO / WIP
-
+    # TODO / WIP
     def gamelogic_to_net(self, game):
         previous_selected_cards = self.to_dict_previous_selected_cards(game)
         top_card = self.to_dict_top_card(game)
@@ -27,6 +26,10 @@ class DataConvert:
     # TODO
     def to_dict_previous_selected_cards(self, game):
         data = {}
+        if self.is_game_start(game):
+            return data
+        else:
+            pass
         return data
 
     # TODO
@@ -43,7 +46,6 @@ class DataConvert:
     def to_dict_own_hand_cards(self, game):
         data = {}
         return data
-
 
     '''
     def gamelogic_to_net(self, game):
@@ -71,6 +73,7 @@ class DataConvert:
         #     }
         return turn_data
     '''
+
     def is_game_start(self, game):
         return len(game.turns) == 1
 
@@ -161,7 +164,8 @@ class DataConvert:
                     modified_input_dict.__delitem__("chosen_number")
                 else:
                     # Spieler wegen falschen Wahlwerten disqualifizieren
-                    game.disqualify_player(player, "Es wurden falsche Wahlwerte für die einfarbige SelectionCard übergeben")
+                    game.disqualify_player(player,
+                                           "Es wurden falsche Wahlwerte für die einfarbige SelectionCard übergeben")
             # Dict besitzt nicht Wahlwert
             else:
                 game.disqualify_player(player, "Der Schlüssel 'chosen_number' befand sich nicht im dictionary")
@@ -170,7 +174,8 @@ class DataConvert:
         elif len(selection_card.color) == 4:
             # Dict besitzt Wahlwerte
             if "chosen_number" in modified_input_dict and "chosen_color" in modified_input_dict:
-                if modified_input_dict.get("chosen_number") in allowed_numbers and modified_input_dict.get("chosen_color") in allowed_colors:
+                if modified_input_dict.get("chosen_number") in allowed_numbers and modified_input_dict.get(
+                        "chosen_color") in allowed_colors:
                     # Theoretical Card setzen
                     number = modified_input_dict.get("chosen_number")
                     color = modified_input_dict.get("chosen_color")
@@ -179,10 +184,12 @@ class DataConvert:
                     modified_input_dict.__delitem__("chosen_color")
                 else:
                     # Spieler wegen falschen Wahlwerten disqualifizieren
-                    game.disqualify_player(player, "Es wurden falsche Wahlwerte für die vierfarbige SelectionCard übergeben")
+                    game.disqualify_player(player,
+                                           "Es wurden falsche Wahlwerte für die vierfarbige SelectionCard übergeben")
             # Dict besitzt nicht Wahlwerte
             else:
-                game.disqualify_player(player, "Einer oder beide Schlüssel 'chosen_number', 'chosen_color' befanden sich nicht im dictionary")
+                game.disqualify_player(player,
+                                       "Einer oder beide Schlüssel 'chosen_number', 'chosen_color' befanden sich nicht im dictionary")
         return modified_input_dict
 
     def are_all_integers(self, cards):

@@ -50,8 +50,9 @@ cards = [
 cards_data = [card.to_dict() for card in cards]
 json_data = json.dumps(cards_data)
 '''
+
 p1 = Player("Eric", 33)
 p2 = Player("Marc", 19)
 game = Game(p1, p2)
-# for c in game.deck.cards:
-#     print(c)
+for c in game.deck.cards:
+    print(c)
