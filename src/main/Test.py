@@ -1,3 +1,5 @@
+from src.gamelogic.card.SelectionCard import SelectionCard
+from src.gamelogic.card.ViewCard import ViewCard
 from src.gamelogic.game.Game import Game
 from src.gamelogic.player.Player import Player
 from src.dataconvert.DataConvert import DataConvert
@@ -56,3 +58,17 @@ p2 = Player("Marc", 19)
 game = Game(p1, p2)
 for c in game.deck.cards:
     print(c)
+
+"""
+n_card = game.deck.cards_dict.get(9)
+j_card = game.deck.cards_dict.get(101)
+ss_card = game.deck.cards_dict.get(97)
+cards = [n_card, j_card, ss_card]
+previous = []
+for card in cards:
+    if isinstance(card, (ViewCard, SelectionCard)):
+        previous.append(card.to_dict_actual_card())
+    else:
+        previous.append(card.to_dict())
+print(previous)
+"""

@@ -25,12 +25,17 @@ class DataConvert:
 
     # TODO
     def to_dict_previous_selected_cards(self, game):
-        data = {}
+        data = []
         if self.is_game_start(game):
             return data
         else:
-            pass
-        return data
+            previous_turn = game.turns[-2]
+            for card in previous_turn.selected_cards:
+                if isinstance(card, (ViewCard, SelectionCard, RestartCard)):
+                    data.append(card.to_dict_actual_card())
+                else:
+                    data.append(card.to_dict())
+            return data
 
     # TODO
     def to_dict_top_card(self, game):
