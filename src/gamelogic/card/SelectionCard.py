@@ -8,6 +8,12 @@ class SelectionCard(ActionCard):
         super().__init__(id, color)
         self.theoretical_card = None
 
+    def __repr__(self):
+        if self.theoretical_card is None:
+            return super().__str__() + f" Effect: Selection Chosen_Number: None Chosen_Color: None"
+        else:
+            return super().__str__() + f" Chosen_number: {self.get_number()} Chosen_color: {self.get_color()}"
+
     def __str__(self):
         if self.theoretical_card is None:
             return super().__str__() + f" Effect: Selection Chosen_Number: None Chosen_Color: None"

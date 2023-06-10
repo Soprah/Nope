@@ -115,7 +115,13 @@ class TestNetToGamelogic(unittest.TestCase):
 
     """ Prüft den Spezialfall einer einfarbigen Selection Card
         - Gültige Wahlwerte """
-    def test_net_to_gamelogic_single_color_selection_card(self):
+
+### SELECTION CARD CASE
+
+# SINGLE COLOR
+
+    # GÜLTIG
+    def test_net_to_gamelogic_single_color_selection_card_valid_choice(self):
         # color=green
         selection_card = self.game.deck.cards_dict.get(97)
         self.p1.hand = [selection_card]
@@ -141,9 +147,61 @@ class TestNetToGamelogic(unittest.TestCase):
         actual_number = edited_card.get_number()
         self.assertEqual(3, actual_number)
 
-    """ Prüft den Spezialfall einer vierfarbigen Selection Card
-        - Gültige Wahlwerte """
-    def test_net_to_gamelogic_four_color_selection_card(self):
+    # UNGÜLTIG
+    def test_net_to_gamelogic_single_color_selection_card_invalid_choice(self):
+        # color=green der selection_card
+        selection_card = self.game.deck.cards_dict.get(97)
+        self.p1.hand = [selection_card]
+        selected_id_cards = [selection_card.id]
+        input_dict = {
+            "token": self.player_1_id,
+            "selected_cards": selected_id_cards,
+            "chosen_number": 7
+        }
+        # expected_output = {
+        #     "token": self.player_1_id,
+        #     "selected_cards": [selection_card],
+        #     "game": self.game
+        # }
+
+        actual_output = self.dc.net_to_gamelogic(input_dict, self.game)
+
+        # Gleiches Dictionary
+        # self.assertEqual(expected_output, actual_output)
+
+        # Spieler disqualifiziert
+        self.assertTrue(self.game.active_player.is_disqualified)
+        self.assertEqual(self.game.reason_of_disqualification,
+        "Es wurden falsche Wahlwerte für die einfarbige SelectionCard übergeben")
+
+    # FEHLT
+    def test_net_to_gamelogic_single_color_selection_card_missing_choice(self):
+        # color=green der selection_card
+        selection_card = self.game.deck.cards_dict.get(97)
+        self.p1.hand = [selection_card]
+        selected_id_cards = [selection_card.id]
+        input_dict = {
+            "token": self.player_1_id,
+            "selected_cards": selected_id_cards,
+        }
+        # expected_output = {
+        #     "token": self.player_1_id,
+        #     "selected_cards": [selection_card],
+        #     "game": self.game
+        # }
+        actual_output = self.dc.net_to_gamelogic(input_dict, self.game)
+        # Gleiches Dictionary
+        # self.assertEqual(expected_output, actual_output)
+
+        # Spieler disqualifiziert
+        self.assertTrue(self.game.active_player.is_disqualified)
+        self.assertEqual(self.game.reason_of_disqualification, "Der Schlüssel 'chosen_number' befand sich nicht im dictionary")
+
+
+# FOUR COLOR
+
+    # GÜLTIG
+    def test_net_to_gamelogic_four_color_selection_card_valid_choice(self):
         # SelectionCard: id=100, color=(("red"), ("blue"), ("yellow"), ("green"))
         selection_card = self.game.deck.cards_dict.get(100)
         self.p1.hand = [selection_card]
@@ -173,30 +231,139 @@ class TestNetToGamelogic(unittest.TestCase):
         actual_number = edited_card.get_number()
         actual_color = edited_card.get_color()
         self.assertEqual(3, actual_number)
-        self.assertEqual(("blue,"), actual_color)
+        self.assertEqual(("blue",), actual_color)
 
-    """ Prüft den Spezialfall einer einfarbigen Selection Card
-        - Ungültige Wahlwerte """
-    # def test_net_to_gamelogic_single_color_selection_card_invalid_choice(self):
-    #     # color=green
-    #     selection_card = self.game.deck.cards_dict.get(97)
-    #     self.p1.hand = [selection_card]
-    #     selected_id_cards = [selection_card.id]
-    #     input = {
-    #         "token": self.player_1_id,
-    #         "selected_cards": selected_id_cards,
-    #         "chosen_number": 7
-    #     }
-    #     expected_output = {
-    #         "token": self.player_1_id,
-    #         "selected_cards": [selection_card],
-    #         "game": self.game
-    #     }
-    #
-    #     actual_output = self.dc.net_to_gamelogic(input, self.game)
-    #
-    #     # Gleiches Dictionary
-    #     self.assertEqual(expected_output, actual_output)
+    # UNGÜLTIG - Zahl
+    def test_net_to_gamelogic_four_color_selection_card_invalid_number_choice(self):
+        # SelectionCard: id=100, color=(("red"), ("blue"), ("yellow"), ("green"))
+        selection_card = self.game.deck.cards_dict.get(100)
+        self.p1.hand = [selection_card]
+        selected_id_cards = [selection_card.id]
+        input_dict = {
+            "token": self.player_1_id,
+            "selected_cards": selected_id_cards,
+            "chosen_number": 4,
+            "chosen_color": ("blue",)
+        }
+        expected_output = {
+            "token": self.player_1_id,
+            "selected_cards": [selection_card],
+            "game": self.game
+        }
+
+        actual_output = self.dc.net_to_gamelogic(input_dict, self.game)
+
+        # Gleiches Dictionary
+        # self.assertEqual(expected_output, actual_output)
+
+        # Spieler nicht disqualifiziert
+        self.assertTrue(self.game.active_player.is_disqualified)
+
+        # Wahlwerte wurden nicht gesetzt
+        edited_card = actual_output.get("selected_cards")[0]
+        actual_number = edited_card.get_number()
+        actual_color = edited_card.get_color()
+        self.assertEqual(1, actual_number)
+        self.assertEqual((("red"), ("blue"), ("yellow"), ("green")), actual_color)
+
+    # UNGÜLTIG - Farbe
+    def test_net_to_gamelogic_four_color_selection_card_invalid_color_choice(self):
+        # SelectionCard: id=100, color=(("red"), ("blue"), ("yellow"), ("green"))
+        selection_card = self.game.deck.cards_dict.get(100)
+        self.p1.hand = [selection_card]
+        selected_id_cards = [selection_card.id]
+        input_dict = {
+            "token": self.player_1_id,
+            "selected_cards": selected_id_cards,
+            "chosen_number": 3,
+            "chosen_color": ("purple",)
+        }
+        expected_output = {
+            "token": self.player_1_id,
+            "selected_cards": [selection_card],
+            "game": self.game
+        }
+
+        actual_output = self.dc.net_to_gamelogic(input_dict, self.game)
+
+        # Gleiches Dictionary
+        # self.assertEqual(expected_output, actual_output)
+
+        # Spieler nicht disqualifiziert
+        self.assertTrue(self.game.active_player.is_disqualified)
+
+        # Wahlwerte wurden nicht gesetzt
+        edited_card = actual_output.get("selected_cards")[0]
+        actual_number = edited_card.get_number()
+        actual_color = edited_card.get_color()
+        self.assertEqual(1, actual_number)
+        self.assertEqual((("red"), ("blue"), ("yellow"), ("green")), actual_color)
+
+    # FEHLT - Zahl
+    def test_net_to_gamelogic_four_color_selection_card_missing_number_choice(self):
+        # SelectionCard: id=100, color=(("red"), ("blue"), ("yellow"), ("green"))
+        selection_card = self.game.deck.cards_dict.get(100)
+        self.p1.hand = [selection_card]
+        selected_id_cards = [selection_card.id]
+        input_dict = {
+            "token": self.player_1_id,
+            "selected_cards": selected_id_cards,
+            # "chosen_number": 3,
+            "chosen_color": ("blue",)
+        }
+        expected_output = {
+            "token": self.player_1_id,
+            "selected_cards": [selection_card],
+            "game": self.game
+        }
+
+        actual_output = self.dc.net_to_gamelogic(input_dict, self.game)
+
+        # Gleiches Dictionary
+        # self.assertEqual(expected_output, actual_output)
+
+        # Spieler nicht disqualifiziert
+        self.assertTrue(self.game.active_player.is_disqualified)
+
+        # Wahlwerte wurden nicht gesetzt
+        edited_card = actual_output.get("selected_cards")[0]
+        actual_number = edited_card.get_number()
+        actual_color = edited_card.get_color()
+        self.assertEqual(1, actual_number)
+        self.assertEqual((("red"), ("blue"), ("yellow"), ("green")), actual_color)
+
+    # FEHLT - Farbe
+    def test_net_to_gamelogic_four_color_selection_card_missing_number_choice(self):
+        # SelectionCard: id=100, color=(("red"), ("blue"), ("yellow"), ("green"))
+        selection_card = self.game.deck.cards_dict.get(100)
+        self.p1.hand = [selection_card]
+        selected_id_cards = [selection_card.id]
+        input_dict = {
+            "token": self.player_1_id,
+            "selected_cards": selected_id_cards,
+            "chosen_number": 3,
+            # "chosen_color": ("blue",)
+        }
+        expected_output = {
+            "token": self.player_1_id,
+            "selected_cards": [selection_card],
+            "game": self.game
+        }
+
+        actual_output = self.dc.net_to_gamelogic(input_dict, self.game)
+
+        # Gleiches Dictionary
+        # self.assertEqual(expected_output, actual_output)
+
+        # Spieler nicht disqualifiziert
+        self.assertTrue(self.game.active_player.is_disqualified)
+
+        # Wahlwerte wurden nicht gesetzt
+        edited_card = actual_output.get("selected_cards")[0]
+        actual_number = edited_card.get_number()
+        actual_color = edited_card.get_color()
+        self.assertEqual(1, actual_number)
+        self.assertEqual((("red"), ("blue"), ("yellow"), ("green")), actual_color)
 
 if __name__ == '__main__':
     unittest.main()

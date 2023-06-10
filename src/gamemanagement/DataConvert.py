@@ -110,6 +110,7 @@ class DataConvert:
         player_id = modified_input_dict.get("token")
         player = game.get_player_via_id(player_id)
         selection_card = selected_cards[0]
+        modified_input_dict["game"] = game
 
         allowed_colors = (("red",), ("blue",), ("green",), ("yellow",))
         allowed_numbers = [1, 2, 3]
@@ -177,4 +178,4 @@ class DataConvert:
         return len(list_of_ids) != len(set(list_of_ids))
 
     def is_only_selection_card(self, list):
-        return len(list) == 0 and isinstance(list[0], SelectionCard)
+        return len(list) == 1 and isinstance(list[0], SelectionCard)
