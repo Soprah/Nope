@@ -37,8 +37,6 @@ class DataConvert:
         return turn_data
     '''
 
-# TODO / WIP
-    # '''
     def net_to_gamelogic(self, input_dict, game):
         """
         Prüft KartenIDs / Zusatzdaten
@@ -96,7 +94,6 @@ class DataConvert:
 
         output_dict["selected_cards"] = built_cards
         return output_dict
-    # '''
 
     def execute_steps_for_selection_card(self, modified_input_dict, game):
         """
@@ -156,9 +153,6 @@ class DataConvert:
 
     def is_empty(self, cards):
         return len(cards) == 0
-
-    def is_data_from_active_player(self, token, game):
-        return game.active_player.id == token
 
     def is_list_in_player_hand(self, list, game):
         for id in list:
