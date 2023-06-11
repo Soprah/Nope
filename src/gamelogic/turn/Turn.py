@@ -1,3 +1,4 @@
+from src.gamelogic.card.ActionCard import ActionCard
 from src.gamelogic.card.Card import Card
 from src.gamelogic.card.JokerCard import JokerCard
 from src.gamelogic.card.NumberCard import NumberCard
@@ -86,6 +87,32 @@ class Turn:
                 flag = False
         return flag
 
+    # TODO
+    def is_valid(self, selected_cards):
+        cards = selected_cards
+        self.turn_attempt = self.turn_attempt + 1
+        self.selected_cards = cards
+        self.possible_moves = self.create_dict_possible_moves()
+
+        if len(cards) == 0:
+            self.is_turn_valid = self.player_has_set() == False
+        elif self.player_has_set():
+            self.is_turn_valid = self.selected_cards_represent_set(cards) or self.played_valid_action_card(cards)
+        return self.is_turn_valid
+
+    def has_common_color(self, new_card):
+        set_new_card = set(new_card.color)
+        set_top_card = set(self.top_card.color)
+        common_color = (set_new_card & set_top_card)
+        return len(common_color) > 0
+
+
+    # TODO
+    def played_valid_action_card(self, cards):
+        card = cards[0]
+        return len(cards) == 1 and isinstance(card, ActionCard) and card.color in self.top_card.color
+
+    '''
     def is_valid(self, selected_cards):
         """
         Überprüft, ob die übergebenen Karten einen gültigen Spielzug darstellen
@@ -103,6 +130,7 @@ class Turn:
         if self.is_turn_valid == False:
             self.player.is_disqualified = True
         return self.is_turn_valid
+    '''
 
     def is_another_attempt_necessary(self):
         """
@@ -116,7 +144,6 @@ class Turn:
         return len(self.possible_moves) != 0
 
     def selected_cards_represent_set(self, selected_cards):
-        # if isinstance(self.top_card, NumberCard):
         flag = []
         for color in self.possible_moves.keys():
             color_and_len_flag = self.is_color_consistent(color, selected_cards) and len(

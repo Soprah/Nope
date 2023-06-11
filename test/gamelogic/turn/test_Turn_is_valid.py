@@ -111,6 +111,7 @@ class TestTurnIsValid(unittest.TestCase):
 
 # NEUE TESTS
 
+    # FIRST ATTEMPT - MUST PLAY
     def test_is_valid_case_A_1(self):
         p1_hand = [
             self.g_1,
@@ -137,6 +138,7 @@ class TestTurnIsValid(unittest.TestCase):
         # Test
 
         # Dictionary prüfen
+        self.assertTrue(turn.player_has_set())
         self.assertTrue(len(turn.possible_moves) == 1)
         self.assertTrue(len(turn.possible_moves.get("red")) == 1)
         self.assertEqual(self.view_red, turn.possible_moves.get("red")[0])
@@ -145,7 +147,60 @@ class TestTurnIsValid(unittest.TestCase):
         self.assertTrue(turn.is_valid(possible_cards_to_play))
         self.assertFalse(turn.is_valid(impossible_cards_to_play))
 
+    # FIRST ATTEMPT - CAN PLAY
+    # def test_is_valid_case_A_2(self):
+    #     p1_hand = [
+    #         self.g_1,
+    #         self.y_1,
+    #         self.b_1,
+    #         self.view_red,
+    #         self.y_3,
+    #         self.g_2,
+    #         self.y_2,
+    #         self.selection_blue
+    #     ]
+    #
+    #     # Vorbereitungen
+    #     r_2 = self.game.deck.cards_dict.get(9)
+    #     top_card = r_2
+    #     turn = Turn(self.p1, top_card)
+    #     self.p1.hand = p1_hand
+    #     possible_set_to_play = []
+    #     possible_action_card_to_play = [self.view_red]
+    #     impossible_cards_to_play = [self.y_1]
+    #
+    #     # Funktion
+    #     turn.possible_moves = turn.create_dict_possible_moves()
+    #
+    #     # Test
+    #
+    #     # Dictionary prüfen
+    #     self.assertFalse(turn.player_has_set())
+    #     self.assertTrue(len(turn.possible_moves) == 0)
+    #
+    #     # is_valid
+    #     self.assertTrue(turn.is_valid(possible_action_card_to_play))
+    #     # self.assertFalse(turn.is_valid(impossible_cards_to_play))
 
+    '''
+    def is_valid(self, selected_cards):
+        """
+        Überprüft, ob die übergebenen Karten einen gültigen Spielzug darstellen
+
+        :param selected_cards: Liste an Karten, die der Spieler für einen Spielzug ausgesucht hat
+        :return: boolean
+        """
+        self.turn_attempt = self.turn_attempt + 1
+        self.selected_cards = selected_cards
+        self.possible_moves = self.create_dict_possible_moves()
+        if len(selected_cards) == 0:
+            self.is_turn_valid = self.player_has_set() == False and len(selected_cards) == 0
+        elif len(selected_cards) > 0:
+            self.is_turn_valid = self.selected_cards_represent_set(selected_cards)
+        if self.is_turn_valid == False:
+            self.player.is_disqualified = True
+        return self.is_turn_valid
+    '''
 
 if __name__ == '__main__':
     unittest.main()

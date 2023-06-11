@@ -95,7 +95,7 @@ class Deck:
             id_count = id_count + 1
 
         self.cards_dict = self.create_dict_deck_copy(self.cards)
-        self.shuffle()
+        # self.shuffle()
         self.draw_stack = self.cards.copy()
 
 
