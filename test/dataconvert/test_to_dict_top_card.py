@@ -188,7 +188,7 @@ class TestDataConvertToDictTopCard(unittest.TestCase):
 
         # Vorbereitungen
         first_turn = self.game.next_turn()
-        first_turn.top_card = self.n_card()
+        first_turn.top_card = self.n_card
         second_turn = self.game.next_turn()
         self.v_card.set_theoretical_card(first_turn.top_card)
 

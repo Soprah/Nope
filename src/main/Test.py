@@ -56,8 +56,17 @@ json_data = json.dumps(cards_data)
 p1 = Player("Eric", 33)
 p2 = Player("Marc", 19)
 game = Game(p1, p2)
-for c in game.deck.cards:
-    print(c)
+# for c in game.deck.cards:
+#     print(c)
+
+n = game.deck.cards_dict.get(9)
+v = game.deck.cards_dict.get(92)
+i = {}
+i["selected_cards"] = [v]
+cards = i.get("selected_cards")
+if len(cards) == 1 and isinstance(cards[0], ViewCard):
+    v.set_theoretical_card(n)
+print(v)
 
 """
 n_card = game.deck.cards_dict.get(9)

@@ -365,5 +365,43 @@ class TestNetToGamelogic(unittest.TestCase):
         self.assertEqual(1, actual_number)
         self.assertEqual((("red"), ("blue"), ("yellow"), ("green")), actual_color)
 
+### VIEWCARD CASE
+
+    def test_net_to_gamelogic_view_card_effect(self):
+        # color=red, number=2
+        n_card = self.game.deck.cards_dict.get(9)
+        # color=blue
+        v_card = self.game.deck.cards_dict.get(92)
+
+        selected_id_cards = [v_card.id]
+        input_dict = {
+            "token": self.player_1_id,
+            "selected_cards": selected_id_cards,
+        }
+        expected_output = {
+            "token": self.player_1_id,
+            "selected_cards": [v_card],
+            "game": self.game
+        }
+
+        # Vorbereitungen
+        self.p1.hand = [v_card]
+        first_turn = self.game.next_turn()
+        first_turn.top_card = n_card
+
+        # Funktion
+        actual_output = self.dc.net_to_gamelogic(input_dict, self.game)
+
+        # Test: Gleiches Dictionary
+        self.assertDictEqual(expected_output, actual_output)
+
+        # Test: Werte der ViewCard gesetzt?
+        actual_number = v_card.get_number()
+        actual_color = v_card.get_color()
+        self.assertEqual(2, actual_number)
+        self.assertEqual(("red",), actual_color)
+
+
+
 if __name__ == '__main__':
     unittest.main()

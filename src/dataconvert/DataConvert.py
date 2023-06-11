@@ -138,9 +138,13 @@ class DataConvert:
 
                 # Nur SelectionCard
                 if self.is_only_selection_card(input_dict.get("selected_cards")):
-                    # TODO | Keine variable speichert das ergebnis folgender funktion:
                     s_dict = self.execute_steps_for_selection_card(input_dict, game)
                     return s_dict
+
+                # Nur ViewCard
+                if self.is_only_view_card(input_dict.get("selected_cards")):
+                    v_dict = self.execute_steps_for_view_card(input_dict, game)
+                    return v_dict
 
             # ID nicht in Spielerhand
             else:
@@ -149,6 +153,14 @@ class DataConvert:
 
         output_dict["selected_cards"] = built_cards
         return output_dict
+
+    def execute_steps_for_view_card(self, modified_input_dict, game):
+        modified_input_dict["game"] = game
+        selected_cards = modified_input_dict.get("selected_cards")
+        view_card = selected_cards[0]
+        card_underneath = game.turns[-1].top_card
+        view_card.set_theoretical_card(card_underneath)
+        return modified_input_dict
 
     def execute_steps_for_selection_card(self, modified_input_dict, game):
         """
@@ -232,3 +244,6 @@ class DataConvert:
 
     def is_only_selection_card(self, list):
         return len(list) == 1 and isinstance(list[0], SelectionCard)
+
+    def is_only_view_card(self, list):
+        return len(list) == 1 and isinstance(list[0], ViewCard)
