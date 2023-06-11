@@ -56,11 +56,6 @@ class DataConvert:
         data = {}
         return data
 
-    # TODO
-    #   * Wann setze ich den theoretical_card wert der ViewCard?
-    def was_only_viewcard_played(self, game):
-        pass
-
 
     '''
     def gamelogic_to_net(self, game):
@@ -160,6 +155,7 @@ class DataConvert:
         view_card = selected_cards[0]
         card_underneath = game.turns[-1].top_card
         view_card.set_theoretical_card(card_underneath)
+        modified_input_dict["selected_cards"] = [view_card]
         return modified_input_dict
 
     def execute_steps_for_selection_card(self, modified_input_dict, game):
