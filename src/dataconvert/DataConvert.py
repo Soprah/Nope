@@ -36,7 +36,6 @@ class DataConvert:
                     data.append(card.to_dict())
             return data
 
-    # TODO
     def to_dict_top_card(self, game):
         current_turn = game.turns[-1]
         top_card = current_turn.top_card
@@ -48,7 +47,12 @@ class DataConvert:
 
     # TODO
     def to_dict_amount_opponent_hand(self, game):
-        data = {}
+        if self.is_game_start(game):
+            opponent = game.player_2
+        else:
+            previous_turn = game.turns[-2]
+            opponent = previous_turn.player
+        data = len(opponent.hand)
         return data
 
     # TODO
