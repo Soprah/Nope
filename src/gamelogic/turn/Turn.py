@@ -45,7 +45,7 @@ class Turn:
         """
         cards = self.possible_moves.get(color)
         if isinstance(self.top_card, NumberCard):
-            if len(cards) >= self.top_card.number:
+            if len(cards) >= self.top_card.get_number():
                 return True
         if isinstance(self.top_card, JokerCard) or isinstance(self.top_card, RestartCard):
             if len(cards) >= 1:
@@ -82,7 +82,7 @@ class Turn:
         """
         flag = True
         for card in selected_cards:
-            if color not in card.color:
+            if color not in card.get_color():
                 flag = False
         return flag
 
@@ -120,6 +120,6 @@ class Turn:
         flag = []
         for color in self.possible_moves.keys():
             color_and_len_flag = self.is_color_consistent(color, selected_cards) and len(
-                selected_cards) == self.top_card.number
+                selected_cards) == self.top_card.get_number()
             flag.append(color_and_len_flag)
         return True in flag
