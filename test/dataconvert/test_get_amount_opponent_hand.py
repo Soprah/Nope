@@ -5,7 +5,7 @@ from src.gamelogic.game.Game import Game
 from src.gamelogic.player.Player import Player
 
 
-class TestDataConvertToDictAmountOpponentHand(unittest.TestCase):
+class TestDataConvertGetAmountOpponentHand(unittest.TestCase):
     def setUp(self):
         self.p1 = Player("Christina", 8)
         self.p2 = Player("Marc", 19)
@@ -45,14 +45,14 @@ class TestDataConvertToDictAmountOpponentHand(unittest.TestCase):
         self.game.next_turn()
 
         # Test für Spieler 1
-        p1_first_turn_amount_actual = self.dc.to_dict_amount_opponent_hand(self.game)
+        p1_first_turn_amount_actual = self.dc.get_amount_opponent_hand(self.game)
         self.assertEqual(p1_first_turn_amount_expected, p1_first_turn_amount_actual)
 
         # Vorbereitung
         self.game.next_turn()
 
         # Test für Spieler 2
-        p2_first_turn_amount_actual = self.dc.to_dict_amount_opponent_hand(self.game)
+        p2_first_turn_amount_actual = self.dc.get_amount_opponent_hand(self.game)
         self.assertEqual(p2_first_turn_amount_expected, p2_first_turn_amount_actual)
 
 

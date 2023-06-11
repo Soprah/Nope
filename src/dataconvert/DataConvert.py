@@ -13,7 +13,7 @@ class DataConvert:
     def gamelogic_to_net(self, game):
         previous_selected_cards = self.to_dict_previous_selected_cards(game)
         top_card = self.to_dict_top_card(game)
-        amount_opponent_hand = self.to_dict_amount_opponent_hand(game)
+        amount_opponent_hand = self.get_amount_opponent_hand(game)
         own_hand_cards = self.to_dict_own_hand_cards(game)
         turn_data = {
             "previous_selected_cards": previous_selected_cards,
@@ -45,8 +45,7 @@ class DataConvert:
             data = top_card.to_dict()
         return data
 
-    # TODO
-    def to_dict_amount_opponent_hand(self, game):
+    def get_amount_opponent_hand(self, game):
         if self.is_game_start(game):
             opponent = game.player_2
         else:
@@ -57,7 +56,13 @@ class DataConvert:
 
     # TODO
     def to_dict_own_hand_cards(self, game):
-        data = {}
+        data = []
+        cards = game.active_player.hand
+        for card in cards:
+            if isinstance(card, (ViewCard, SelectionCard, RestartCard)):
+                data.append(card.to_dict_actual_card())
+            else:
+                data.append(card.to_dict())
         return data
 
 
