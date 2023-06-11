@@ -11,10 +11,6 @@ game = Game(p1, p2)
 for c in game.deck.cards:
     print(c)
 
-view_red = game.deck.cards_dict.get(91)
-if isinstance(view_red, ViewCard):
-    print("OK!")
-
 
 # c1 = game.deck.cards_dict.get(71)
 # c2 = game.deck.cards_dict.get(80)

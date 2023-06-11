@@ -31,8 +31,9 @@ class Turn:
         :return: dict
         """
         dict = {}
-        for i in range(len(self.top_card.color)):
-            required_color = self.top_card.color[i]
+        c = self.top_card.get_color()
+        for i in range(len(c)):
+            required_color = c[i]
             dict[required_color] = [card for card in self.player.hand
                                     if required_color in card.color]
         return dict
