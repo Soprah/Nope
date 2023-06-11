@@ -9,8 +9,13 @@ from src.gamelogic.game.Game import Game
 
 class DataConvert:
 
-    # TODO / WIP
     def gamelogic_to_net(self, game):
+        """
+        Creates turn_data package for the client
+
+        :param game:
+        :return:
+        """
         previous_selected_cards = self.to_dict_previous_selected_cards(game)
         top_card = self.to_dict_top_card(game)
         amount_opponent_hand = self.get_amount_opponent_hand(game)
@@ -54,7 +59,6 @@ class DataConvert:
         data = len(opponent.hand)
         return data
 
-    # TODO
     def to_dict_own_hand_cards(self, game):
         data = []
         cards = game.active_player.hand
@@ -64,34 +68,6 @@ class DataConvert:
             else:
                 data.append(card.to_dict())
         return data
-
-
-    '''
-    def gamelogic_to_net(self, game):
-        turn_data = {}
-        current_turn = game.turns[-1]
-        if len(game.turns) == 1:
-            opponent = game.player_2
-            if isinstance(current_turn.top_card, (SelectionCard, ViewCard)):
-                top_card_dict = current_turn.top_card.to_dict_top_card()
-            else:
-                top_card_dict = current_turn.top_card.to_dict()
-            turn_data = {
-                "previous_selected_cards": [],
-                "top_card": top_card_dict,
-                "amount_opponent_cards": len(opponent.hand),
-                "own_hand_cards": current_turn.player.hand
-            }
-        # elif len(self.turns) > 1:
-        #     previous_turn = game.turns[-2]
-        #     turn_data = {
-        #         "previous_selected_cards": previous_turn.selected_cards,
-        #         "top_card": previous_turn.top_card,
-        #         "amount_opponent_cards": len(previous_turn.player.hand),
-        #         "own_hand_cards": current_turn.player.hand
-        #     }
-        return turn_data
-    '''
 
     def is_game_start(self, game):
         return len(game.turns) == 1
