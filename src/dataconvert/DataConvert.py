@@ -23,7 +23,6 @@ class DataConvert:
         }
         return turn_data
 
-    # TODO
     def to_dict_previous_selected_cards(self, game):
         data = []
         if self.is_game_start(game):
@@ -39,7 +38,12 @@ class DataConvert:
 
     # TODO
     def to_dict_top_card(self, game):
-        data = {}
+        current_turn = game.turns[-1]
+        top_card = current_turn.top_card
+        if isinstance(top_card, (ViewCard, SelectionCard, RestartCard)):
+            data = top_card.to_dict_top_card()
+        else:
+            data = top_card.to_dict()
         return data
 
     # TODO
@@ -51,6 +55,12 @@ class DataConvert:
     def to_dict_own_hand_cards(self, game):
         data = {}
         return data
+
+    # TODO
+    #   * Wann setze ich den theoretical_card wert der ViewCard?
+    def was_only_viewcard_played(self, game):
+        pass
+
 
     '''
     def gamelogic_to_net(self, game):
