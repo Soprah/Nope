@@ -1,6 +1,7 @@
 import unittest
 
 from src.gamelogic.card.NumberCard import NumberCard
+from src.gamelogic.card.ViewCard import ViewCard
 from src.gamelogic.deck.Deck import Deck
 from src.gamelogic.game.Game import Game
 from src.gamelogic.player.Player import Player
@@ -34,14 +35,21 @@ class TestTurnIsValid(unittest.TestCase):
         self.y_1 = self.game.deck.cards_dict.get(7)
         self.b_1 = self.game.deck.cards_dict.get(4)
         self.view_red = self.game.deck.cards_dict.get(91)
+        # self.view_red.clear_theoretical_card()
         self.y_3 = self.game.deck.cards_dict.get(20)
         self.g_2 = self.game.deck.cards_dict.get(14)
         self.y_2 = self.game.deck.cards_dict.get(16)
         self.selection_blue = self.game.deck.cards_dict.get(96)
 
+        self.g_3 = self.game.deck.cards_dict.get(19)
 
 
-# ALTE TESTS
+    def tearDown(self):
+        self.view_red = None
+
+
+
+# ALTE TESTS - ZAHLENKARTEN
 
     """ Der Spieler schickt eine leere Liste an Karten 
         und man hätte auch keinen Zug ausführen können """
@@ -109,7 +117,7 @@ class TestTurnIsValid(unittest.TestCase):
         turn.possible_moves = turn.create_dict_possible_moves()
         self.assertFalse(turn.is_valid(selected_cards=[card2, card3]))
 
-# NEUE TESTS
+# NEUE TESTS, Ergänzung zu oben mit Aktionskarten
 
     # FIRST ATTEMPT - MUST PLAY
     def test_is_valid_case_A_1(self):
@@ -129,6 +137,7 @@ class TestTurnIsValid(unittest.TestCase):
         top_card = r_1
         turn = Turn(self.p1, top_card)
         self.p1.hand = p1_hand
+        nope = []
         possible_cards_to_play = [self.view_red]
         impossible_cards_to_play = [self.y_1]
 
@@ -146,61 +155,262 @@ class TestTurnIsValid(unittest.TestCase):
         # is_valid
         self.assertTrue(turn.is_valid(possible_cards_to_play))
         self.assertFalse(turn.is_valid(impossible_cards_to_play))
+        self.assertFalse(turn.is_valid(nope))
 
-    # FIRST ATTEMPT - CAN PLAY
-    # def test_is_valid_case_A_2(self):
-    #     p1_hand = [
-    #         self.g_1,
-    #         self.y_1,
-    #         self.b_1,
-    #         self.view_red,
-    #         self.y_3,
-    #         self.g_2,
-    #         self.y_2,
-    #         self.selection_blue
-    #     ]
-    #
-    #     # Vorbereitungen
-    #     r_2 = self.game.deck.cards_dict.get(9)
-    #     top_card = r_2
-    #     turn = Turn(self.p1, top_card)
-    #     self.p1.hand = p1_hand
-    #     possible_set_to_play = []
-    #     possible_action_card_to_play = [self.view_red]
-    #     impossible_cards_to_play = [self.y_1]
-    #
-    #     # Funktion
-    #     turn.possible_moves = turn.create_dict_possible_moves()
-    #
-    #     # Test
-    #
-    #     # Dictionary prüfen
-    #     self.assertFalse(turn.player_has_set())
-    #     self.assertTrue(len(turn.possible_moves) == 0)
-    #
-    #     # is_valid
-    #     self.assertTrue(turn.is_valid(possible_action_card_to_play))
-    #     # self.assertFalse(turn.is_valid(impossible_cards_to_play))
+    # FIRST ATTEMPT - CAN PLAY | SECOND ATTEMPT - MUST PLAY
+    def test_is_valid_case_A_2(self):
+        p1_hand = [
+            self.g_1,
+            self.y_1,
+            self.b_1,
+            self.view_red,
+            self.y_3,
+            self.g_2,
+            self.y_2,
+            self.selection_blue
+        ]
 
+        # Vorbereitungen
+        r_2 = self.game.deck.cards_dict.get(9)
+        top_card = r_2
+        turn = Turn(self.p1, top_card)
+        self.p1.hand = p1_hand
+        nope = []
+        possible_action_card_to_play = [self.view_red]
+        impossible_cards_to_play = [self.y_1]
+
+        # Funktion
+        turn.possible_moves = turn.create_dict_possible_moves()
+
+        # Test
+
+        # Dictionary prüfen
+        self.assertFalse(turn.player_has_set())
+        self.assertTrue(len(turn.possible_moves) == 0)
+
+        # is_valid
+        self.assertTrue(turn.is_valid(possible_action_card_to_play))
+        self.assertFalse(turn.is_valid(impossible_cards_to_play))
+        self.assertTrue(turn.is_valid(nope))
+
+        ## ZWEITER VERSUCH
+
+        # Vorbereitungen
+        r_1 = self.game.deck.cards_dict.get(1)
+        r_3 = self.game.deck.cards_dict.get(17)
+        self.p1.hand.append(r_1)
+        self.p1.hand.append(r_3)
+        nope = []
+        possible_set_to_play_only_numbers = [r_1, r_3]
+        possible_set_to_play_including_action = [r_1, self.view_red]
+        impossible_cards_to_play = [self.g_2]
+
+        # Funktion
+        turn.possible_moves = turn.create_dict_possible_moves()
+
+        # Dictionary prüfen
+        self.assertTrue(turn.player_has_set())
+        self.assertTrue(len(turn.possible_moves) == 1)
+
+        # is_valid
+        self.assertTrue(turn.is_valid(possible_action_card_to_play))
+        self.assertTrue(turn.is_valid(possible_set_to_play_only_numbers))
+        self.assertTrue(turn.is_valid(possible_set_to_play_including_action))
+        self.assertFalse(turn.is_valid(impossible_cards_to_play))
+        self.assertFalse(turn.is_valid(nope))
+
+    # FIRST ATTEMPT - CAN PLAY | SECOND ATTEMPT - CAN PLAY
+    def test_is_valid_case_A_3(self):
+        p1_hand = [
+            self.g_1,
+            self.y_1,
+            self.b_1,
+            self.view_red,
+            self.y_3,
+            self.g_2,
+            self.y_2,
+            self.selection_blue
+        ]
+
+        # Vorbereitungen
+        r_2 = self.game.deck.cards_dict.get(9)
+        top_card = r_2
+        turn = Turn(self.p1, top_card)
+        self.p1.hand = p1_hand
+        nope = []
+        possible_action_card_to_play = [self.view_red]
+        impossible_cards_to_play = [self.y_1]
+
+        # Funktion
+        turn.possible_moves = turn.create_dict_possible_moves()
+
+        # Test
+
+        # Dictionary prüfen
+        self.assertFalse(turn.player_has_set())
+        self.assertTrue(len(turn.possible_moves) == 0)
+
+        # is_valid
+        self.assertTrue(turn.is_valid(possible_action_card_to_play))
+        self.assertFalse(turn.is_valid(impossible_cards_to_play))
+        self.assertTrue(turn.is_valid(nope))
+
+        ## ZWEITER VERSUCH
+
+        # Vorbereitungen
+        r_1 = self.game.deck.cards_dict.get(1)
+        b_2 = self.game.deck.cards_dict.get(11)
+        self.p1.hand.append(r_1)
+        self.p1.hand.append(b_2)
+        nope = []
+        possible_set_to_play_including_action = [r_1, self.view_red]
+        impossible_cards_to_play = [b_2]
+
+        # Funktion
+        turn.possible_moves = turn.create_dict_possible_moves()
+
+        # Dictionary prüfen
+        self.assertTrue(turn.player_has_set())
+        self.assertTrue(len(turn.possible_moves) == 1)
+
+        # is_valid
+        self.assertTrue(turn.is_valid(possible_action_card_to_play))
+        self.assertTrue(turn.is_valid(possible_set_to_play_including_action))
+        self.assertFalse(turn.is_valid(impossible_cards_to_play))
+        self.assertFalse(turn.is_valid(nope))
+
+    # TOP_CARD = VIEW als Startkarte
+    def test_is_valid_case_A_6(self):
+        p1_hand = [
+            self.g_1,
+            self.y_1,
+            self.b_1,
+            self.g_3,
+            self.y_3,
+            self.g_2,
+            self.y_2,
+            self.selection_blue
+        ]
+        self.assertIsInstance(self.view_red, ViewCard)
+
+
+        # Vorbereitungen
+        top_card = self.view_red
+        self.game.deck.discard_stack[0] = top_card
+        turn = self.game.next_turn()
+        self.p1.hand = p1_hand
+        nope = []
+        impossible_cards_to_play = [self.y_1]
+
+        # ViewCard Wert prüfen
+        self.assertEqual(1, self.view_red.get_number())
+        self.assertEqual(("red",), self.view_red.get_color())
+        self.assertIsInstance(self.view_red, ViewCard)
+
+        # Funktion
+        turn.possible_moves = turn.create_dict_possible_moves()
+
+        # Test
+
+        # Dictionary prüfen
+        self.assertFalse(turn.player_has_set())
+        self.assertTrue(len(turn.possible_moves) == 0)
+
+        # is_valid
+        self.assertFalse(turn.is_valid(impossible_cards_to_play))
+        self.assertTrue(turn.is_valid(nope))
+
+        ## ZWEITER VERSUCH
+
+        # Vorbereitungen
+        r_1 = self.game.deck.cards_dict.get(1)
+        b_2 = self.game.deck.cards_dict.get(11)
+        self.p1.hand.append(r_1)
+        self.p1.hand.append(b_2)
+        nope = []
+        possible_set_to_play = [r_1]
+        impossible_cards_to_play = [b_2]
+
+        # Funktion
+        turn.possible_moves = turn.create_dict_possible_moves()
+
+        # Dictionary prüfen
+        # self.assertTrue(turn.player_has_set())
+        self.assertTrue(len(turn.possible_moves) == 1)
+
+        # is_valid
+        self.assertTrue(turn.is_valid(possible_set_to_play))
+        self.assertFalse(turn.is_valid(impossible_cards_to_play))
+        self.assertFalse(turn.is_valid(nope))
+        # """
+
+    # TOP_CARD = VIEW mit unterer Karte
+    # TODO
     '''
-    def is_valid(self, selected_cards):
-        """
-        Überprüft, ob die übergebenen Karten einen gültigen Spielzug darstellen
+    def test_is_valid_case_A_7(self):
+        p1_hand = [
+            self.g_1,
+            self.y_1,
+            self.b_1,
+            self.g_3,
+            self.y_3,
+            self.g_2,
+            self.y_2,
+            self.selection_blue
+        ]
+        self.assertIsInstance(self.view_red, ViewCard)
 
-        :param selected_cards: Liste an Karten, die der Spieler für einen Spielzug ausgesucht hat
-        :return: boolean
-        """
-        self.turn_attempt = self.turn_attempt + 1
-        self.selected_cards = selected_cards
-        self.possible_moves = self.create_dict_possible_moves()
-        if len(selected_cards) == 0:
-            self.is_turn_valid = self.player_has_set() == False and len(selected_cards) == 0
-        elif len(selected_cards) > 0:
-            self.is_turn_valid = self.selected_cards_represent_set(selected_cards)
-        if self.is_turn_valid == False:
-            self.player.is_disqualified = True
-        return self.is_turn_valid
-    '''
+
+        # Vorbereitungen
+        top_card = self.view_red
+        self.game.deck.discard_stack[0] = top_card
+        turn = self.game.next_turn()
+        self.p1.hand = p1_hand
+        nope = []
+        impossible_cards_to_play = [self.y_1]
+
+        # ViewCard Wert prüfen
+        self.assertEqual(1, self.view_red.get_number())
+        self.assertEqual(("red",), self.view_red.get_color())
+        self.assertIsInstance(self.view_red, ViewCard)
+
+        # Funktion
+        turn.possible_moves = turn.create_dict_possible_moves()
+
+        # Test
+
+        # Dictionary prüfen
+        self.assertFalse(turn.player_has_set())
+        self.assertTrue(len(turn.possible_moves) == 0)
+
+        # is_valid
+        self.assertFalse(turn.is_valid(impossible_cards_to_play))
+        self.assertTrue(turn.is_valid(nope))
+
+        ## ZWEITER VERSUCH
+        # """
+        # Vorbereitungen
+        r_1 = self.game.deck.cards_dict.get(1)
+        b_2 = self.game.deck.cards_dict.get(11)
+        self.p1.hand.append(r_1)
+        self.p1.hand.append(b_2)
+        nope = []
+        possible_set_to_play = [r_1]
+        impossible_cards_to_play = [b_2]
+
+        # Funktion
+        turn.possible_moves = turn.create_dict_possible_moves()
+
+        # Dictionary prüfen
+        # self.assertTrue(turn.player_has_set())
+        self.assertTrue(len(turn.possible_moves) == 1)
+
+        # is_valid
+        self.assertTrue(turn.is_valid(possible_set_to_play))
+        self.assertFalse(turn.is_valid(impossible_cards_to_play))
+        self.assertFalse(turn.is_valid(nope))
+        # """
+        '''
 
 if __name__ == '__main__':
     unittest.main()

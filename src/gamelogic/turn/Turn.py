@@ -45,13 +45,7 @@ class Turn:
         :return: boolean
         """
         cards = self.possible_moves.get(color)
-        if isinstance(self.top_card, NumberCard):
-            if len(cards) >= self.top_card.get_number():
-                return True
-        if isinstance(self.top_card, JokerCard) or isinstance(self.top_card, RestartCard):
-            if len(cards) >= 1:
-                return True
-        return False
+        return len(cards) >= self.top_card.get_number()
 
     def create_dict_possible_moves(self):
         """
@@ -60,11 +54,7 @@ class Turn:
 
         :return: dictionary der möglichen Farben
         """
-        # Das Dictionary mit den ungecheckten Moves erstellt
         self.possible_moves = self.get_cards_matching_color()
-        # Hier geht man mit der Hilfsfunktion, die eine Liste
-        # ... für eine spezifische Farbe nach Validität prüft,
-        # ... alle Listen nach Validität durch
         keys_to_remove = []
         for key in self.possible_moves.keys():
             if not self.has_sufficient_matching_cards(key):
@@ -89,15 +79,15 @@ class Turn:
 
     # TODO
     def is_valid(self, selected_cards):
-        cards = selected_cards
+        c = selected_cards
         self.turn_attempt = self.turn_attempt + 1
-        self.selected_cards = cards
+        self.selected_cards = c
         self.possible_moves = self.create_dict_possible_moves()
 
-        if len(cards) == 0:
-            self.is_turn_valid = self.player_has_set() == False
-        elif self.player_has_set():
-            self.is_turn_valid = self.selected_cards_represent_set(cards) or self.played_valid_action_card(cards)
+        if self.player_has_set():
+            self.is_turn_valid = self.selected_cards_represent_set(c) or self.played_valid_action_card(c)
+        else:
+            self.is_turn_valid = len(c) == 0 or self.played_valid_action_card(c)
         return self.is_turn_valid
 
     def has_common_color(self, new_card):
@@ -106,31 +96,12 @@ class Turn:
         common_color = (set_new_card & set_top_card)
         return len(common_color) > 0
 
-
     # TODO
     def played_valid_action_card(self, cards):
+        if len(cards) == 0:
+            return False
         card = cards[0]
-        return len(cards) == 1 and isinstance(card, ActionCard) and card.color in self.top_card.color
-
-    '''
-    def is_valid(self, selected_cards):
-        """
-        Überprüft, ob die übergebenen Karten einen gültigen Spielzug darstellen
-
-        :param selected_cards: Liste an Karten, die der Spieler für einen Spielzug ausgesucht hat
-        :return: boolean
-        """
-        self.turn_attempt = self.turn_attempt + 1
-        self.selected_cards = selected_cards
-        self.possible_moves = self.create_dict_possible_moves()
-        if len(selected_cards) == 0:
-            self.is_turn_valid = self.player_has_set() == False and len(selected_cards) == 0
-        elif len(selected_cards) > 0:
-            self.is_turn_valid = self.selected_cards_represent_set(selected_cards)
-        if self.is_turn_valid == False:
-            self.player.is_disqualified = True
-        return self.is_turn_valid
-    '''
+        return len(cards) == 1 and isinstance(card, ActionCard) and self.has_common_color(card)
 
     def is_another_attempt_necessary(self):
         """
