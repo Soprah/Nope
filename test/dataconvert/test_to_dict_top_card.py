@@ -209,8 +209,77 @@ class TestDataConvertToDictTopCard(unittest.TestCase):
         self.assertEqual(expected_out_hard, actual_output)
 
     # SINGLE SEL
+    def test_to_dict_top_card_mid_game_single_selection_card(self):
+        expected_out_hard = {
+                "id": -1,
+                "color_amount": 1,
+                "color": ("green",),
+                "type": "number",
+                "content": 2
+            }
+        first_turn_dict = {
+            "token": self.p1.id,
+            "selected_cards": [self.ss_card.id],
+            "chosen_number": 2
+        }
+
+        # Vorbereitungen
+
+        # Erster Spielzug Simulation
+        self.p1.hand = [self.ss_card]
+        self.game.deck.discard_stack[0] = self.r_card
+        first_turn = self.game.next_turn()
+        first_turn.top_card = self.r_card
+
+        # Zweiter Spielzug Simulation
+        second_turn = self.game.next_turn()
+        self.game.switch_active_player()
+        processed_dict = self.dc.net_to_gamelogic(first_turn_dict, self.game)
+        processed_view_card = processed_dict.get("selected_cards")[0]
+        second_turn.top_card = processed_view_card
+
+        # Funktion
+        actual_output = self.dc.to_dict_top_card(self.game)
+
+        # Test
+        self.assertEqual(expected_out_hard, actual_output)
 
     # MULTIPLE SEL
+    def test_to_dict_top_card_mid_game_multiple_selection_card(self):
+        expected_out_hard = {
+                "id": -1,
+                "color_amount": 1,
+                "color": ("yellow",),
+                "type": "number",
+                "content": 2
+            }
+        first_turn_dict = {
+            "token": self.p1.id,
+            "selected_cards": [self.ms_card.id],
+            "chosen_number": 2,
+            "chosen_color": ("yellow",)
+        }
+
+        # Vorbereitungen
+
+        # Erster Spielzug Simulation
+        self.p1.hand = [self.ms_card]
+        self.game.deck.discard_stack[0] = self.r_card
+        first_turn = self.game.next_turn()
+        first_turn.top_card = self.r_card
+
+        # Zweiter Spielzug Simulation
+        second_turn = self.game.next_turn()
+        self.game.switch_active_player()
+        processed_dict = self.dc.net_to_gamelogic(first_turn_dict, self.game)
+        processed_view_card = processed_dict.get("selected_cards")[0]
+        second_turn.top_card = processed_view_card
+
+        # Funktion
+        actual_output = self.dc.to_dict_top_card(self.game)
+
+        # Test
+        self.assertEqual(expected_out_hard, actual_output)
 
 if __name__ == '__main__':
     unittest.main()
