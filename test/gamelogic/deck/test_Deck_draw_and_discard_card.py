@@ -21,30 +21,12 @@ class TestDeckDrawAndDiscard(unittest.TestCase):
         self.selection_blue = self.game.deck.cards_dict.get(96)
         self.multi_sel = self.game.deck.cards_dict.get(100)
 
-    # def test_draw_and_discard_card_same_card(self):
-    #     # card = self.deck.draw_card()
-    #     card = self.game.deck.draw_card()
-    #     self.assertEqual(self.game.active_player.discard_card(card), self.game.deck.discard_stack[0])
+    def test_draw_and_discard_card_same_card(self):
+        drawn_card = self.game.active_player.draw_card()
+        discarded_card = self.game.active_player.discard_card(drawn_card)
+        self.assertEqual(drawn_card, discarded_card)
 
-    # def test_empty_deck_draw_card_v1(self):
-    #     # Initialisiert den Ablagestapel, sodass es eine Karte hat
-    #     old_top_card = self.deck.draw_card()
-    #     self.deck.discard_card(old_top_card)
-    #     # Geben dem Spieler eine Karte, die wir nachher zum Vergleich nutzen
-    #     new_top_card = self.deck.draw_card()
-    #     self.deck.discard_card(new_top_card)
-    #     new_top_card = self.deck.draw_card()
-    #     self.deck.discard_card(new_top_card)
-    #     self.assertEqual(3, len(self.deck.discard_stack))
-    #     # Machen den nachziehstapel leer
-    #     while len(self.deck.draw_stack) > 0:
-    #         self.deck.draw_card()
-    #     self.deck.draw_card()
-    #     self.assertEqual(1, len(self.deck.draw_stack))
-    #     self.assertEqual(1, (len(self.deck.discard_stack)))
-    #     self.assertEqual(new_top_card, self.deck.discard_stack[0])
-
-    def test_empty_deck_draw_card_v2(self):
+    def test_empty_deck_draw_card(self):
         # Vorbereitung
 
         # Spielerhand leeren
