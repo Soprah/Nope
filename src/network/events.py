@@ -1,9 +1,11 @@
-from flask import request, jsonify
+from flask import Flask, request, jsonify
 from flask_socketio import emit, SocketIO
-from src.gamemanagement.GameManagement import GameManagement
+#from src.gamemanagement.GameManagement import GameManagement
 
-socketio = SocketIO()
-gm = GameManagement.get_instance(self=GameManagement)
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'secret!'
+socketio = SocketIO(app)
+#gm = GameManagement.get_instance(self=GameManagement)
 
 users = {}
 
@@ -26,10 +28,8 @@ def handle_join_game(join_data):
         "token": request.sid,
         "room": join_data["room"]
     }
-    gm.receive_player_data(player_data)
+    #gm.receive_player_data(player_data)
 
-
-@socketio.on("game_start")
 def handle_game_start(start_data):
     user = start_data["user"]
     start_data = {
@@ -39,7 +39,6 @@ def handle_game_start(start_data):
     emit("game_start", jsonify(start_data), room=users[user])
 
 
-@socketio.on("next_turn")
 def handle_next_turn(next_turn):
     user = next_turn["user"]
     turn_data = next_turn["turn_data"]
@@ -54,10 +53,9 @@ def handle_selected_cards(data):
         "token": request.sid
     }
     print(f"Received selected cards: {turn}")
-    gm.receive_turn_data(turn)
+    #gm.receive_turn_data(turn)
 
 
-@socketio.on("game_end")
 def handle_game_end(end_data):
     user = end_data["user"]
     result = {
@@ -77,3 +75,6 @@ def handle_disconnect():
             username = user
     if username:
         del users[username]
+
+if __name__ == '__main__':
+    socketio.run(app)
