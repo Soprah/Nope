@@ -2,6 +2,7 @@ import unittest
 
 from src.dataconvert.DataConvert import DataConvert
 from src.gamelogic.card.NumberCard import NumberCard
+from src.gamelogic.card.SelectionCard import SelectionCard
 from src.gamelogic.card.ViewCard import ViewCard
 from src.gamelogic.deck.Deck import Deck
 from src.gamelogic.game.Game import Game
@@ -44,6 +45,8 @@ class TestTurnIsValid(unittest.TestCase):
         self.selection_blue = self.game.deck.cards_dict.get(96)
 
         self.g_3 = self.game.deck.cards_dict.get(19)
+        self.b_3 = self.game.deck.cards_dict.get(18)
+        self.multi_sel = self.game.deck.cards_dict.get(100)
 
 
     def tearDown(self):
@@ -347,7 +350,6 @@ class TestTurnIsValid(unittest.TestCase):
         # """
 
     # TOP_CARD = VIEW mit unterer Karte (gelbe=2)
-    # '''
     def test_is_valid_case_A_7(self):
         selected_id_cards = [self.view_red.id]
         first_turn_dict = {
@@ -403,6 +405,147 @@ class TestTurnIsValid(unittest.TestCase):
         self.assertEqual(2, self.view_red.get_number())
         self.assertEqual(("yellow",), self.view_red.get_color())
         self.assertIsInstance(self.view_red, ViewCard)
+
+        # Funktion
+        second_turn.possible_moves = second_turn.create_dict_possible_moves()
+
+        # Test
+
+        # Dictionary prüfen
+        self.assertTrue(len(second_turn.possible_moves) == 1)
+        self.assertTrue(second_turn.player_has_set())
+
+        # is_valid
+        self.assertFalse(second_turn.is_valid(impossible_cards_to_play))
+        self.assertFalse(second_turn.is_valid(nope))
+        self.assertTrue(second_turn.is_valid(possible_cards_to_play_v1))
+        self.assertTrue(second_turn.is_valid(possible_cards_to_play_v2))
+        self.assertTrue(second_turn.is_valid(possible_cards_to_play_v3))
+
+    # TOP_CARD = SINGLE SEL mit Wahlwerte
+    def test_is_valid_case_A_9(self):
+        selected_id_cards = [self.selection_blue.id]
+        first_turn_dict = {
+            "token": self.p1.id,
+            "selected_cards": selected_id_cards,
+            "chosen_number": 2
+        }
+
+        # First Turn Vorbereitungen
+        self.p1.hand = [self.selection_blue]
+        first_turn = self.game.next_turn()
+        # top_card = numbercard, number=1, color=("blue",)
+        first_turn.top_card = self.game.deck.cards_dict.get(4)
+
+        # Data wird verarbeitet
+        processed_first_turn = self.dc.net_to_gamelogic(first_turn_dict, self.game)
+
+        # Wahlwerte übernommen?
+        processed_vc = processed_first_turn.get("selected_cards")[0]
+        self.assertEqual(processed_vc, self.selection_blue)
+        number = processed_vc.get_number()
+        self.assertEqual(2, number)
+        self.assertEqual(("blue",), self.selection_blue.get_color())
+
+        # Karte "künstlich" ablegen
+        self.game.deck.discard_stack[-1] = processed_vc
+
+
+        # Second Turn Vorbereitungen
+        second_turn = self.game.next_turn()
+
+        r_1 = self.game.deck.cards_dict.get(1)
+        p2_hand = [
+            self.g_1,
+            self.y_1,
+            self.b_1,
+            self.g_3,
+            self.y_3,
+            self.g_2,
+            self.y_2,
+            self.b_3,
+        ]
+
+        self.p2.hand = p2_hand
+        nope = []
+        possible_cards_to_play = [self.b_3, self.b_1]
+        impossible_cards_to_play = [self.b_1]
+
+        # Top Card nochmal überprüfen
+        self.assertEqual(2, self.selection_blue.get_number())
+        self.assertEqual(("blue",), self.selection_blue.get_color())
+        self.assertIsInstance(self.selection_blue, SelectionCard)
+
+        # Funktion
+        second_turn.possible_moves = second_turn.create_dict_possible_moves()
+
+        # Test
+
+        # Dictionary prüfen
+        self.assertTrue(len(second_turn.possible_moves) == 1)
+        self.assertTrue(second_turn.player_has_set())
+
+        # is_valid
+        self.assertFalse(second_turn.is_valid(impossible_cards_to_play))
+        self.assertFalse(second_turn.is_valid(nope))
+        self.assertTrue(second_turn.is_valid(possible_cards_to_play))
+
+    # TOP_CARD = MULTIPLE SEL mit Wahlwerte
+    def test_is_valid_case_A_10(self):
+        selected_id_cards = [self.multi_sel.id]
+        first_turn_dict = {
+            "token": self.p1.id,
+            "selected_cards": selected_id_cards,
+            "chosen_number": 2,
+            "chosen_color": ("green",)
+        }
+
+        # First Turn Vorbereitungen
+        self.p1.hand = [self.multi_sel]
+        first_turn = self.game.next_turn()
+        # top_card = numbercard, number=1, color=("blue",)
+        first_turn.top_card = self.game.deck.cards_dict.get(4)
+
+        # Data wird verarbeitet
+        processed_first_turn = self.dc.net_to_gamelogic(first_turn_dict, self.game)
+
+        # Wahlwerte übernommen?
+        processed_vc = processed_first_turn.get("selected_cards")[0]
+        self.assertEqual(processed_vc, self.multi_sel)
+        number = processed_vc.get_number()
+        self.assertEqual(2, number)
+        self.assertEqual(("green",), self.multi_sel.get_color())
+
+        # Karte "künstlich" ablegen
+        self.game.deck.discard_stack[-1] = processed_vc
+
+
+        # Second Turn Vorbereitungen
+        second_turn = self.game.next_turn()
+
+        r_1 = self.game.deck.cards_dict.get(1)
+        p2_hand = [
+            self.g_1,
+            self.y_1,
+            self.b_1,
+            self.g_3,
+            self.y_3,
+            self.g_2,
+            self.y_2,
+            self.b_3,
+        ]
+
+        self.p2.hand = p2_hand
+        nope = []
+        possible_cards_to_play_v1 = [self.g_1, self.g_2]
+        possible_cards_to_play_v2 = [self.g_2, self.g_3]
+        possible_cards_to_play_v3 = [self.g_3, self.g_1]
+        impossible_cards_to_play = [self.b_1]
+
+        # Top Card nochmal überprüfen
+        self.assertEqual(2, self.multi_sel.get_number())
+        self.assertEqual(("green",), self.multi_sel.get_color())
+        self.assertIsInstance(self.multi_sel, SelectionCard)
 
         # Funktion
         second_turn.possible_moves = second_turn.create_dict_possible_moves()
