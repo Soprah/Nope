@@ -255,3 +255,6 @@ class Game:
 
     def __str__(self) -> str:
         return f"Game ID: {self.id}, ID von Player 1: {self.player_1.get_id()}, ID von Player 2: {self.player_2.get_id()}"
+
+    def __repr__(self):
+        return f"Game ID: {self.id}, ID von Player 1: {self.player_1.get_id()}, ID von Player 2: {self.player_2.get_id()}"

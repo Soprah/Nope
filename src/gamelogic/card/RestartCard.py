@@ -9,6 +9,9 @@ class RestartCard(ActionCard):
     def __str__(self):
         return super().__str__() + f" Effect: Restart"
 
+    def __repr__(self):
+        return super().__str__() + f" Effect: Restart"
+
     def get_number(self):
         return 1
 

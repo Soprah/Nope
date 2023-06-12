@@ -15,6 +15,12 @@ class ViewCard(ActionCard):
         super().__init__(id, color)
         self.theoretical_card = None
 
+    def __repr__(self):
+        if self.theoretical_card is None:
+            return super().__str__() + f" Effect: View Previous_Number: None Previous_Color: None"
+        else:
+            return super().__str__() + f" Previous_Number: {self.get_number()} Previous_Color: {self.get_color()}"
+
     def __str__(self):
         if self.theoretical_card is None:
             return super().__str__() + f" Effect: View Previous_Number: None Previous_Color: None"
