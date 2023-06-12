@@ -1,7 +1,13 @@
 from src.gamelogic.card.Card import Card
+from src.gamelogic.card.JokerCard import JokerCard
 from src.gamelogic.card.NumberCard import NumberCard
 
 import random
+
+from src.gamelogic.card.RestartCard import RestartCard
+from src.gamelogic.card.SelectionCard import SelectionCard
+from src.gamelogic.card.ViewCard import ViewCard
+
 
 class Deck:
 
@@ -26,6 +32,8 @@ class Deck:
         f1 = [("red"), ("blue"), ("green"), ("yellow")]
         f2 = [("red", "blue"), ("red", "green"), ("red", "yellow"), ("blue", "green"), ("blue", "yellow"),
               ("green", "yellow")]
+
+    # Zahlenkarten
 
         # Einfarbige Karten: 20 Stück
         for number in n:
@@ -60,16 +68,51 @@ class Deck:
             self.cards.append(NumberCard(id_count, (farbe[0], farbe[1]), 3))
             id_count = id_count + 1
 
+    # Aktionskarten
+
+        # Neustart / Restart: 4 Stück
+        for i in range(4):
+            self.cards.append(RestartCard(id_count))
+            id_count = id_count + 1
+
+        # Durchblick / View: 4 Stück
+        for color in f1:
+            self.cards.append(ViewCard(id_count, color))
+            id_count = id_count + 1
+
+        # Auswahl / Selection: 6 Stück
+        for color in f1:
+            self.cards.append(SelectionCard(id_count, color))
+            id_count = id_count + 1
+        for i in range(2):
+            self.cards.append(SelectionCard(id_count, (("red"), ("blue"), ("yellow"), ("green"))))
+            id_count = id_count + 1
+
+     # Jokerkarten
+
+        for i in range(4):
+            self.cards.append(JokerCard(id_count))
+            id_count = id_count + 1
+
         self.cards_dict = self.create_dict_deck_copy(self.cards)
-        self.shuffle()
+        # self.shuffle()
         self.draw_stack = self.cards.copy()
+
 
     def draw_card(self):
         if len(self.draw_stack) == 0:
+            # Oberste Karte des Ablagestapels wird entnommen + zwischengespeichert
             top_item = self.discard_stack.pop()
+            # ViewCards & SelectionCards des Ablagestapels werden gecleart
+            cleared_list = self.clear_theoretical_references(self.discard_stack)
+            self.discard_stack = cleared_list
+            # Ablagestapel wird in leeren Nachziehstapel kopiert
             self.draw_stack = self.discard_stack.copy()
+            # Ablagestapel wird geleert
             self.discard_stack.clear()
+            # Oberste Karte wird wieder auf Ablagestapel gelegt
             self.discard_stack.append(top_item)
+            # Nachziehstapel wird gemischt
             random.shuffle(self.draw_stack)
         return self.draw_stack.pop()
 
@@ -87,9 +130,19 @@ class Deck:
         self.discard_stack.append(first_card)
         return first_card
 
+    # TODO
+    def clear_theoretical_references(self, discard_stack_cards):
+        cleared_list = []
+        for card in discard_stack_cards:
+            if isinstance(card, (ViewCard, SelectionCard)):
+                card.clear_theoretical_card()
+            cleared_list.append(card)
+        return cleared_list
+
+    # TODO
     def shuffle(self):
-        if len(self.cards) != 86:
-            raise ValueError("The deck is not complete and therefore not ready to shuffle!")
+        # if len(self.cards) != 104:
+        #     raise ValueError("The deck is not complete and therefore not ready to shuffle!")
         random.shuffle(self.cards)
         return self.cards
 
@@ -98,6 +151,3 @@ class Deck:
         for card in card_list:
             deck_dict[card.id] = card
         return deck_dict
-
-
-

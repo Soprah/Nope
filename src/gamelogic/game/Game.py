@@ -1,5 +1,10 @@
 import uuid
 
+from src.gamelogic.card.JokerCard import JokerCard
+from src.gamelogic.card.NumberCard import NumberCard
+from src.gamelogic.card.RestartCard import RestartCard
+from src.gamelogic.card.SelectionCard import SelectionCard
+from src.gamelogic.card.ViewCard import ViewCard
 from src.gamelogic.deck.Deck import Deck
 from src.gamelogic.player.Player import Player
 from src.gamelogic.turn.Turn import Turn
@@ -7,8 +12,19 @@ from src.gamelogic.turn.Turn import Turn
 class Game:
 
     def __init__(self, p1, p2):
-        self.setup(p1, p2)
+        self.id = uuid.uuid4()
+        self.turns = []
+        self.deck = Deck()
+        self.player_1 = p1
+        self.player_2 = p2
+        self.deck.initialize_discard_stack()
+        self.assign_deck_to_players()
+        self.pass_first_cards()
+        self.active_player = self.player_1
+        self.winner = None
+        self.reason_of_disqualification = None
 
+    '''
     def setup(self, p1, p2):
         self.id = uuid.uuid4()
         self.turns = []
@@ -20,6 +36,12 @@ class Game:
         self.pass_first_cards()
         self.active_player = self.player_1
         self.winner = None
+    '''
+
+    '''
+    def get_active_player(self):
+        return self.active_player
+    '''
 
     def switch_active_player(self):
         if self.active_player == self.player_1:
@@ -27,13 +49,24 @@ class Game:
         else:
             self.active_player = self.player_1
 
-    # def set_active_player(self):
-    #     if len(self.turns) == 0:
-    #         self.active_player = self.player_1
-    #     elif self.active_player == self.player_1:
-    #         self.active_player = self.player_2
-    #     else:
-    #         self.active_player = self.player_1
+    def disqualify_player(self, player, reason):
+        self.set_disqualified_player(player)
+        self.set_reason_of_disqualification(reason)
+
+    def set_disqualified_player(self, disqualified_player):
+        if disqualified_player == self.player_1 or disqualified_player == self.player_2 and isinstance(disqualified_player, Player):
+            disqualified_player.is_disqualified = True
+
+    def set_reason_of_disqualification(self, reason):
+        self.reason_of_disqualification = reason
+
+    def get_player_via_id(self, id):
+        if self.player_1.id == id:
+            return self.player_1
+        elif self.player_2.id == id:
+            return self.player_2
+        else:
+            raise ValueError("Es gibt keinen Spieler in dem Spiel mit dieser ID !")
 
     def assign_deck_to_players(self):
         self.player_1.set_deck(self.deck)
@@ -56,12 +89,13 @@ class Game:
         turn_data = {}
         if len(self.turns) == 1:
             opponent = self.player_2
-            turn_data = {
-                "previous_selected_cards": [],
-                "top_card": self.deck.discard_stack[-1],
-                "amount_opponent_cards": len(opponent.hand),
-                "own_hand_cards": current_turn.player.hand
-            }
+            if isinstance(current_turn.top_card, (NumberCard, JokerCard, RestartCard)):
+                turn_data = {
+                    "previous_selected_cards": [],
+                    "top_card": current_turn.top_card,
+                    "amount_opponent_cards": len(opponent.hand),
+                    "own_hand_cards": current_turn.player.hand
+                }
         # '''
         elif len(self.turns) > 1:
             previous_turn = self.turns[-1]
@@ -76,42 +110,17 @@ class Game:
         return turn_data
     # '''
 
-    def receive_turn_data(self, dict_selected_cards):
-        """
-        Prüft, ob die vom Spieler ausgewählten Karten im Spiel existieren.
-
-        :param dict_selected_cards: Liste von ids der übergebenen Karten
-        :return: Liste der entsprechenden Karten, die tatsächlich existieren
-        """
-        selected_cards = dict_selected_cards.get("selected_cards")
-        checked_list = []
-        if len(selected_cards) == 0:
-            return checked_list
-        if any(not isinstance(x, int) for x in selected_cards):
-            raise TypeError("Es dürfen nur Zahlen als IDs übergeben werden!")
-        if self.is_duplicate_ids(selected_cards) == True:
-            raise ValueError("Die IDs enthalten Duplikate")
-        else:
-            for s_id in selected_cards:
-                # Wenn eine der übergebenen IDs nicht in der Hand des Spielers vorkommen, der die IDs geschickt hat,
-                # ... ist die übergebene Liste ungültig
-                card_to_check = self.deck.cards_dict.get(s_id)
-                if card_to_check not in self.active_player.hand:
-                    raise ValueError(f"Die Karte mit der id {s_id} existiert nicht "
-                                     f"in der Hand des Spielers, der die Karte geschickt hat")
-                # Wenn die übergebene Liste gültig ist, werden die Karten mit den entsprechenden IDs returnt
-                else:
-                    checked_list.append(card_to_check)
-        return checked_list
-
-    def is_duplicate_ids(self, list_of_ids):
-        """
-        Überprüft, ob in der Liste doppelte Werte vorkommen
-
-        :param list_of_ids: Liste von ids, die jeweils eine Karte repräsentieren
-        :return: boolean
-        """
-        return len(list_of_ids) != len(set(list_of_ids))
+    # def get_top_card(self):
+    #     """
+    #     Liefert die oberste Karte des Ablagestapels
+    #
+    #     :return:
+    #     """
+    #     top_card = self.deck.discard_stack[-1]
+    #     if isinstance(top_card, ViewCard):
+    #         if self.deck.discard_stack[-2] is not None:
+    #             top_card = self.deck.discard_stack[-2]
+    #     return top_card
 
     def next_turn(self):
         if self.is_game_over():
@@ -245,4 +254,7 @@ class Game:
         print("WINNER: ", self.winner)
 
     def __str__(self) -> str:
+        return f"Game ID: {self.id}, ID von Player 1: {self.player_1.get_id()}, ID von Player 2: {self.player_2.get_id()}"
+
+    def __repr__(self):
         return f"Game ID: {self.id}, ID von Player 1: {self.player_1.get_id()}, ID von Player 2: {self.player_2.get_id()}"
