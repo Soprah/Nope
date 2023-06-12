@@ -1,7 +1,9 @@
 from flask import request, jsonify
 from flask_socketio import emit, SocketIO
+from src.gamemanagement.GameManagement import GameManagement
 
 socketio = SocketIO()
+gm = GameManagement.get_instance(self=GameManagement)
 
 users = {}
 
@@ -23,7 +25,7 @@ def handle_join_game(username, roomcode):
         "token": request.sid,
         "roomcode": roomcode
     }
-    # TODO: gm.add_player(player_data)
+    gm.receive_player_data(player_data)
 
 
 @socketio.on("game_start")
@@ -40,13 +42,12 @@ def handle_next_turn(user, turn_data):
 
 @socketio.on("play_cards")
 def handle_selected_cards(data):
-    # TODO: Fehler abfangen
     turn = {
         "selected_cards": data["selected_cards"],
         "token": request.sid
     }
     print(f"Received selected cards: {turn}")
-    # TODO: gm.receive_data(turn)
+    gm.receive_turn_data(turn)
 
 
 @socketio.on("game_end")
