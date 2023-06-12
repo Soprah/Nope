@@ -101,10 +101,17 @@ class Deck:
 
     def draw_card(self):
         if len(self.draw_stack) == 0:
+            # Oberste Karte des Ablagestapels wird entnommen + zwischengespeichert
             top_item = self.discard_stack.pop()
+            # TODO: clear() hier einbauen
+
+            # Ablagestapel wird in leeren Nachziehstapel kopiert
             self.draw_stack = self.discard_stack.copy()
+            # Ablagestapel wird geleert
             self.discard_stack.clear()
+            # Oberste Karte wird wieder auf Ablagestapel gelegt
             self.discard_stack.append(top_item)
+            # Nachziehstapel wird gemischt
             random.shuffle(self.draw_stack)
         return self.draw_stack.pop()
 
@@ -122,9 +129,19 @@ class Deck:
         self.discard_stack.append(first_card)
         return first_card
 
+    # TODO
+    def clear_theoretical_references(self, discard_stack_cards):
+        cleared_list = []
+        for card in discard_stack_cards:
+            if isinstance(card, (ViewCard, SelectionCard)):
+                card.clear_theoretical_card()
+            cleared_list.append(card)
+        return cleared_list
+
+    # TODO
     def shuffle(self):
-        if len(self.cards) != 104:
-            raise ValueError("The deck is not complete and therefore not ready to shuffle!")
+        # if len(self.cards) != 104:
+        #     raise ValueError("The deck is not complete and therefore not ready to shuffle!")
         random.shuffle(self.cards)
         return self.cards
 
@@ -133,8 +150,3 @@ class Deck:
         for card in card_list:
             deck_dict[card.id] = card
         return deck_dict
-
-    ''' NUR FÜR ENTWICKLUNGSZWECKE '''
-    # Eine Methode, um bestimmte Karten für Testzwecke in der Hand des Spielers zu haben
-        # draw_card_by_id(id)
-            # Gibt mir eine bestimmte Karte
