@@ -18,7 +18,7 @@ class TestGameInit(unittest.TestCase):
     def test_correct_init(self):
         game = Game(self.p1, self.p2)
         self.assertEqual(len(game.turns), 0)
-        self.assertEqual(len(game.deck.draw_stack), 69)
+        self.assertEqual(len(game.deck.draw_stack), 87)
         self.assertEqual(len(game.deck.discard_stack), 1)
         self.assertEqual(game.player_1.name, self.player_1_name)
         self.assertEqual(game.player_2.name, self.player_2_name)

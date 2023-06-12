@@ -2,20 +2,13 @@ import unittest
 
 from src.gamelogic.card.Card import Card
 
-class TestCard(unittest.TestCase):
+class TestCardInit(unittest.TestCase):
 
 
     def setUp(self):
         self.color = [("red"), ("blue"), ("yellow"), ("green")]
 
 # Einfarbige Karten
-    '''
-    # Einzigartige ID der Karte
-    def test_unique_id(self):
-        card1 = Card(1, ("red"), 1)
-        with self.assertRaises(ValueError):
-            card2 = Card(1, ("blue"), 1)
-    '''
 
     # Gültige Farbe
     def test_invalid_color(self):
