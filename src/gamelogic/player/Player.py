@@ -14,9 +14,6 @@ class Player:
         ''' Client Simulation Attribute: '''
         self.client_simulation = ClientSimulation()
 
-    # def set_id(self, new_id):
-    #     self.id = new_id
-
     def get_id(self):
         return self.id
 
@@ -46,4 +43,7 @@ class Player:
         return player_turn_data
 
     def __str__(self):
+        return f"Spieler ID: {self.id}, Spieler Name: {self.name}"
+
+    def __repr__(self):
         return f"Spieler ID: {self.id}, Spieler Name: {self.name}"

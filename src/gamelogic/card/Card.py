@@ -22,3 +22,6 @@ class Card:
 
     def __str__(self):
         return f"ID: {self.id} Anzahl Farben: {len(self.color)} Colors: {self.color}"
+
+    def get_color(self):
+        return self.color
