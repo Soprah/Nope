@@ -14,30 +14,37 @@ def handle_connect():
 
 
 @socketio.on("join_game")
-def handle_join_game(username, roomcode):
+def handle_join_game(join_data):
+    username = join_data["name"]
     if username in users:
         return False
     print(f"User {username} joined!")
     users[username] = request.sid
     print(users)
     player_data = {
-        "username": username,
+        "name": username,
         "token": request.sid,
-        "roomcode": roomcode
+        "room": join_data["room"]
     }
     gm.receive_player_data(player_data)
 
 
 @socketio.on("game_start")
-def handle_game_start(user, opponent):
+def handle_game_start(start_data):
+    user = start_data["user"]
+    start_data = {
+        "opponent_username": start_data["opponent"],
+    }
     print("Game started")
-    emit("game_start", opponent, room=users[user])
+    emit("game_start", jsonify(start_data), room=users[user])
 
 
 @socketio.on("next_turn")
-def handle_next_turn(user, turn_data):
+def handle_next_turn(next_turn):
+    user = next_turn["user"]
+    turn_data = next_turn["turn_data"]
     print(f"Next turn: {user} {turn_data}")
-    emit("next_turn", turn_data, room=users[user])
+    emit("next_turn", jsonify(turn_data), room=users[user])
 
 
 @socketio.on("play_cards")
@@ -51,9 +58,14 @@ def handle_selected_cards(data):
 
 
 @socketio.on("game_end")
-def handle_game_end(user, result):
+def handle_game_end(end_data):
+    user = end_data["user"]
+    result = {
+        "result": end_data["result"],
+        "history": end_data["history"]
+    }
     print("game ended")
-    emit("game_end", result, room=users[user])
+    emit("game_end", jsonify(result), room=users[user])
 
 
 @socketio.on("disconnect")
@@ -65,17 +77,3 @@ def handle_disconnect():
             username = user
     if username:
         del users[username]
-
-
-@socketio.on("get_history_list")
-def handle_get_games_list():
-    print("get history list")
-    history_list = {}  # TODO: gm.get_history_list()
-    emit("receive_history_list", jsonify(history_list), room=request.sid)
-
-
-@socketio.on("get_history")
-def handle_get_history(hist_id):
-    print("get history")
-    history = {}  # TODO: gm.get_history(hist_id)
-    emit("receive_history", jsonify(history), room=request.sid)
