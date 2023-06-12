@@ -78,7 +78,6 @@ class Turn:
                 flag = False
         return flag
 
-    # TODO
     def is_valid(self, selected_cards):
         c = selected_cards
         self.turn_attempt = self.turn_attempt + 1
@@ -97,7 +96,6 @@ class Turn:
         common_color = (set_new_card & set_top_card)
         return len(common_color) > 0
 
-    # TODO
     def played_valid_action_card(self, cards):
         if len(cards) == 0:
             return False

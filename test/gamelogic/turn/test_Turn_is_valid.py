@@ -108,9 +108,12 @@ class TestTurnIsValid(unittest.TestCase):
         card1 = NumberCard(2, ("blue", "red"), 1)
         card2 = NumberCard(8, ("green", "red"), 1)
         card3 = NumberCard(9, ("red"), 1)
-        self.player.hand = [card1, card2, card3]
+        card4 = NumberCard(9, ("blue", "green"), 1)
+        self.player.hand = [card1, card2, card3, card4]
         turn.possible_moves = turn.create_dict_possible_moves()
+        self.assertTrue(len(turn.possible_moves) == 2)
         self.assertTrue(turn.is_valid(selected_cards=[card2, card3]))
+        self.assertTrue(turn.is_valid(selected_cards=[card2, card1]))
 
     def test_is_valid_existing_selected_cards_two_choice_false(self):
         card = NumberCard(49, ("green", "red"), 2)
@@ -421,6 +424,48 @@ class TestTurnIsValid(unittest.TestCase):
         self.assertTrue(second_turn.is_valid(possible_cards_to_play_v1))
         self.assertTrue(second_turn.is_valid(possible_cards_to_play_v2))
         self.assertTrue(second_turn.is_valid(possible_cards_to_play_v3))
+
+    # TOP_CARD = SELECTION als Startkarte
+    def test_is_valid_case_A_8(self):
+        p1_hand = [
+            self.g_1,
+            self.y_1,
+            self.b_1,
+            self.g_3,
+            self.y_3,
+            self.g_2,
+            self.y_2,
+            self.view_red
+        ]
+
+        # Vorbereitungen
+        # TODO
+        top_card = self.selection_blue
+        self.game.deck.discard_stack[0] = top_card
+        turn = self.game.next_turn()
+        self.p1.hand = p1_hand
+        nope = []
+        possible_set_to_play = [self.b_1]
+        impossible_cards_to_play = [self.y_1]
+
+        # SelectionCard Wert prüfen
+        self.assertEqual(1, self.selection_blue.get_number())
+        self.assertEqual(("blue",), self.selection_blue.get_color())
+        self.assertIsInstance(self.selection_blue, SelectionCard)
+
+        # Funktion
+        turn.possible_moves = turn.create_dict_possible_moves()
+
+        # Test
+
+        # Dictionary prüfen
+        self.assertTrue(turn.player_has_set())
+        self.assertTrue(len(turn.possible_moves) == 1)
+
+        # is_valid
+        self.assertFalse(turn.is_valid(impossible_cards_to_play))
+        self.assertFalse(turn.is_valid(nope))
+        self.assertTrue(possible_set_to_play)
 
     # TOP_CARD = SINGLE SEL mit Wahlwerte
     def test_is_valid_case_A_9(self):

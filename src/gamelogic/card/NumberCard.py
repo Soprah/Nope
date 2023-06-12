@@ -8,6 +8,9 @@ class NumberCard(Card):
             raise ValueError("The number must be 1, 2 or 3")
         self.number = number
 
+    def __repr__(self):
+        return super().__str__() + f" Number: {self.number}"
+
     def __str__(self):
         return super().__str__() + f" Number: {self.number}"
 
