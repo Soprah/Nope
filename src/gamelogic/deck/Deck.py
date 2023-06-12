@@ -103,8 +103,9 @@ class Deck:
         if len(self.draw_stack) == 0:
             # Oberste Karte des Ablagestapels wird entnommen + zwischengespeichert
             top_item = self.discard_stack.pop()
-            # TODO: clear() hier einbauen
-
+            # ViewCards & SelectionCards des Ablagestapels werden gecleart
+            cleared_list = self.clear_theoretical_references(self.discard_stack)
+            self.discard_stack = cleared_list
             # Ablagestapel wird in leeren Nachziehstapel kopiert
             self.draw_stack = self.discard_stack.copy()
             # Ablagestapel wird geleert
