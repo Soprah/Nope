@@ -109,7 +109,7 @@ class TestDataConvertToDictTopCard(unittest.TestCase):
     def test_to_dict_top_card_view(self):
         expected_out_soft = self.v_card.to_dict_top_card()
         expected_out_hard = {
-                "id": -1,
+                "id": 92,
                 "color_amount": 1,
                 "color": ("blue",),
                 "type": "number",
@@ -131,7 +131,7 @@ class TestDataConvertToDictTopCard(unittest.TestCase):
     def test_to_dict_top_card_single_selection(self):
         expected_out_soft = self.ss_card.to_dict_top_card()
         expected_out_hard = {
-                "id": -1,
+                "id": 97,
                 "color_amount": 1,
                 "color": ("green",),
                 "type": "number",
@@ -153,7 +153,7 @@ class TestDataConvertToDictTopCard(unittest.TestCase):
     def test_to_dict_top_card_multiple_selection(self):
         expected_out_soft = self.ms_card.to_dict_top_card()
         expected_out_hard = {
-                "id": -1,
+                "id": 100,
                 "color_amount": 4,
                 "color": (("red"),("blue"), ("yellow"),("green")),
                 "type": "number",
@@ -176,7 +176,7 @@ class TestDataConvertToDictTopCard(unittest.TestCase):
     # VIEW
     def test_to_dict_top_card_mid_game_viewcard(self):
         expected_out_hard = {
-                "id": -1,
+                "id": 92,
                 "color_amount": 1,
                 "color": ("red",),
                 "type": "number",
@@ -211,7 +211,7 @@ class TestDataConvertToDictTopCard(unittest.TestCase):
     # SINGLE SEL
     def test_to_dict_top_card_mid_game_single_selection_card(self):
         expected_out_hard = {
-                "id": -1,
+                "id": 97,
                 "color_amount": 1,
                 "color": ("green",),
                 "type": "number",
@@ -247,7 +247,7 @@ class TestDataConvertToDictTopCard(unittest.TestCase):
     # MULTIPLE SEL
     def test_to_dict_top_card_mid_game_multiple_selection_card(self):
         expected_out_hard = {
-                "id": -1,
+                "id": 100,
                 "color_amount": 1,
                 "color": ("yellow",),
                 "type": "number",

@@ -14,7 +14,7 @@ class TestSelectionCardToDictTopCard(unittest.TestCase):
     # Anfang des Spiels / Keine theoretical card Referenz - einfarbige SelectionCard
     def test_to_dict_top_card_single_color_start_game(self):
         expected_dict = {
-            "id": -1,
+            "id": 1,
             "color_amount": 1,
             "color": ("blue",),
             "type": "number",
@@ -26,7 +26,7 @@ class TestSelectionCardToDictTopCard(unittest.TestCase):
     # Anfang des Spiels / Keine theoretical card Referenz - vierfarbige SelectionCard
     def test_to_dict_top_card_four_color_start_game(self):
         expected_dict = {
-            "id": -1,
+            "id": 2,
             "color_amount": 4,
             "color": (("red"), ("blue"), ("green"), ("yellow")),
             "type": "number",
@@ -39,7 +39,7 @@ class TestSelectionCardToDictTopCard(unittest.TestCase):
     def test_to_dict_top_card_single_color_mid_game(self):
         self.selection_card_single.set_theoretical_card(self.number_choice)
         expected_dict = {
-            "id": -1,
+            "id": 1,
             "color_amount": 1,
             "color": ("blue",),
             "type": "number",
@@ -52,7 +52,7 @@ class TestSelectionCardToDictTopCard(unittest.TestCase):
     def test_to_dict_top_card_four_color_mid_game(self):
         self.selection_card_multiple.set_theoretical_card(self.number_choice)
         expected_dict = {
-            "id": -1,
+            "id": 2,
             "color_amount": 4,
             "color": (("red"), ("blue"), ("green"), ("yellow")),
             "type": "number",

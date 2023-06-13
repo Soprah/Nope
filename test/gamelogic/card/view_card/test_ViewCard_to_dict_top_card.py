@@ -13,7 +13,7 @@ class TestViewCardToDictTopCard(unittest.TestCase):
     def test_to_dict_top_card_start_game(self):
         view_card = ViewCard(1, ("blue"))
         expected_dict = {
-            "id": -1,
+            "id": 1,
             "color_amount": 1,
             "color": ("blue",),
             "type": "number",
@@ -29,7 +29,7 @@ class TestViewCardToDictTopCard(unittest.TestCase):
         second_top_card = ViewCard(2, ("green"))
         second_top_card.set_theoretical_card(first_top_card)
         expected_dict = {
-            "id": -1,
+            "id": 2,
             "color_amount": 2,
             "color": (("blue"), ("red")),
             "type": "number",
@@ -45,7 +45,7 @@ class TestViewCardToDictTopCard(unittest.TestCase):
         second_top_card = ViewCard(2, ("green"))
         second_top_card.set_theoretical_card(first_top_card)
         expected_dict = {
-            "id": -1,
+            "id": 2,
             "color_amount": 4,
             "color": (("red"), ("blue"), ("yellow"), ("green")),
             "type": "number",
@@ -61,7 +61,7 @@ class TestViewCardToDictTopCard(unittest.TestCase):
         second_top_card = ViewCard(2, ("green"))
         second_top_card.set_theoretical_card(first_top_card)
         expected_dict = {
-            "id": -1,
+            "id": 2,
             "color_amount": 4,
             "color": (("red"), ("blue"), ("yellow"), ("green")),
             "type": "number",
@@ -77,7 +77,7 @@ class TestViewCardToDictTopCard(unittest.TestCase):
         second_top_card = ViewCard(2, ("green"))
         second_top_card.set_theoretical_card(first_top_card)
         expected_dict = {
-            "id": -1,
+            "id": 2,
             "color_amount": 1,
             "color": ("blue",),
             "type": "number",
@@ -93,7 +93,7 @@ class TestViewCardToDictTopCard(unittest.TestCase):
         second_top_card = ViewCard(2, ("green"))
         second_top_card.set_theoretical_card(first_top_card)
         expected_dict = {
-            "id": -1,
+            "id": 2,
             "color_amount": 4,
             "color": (("red"), ("blue"), ("yellow"), ("green")),
             "type": "number",
@@ -110,7 +110,7 @@ class TestViewCardToDictTopCard(unittest.TestCase):
         second_top_card = ViewCard(2, ("green"))
         second_top_card.set_theoretical_card(first_top_card)
         expected_dict = {
-            "id": -1,
+            "id": 2,
             "color_amount": 1,
             "color": ("blue",),
             "type": "number",
@@ -127,7 +127,7 @@ class TestViewCardToDictTopCard(unittest.TestCase):
         second_top_card = ViewCard(2, ("green"))
         second_top_card.set_theoretical_card(first_top_card)
         expected_dict = {
-            "id": -1,
+            "id": 2,
             "color_amount": 1,
             "color": ("red",),
             "type": "number",
@@ -143,7 +143,7 @@ class TestViewCardToDictTopCard(unittest.TestCase):
         second_top_card = ViewCard(2, ("green"))
         second_top_card.set_theoretical_card(first_top_card)
         expected_dict = {
-            "id": -1,
+            "id": 2,
             "color_amount": 1,
             "color": ("blue",),
             "type": "number",
@@ -162,7 +162,7 @@ class TestViewCardToDictTopCard(unittest.TestCase):
         third_top_card = ViewCard(2, ("red"))
         third_top_card.set_theoretical_card(second_top_card)
         expected_dict = {
-            "id": -1,
+            "id": 2,
             "color_amount": 1,
             "color": ("green",),
             "type": "number",
@@ -181,10 +181,10 @@ class TestViewCardToDictTopCard(unittest.TestCase):
         first_top_card.set_theoretical_card(start_card)
         second_top_card = ViewCard(2, ("green"))
         second_top_card.set_theoretical_card(first_top_card)
-        third_top_card = ViewCard(2, ("red"))
+        third_top_card = ViewCard(3, ("red"))
         third_top_card.set_theoretical_card(second_top_card)
         expected_dict = {
-            "id": -1,
+            "id": 3,
             "color_amount": 1,
             "color": ("green",),
             "type": "number",
