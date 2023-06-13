@@ -1,5 +1,6 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request
 from flask_socketio import emit, SocketIO
+import json
 #from src.gamemanagement.GameManagement import GameManagement
 
 app = Flask(__name__)
@@ -17,6 +18,7 @@ def handle_connect():
 
 @socketio.on("join_game")
 def handle_join_game(join_data):
+    join_data = json.loads(join_data)
     username = join_data["name"]
     if username in users:
         return False
@@ -28,6 +30,7 @@ def handle_join_game(join_data):
         "token": request.sid,
         "room": join_data["room"]
     }
+    print(player_data)
     #gm.receive_player_data(player_data)
 
 def handle_game_start(start_data):
@@ -36,18 +39,19 @@ def handle_game_start(start_data):
         "opponent_username": start_data["opponent"],
     }
     print("Game started")
-    emit("game_start", jsonify(start_data), room=users[user])
+    emit("game_start", json.dumps(start_data), room=users[user])
 
 
 def handle_next_turn(next_turn):
     user = next_turn["user"]
     turn_data = next_turn["turn_data"]
     print(f"Next turn: {user} {turn_data}")
-    emit("next_turn", jsonify(turn_data), room=users[user])
+    emit("next_turn", json.dumps(turn_data), room=users[user])
 
 
 @socketio.on("play_cards")
 def handle_selected_cards(data):
+    data = json.loads(data)
     turn = {
         "selected_cards": data["selected_cards"],
         "token": request.sid
@@ -63,7 +67,7 @@ def handle_game_end(end_data):
         "history": end_data["history"]
     }
     print("game ended")
-    emit("game_end", jsonify(result), room=users[user])
+    emit("game_end", json.dumps(result), room=users[user])
 
 
 @socketio.on("disconnect")
