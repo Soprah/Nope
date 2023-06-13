@@ -1,7 +1,7 @@
 import uuid
 
 from src.gamelogic.player.client_simulation.ClientSimulation import ClientSimulation
-
+from src.Datenbank.connector import DatabaseConnector
 
 class Player:
 
@@ -29,6 +29,7 @@ class Player:
         if card in self.hand:
             discarded_card = self.hand.pop(self.hand.index(card))
             self.deck.discard_stack.append(discarded_card)
+            #DatabaseConnector(host, port, database, user, password).execute_query("QUERY")
             return discarded_card
         else:
             raise ValueError("Card not in player's hand.")
