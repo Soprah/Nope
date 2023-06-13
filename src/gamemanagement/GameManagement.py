@@ -136,8 +136,9 @@ class GameManagement:
 			"user": game.player_2,
 			"opponent": game.player_1
 		}
-		events.handle_game_start(p1_dict)
-		events.handle_game_start(p2_dict)
+		# TODO: Folgende Methode entklammern
+		# events.handle_game_start(p1_dict)
+		# events.handle_game_start(p2_dict)
 		# game.execute()
 
 	def send_turn_data(self, data, active_player):

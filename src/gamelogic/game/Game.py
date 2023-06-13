@@ -25,10 +25,9 @@ class Game:
         self.active_player = self.player_1
         self.winner = None
         self.reason_of_disqualification = None
-        self.state_output = None
 
     def execute(self, data=None):
-        self.state.handle(self, data)
+        return self.state.handle(self, data)
 
     def change_state(self):
         self.state.change_state(self)

@@ -13,6 +13,9 @@ class GameState:
     def __str__(self):
         return type(self).__name__
 
+    def __repr__(self):
+        return type(self).__name__
+
 
 class NewTurnState(GameState):
 
@@ -27,11 +30,20 @@ class NewTurnState(GameState):
 
         # Funktionen
         g.next_turn()
-        g.state_output = dc.gamelogic_to_net(g)
-        gm.send_turn_data(g.state_output, g.active_player)
+        output = dc.gamelogic_to_net(g)
+        # TODO: Folgende Methode entklammern
+        # gm.send_turn_data(output, g.active_player)
+        self.change_state(g)
+        return output
 
     def change_state(self, g):
         g.set_state(FirstAttemptState())
+
+    def __str__(self):
+        return type(self).__name__
+
+    def __repr__(self):
+        return type(self).__name__
 
 
 class FirstAttemptState(GameState):
@@ -39,17 +51,38 @@ class FirstAttemptState(GameState):
     def handle(self, g, data=None):
         print("The client does his first attempt !")
         print("Does he need another turn . . . ?")
+        from src.dataconvert.DataConvert import DataConvert
+        from src.gamemanagement.GameManagement import GameManagement
+        # Objekte
+        dc = DataConvert()
+        gm = GameManagement.get_instance(self=GameManagement)
 
-        # Funktionen
+        if g.is_game_over() == False:
+            # Funktionen
+            print("Vom Client verschickte Dictionary: ", data)
+            processed_data = dc.net_to_gamelogic(data, g)
+            cards = processed_data.get("selected_cards")
+            print("Ausgewählte Karten:", cards)
+            turn_valid = g.turns[-1].is_valid(cards)
+            print(turn_valid)
+            self.change_state(g)
+
+        else:
+            print("Spiel ist beendet!")
+
+    def __str__(self):
+        return type(self).__name__
+
+    def __repr__(self):
+        return type(self).__name__
 
     def change_state(self, g):
-        '''
-        if condition == 3:
+        another_attempt_necessary = g.turns[-1].is_another_attempt_necessary()
+        print("Muss man noch einen Spielzug machen? Antwort: ",another_attempt_necessary)
+        if another_attempt_necessary:
             g.set_state(FinishTurnState())
         else:
             g.set_state(NewCardsState())
-        '''
-
 
 class FinishTurnState(GameState):
 
