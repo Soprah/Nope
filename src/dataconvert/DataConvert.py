@@ -4,7 +4,6 @@ from src.gamelogic.card.NumberCard import NumberCard
 from src.gamelogic.card.RestartCard import RestartCard
 from src.gamelogic.card.SelectionCard import SelectionCard
 from src.gamelogic.card.ViewCard import ViewCard
-from src.gamelogic.game.Game import Game
 
 
 class DataConvert:

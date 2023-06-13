@@ -1,6 +1,7 @@
 from src.gamelogic.player.Player import Player
 from src.gamelogic.game.Game import Game
 from src.dataconvert.DataConvert import DataConvert
+from src.network import events
 
 
 class GameManagement:
@@ -61,6 +62,8 @@ class GameManagement:
 			self.add_game_to_sessions(game, player_1.id, player_2.id)
 			room["game"] = game
 			room["player_2"] = player_2
+
+			self.start_game(game)
 			return "Successfully assigned a player to an existing room !"
 
 		# Room existiert nicht
@@ -122,7 +125,8 @@ class GameManagement:
 			# Richtiger Spieler
 			if game.active_player.id == p_id:
 				# Daten übergeben
-				dc.net_to_gamelogic(turn_data, game)
+				# dc.net_to_gamelogic(turn_data, game)
+				game.execute(turn_data)
 				return None
 			# Nicht aktiver Spieler
 			else:
@@ -132,9 +136,23 @@ class GameManagement:
 			return f"Es gibt kein laufendes Spiel mit der Spieler ID {p_id} !"
 
 	# TODO: Startet das Spiel
-	def start_game(self):
-		pass
+	def start_game(self, game):
+		p1_dict = {
+			"user": game.player_1,
+			"opponent": game.player_2
+		}
+		p2_dict = {
+			"user": game.player_2,
+			"opponent": game.player_1
+		}
+		events.handle_game_start(p1_dict)
+		events.handle_game_start(p2_dict)
+		# game.execute()
 
 	# TODO: Verschickt die Spielzugdaten, welches von DataConvert bereitgestellt wurde
-	def send_turn_data(self):
-		pass
+	def send_turn_data(self, data, active_player):
+		to_send_data = {
+			"turn_data": data,
+			"user": active_player
+		}
+		events.handle_next_turn(to_send_data)

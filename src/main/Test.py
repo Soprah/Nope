@@ -12,3 +12,13 @@ p2 = Player("Marc", "19")
 game = Game(p1, p2)
 # for c in game.deck.cards:
 #     print(c)
+
+print(game.get_state())
+game.execute()
+print(game.state_output)
+game.change_state()
+
+print(game.get_state())
+game.execute()
+print(game.state_output)
+game.change_state()
