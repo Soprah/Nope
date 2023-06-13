@@ -1,5 +1,5 @@
 from src.gamelogic.player.Player import Player
-from src.gamelogic.game.Game import Game
+# from src.gamelogic.game.Game import Game
 from src.dataconvert.DataConvert import DataConvert
 from src.network import events
 

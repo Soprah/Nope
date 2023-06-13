@@ -24,6 +24,7 @@ class NewTurnState(GameState):
         g.next_turn()
         g.state_output = self.dc.gamelogic_to_net(g)
         self.gm.send_turn_data(g.state_output, g.active_player)
+        self.gm.send_turn_data(g.state_output)
 
     def change_state(self, g):
         g.set_state(FirstAttemptState())
@@ -70,30 +71,3 @@ class SecondAttemptState(GameState):
 
     def handle(self, g, data=None):
         print()
-
-
-
-"""
-# Zustand 1
-print("State: ", game.get_state())
-game.execute()
-print("Value: ", game.get_value())
-game.change_state()
-
-# Zustand 2
-print("State: ", game.get_state())
-game.execute()
-print("Value: ", game.get_value())
-game.change_state()
-
-# Zustand 3
-print("State: ", game.get_state())
-game.execute()
-print("Value: ", game.get_value())
-game.change_state()
-
-# Zustand 4
-print("State: ", game.get_state())
-game.execute()
-print("Value: ", game.get_value())
-"""
