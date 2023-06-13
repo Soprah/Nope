@@ -101,6 +101,28 @@ CREATE TABLE public."Tabelle" (
 
 ALTER TABLE public."Tabelle" OWNER TO postgres;
 
+CREATE TABLE public."Turn" (
+    "GameID" INT NOT NULL,
+    "PlayerID" INT NOT NULL,
+    "TurnNr" INT AUTO_INCREMENT,
+    "Card" VARCHAR(50)
+);
+ALTER TABLE public."Turn" OWNER TO postgres;
+ALTER TABLE public."Turn" ADD PRIMARY KEY ("GameID", "TurnNr");
+ALTER TABLE public."Turn" ADD CONSTRAINT "FK_Turn_PlayerID "FOREIGN KEY ("PlayerID") REFERENCES Spieler("Id");
+ALTER TABLE public."Turn" ADD CONSTRAINT "FK_Turn_GameID" FOREIGN KEY ("GameID") REFERENCES Spiel("Id");
+
+CREATE TABLE "dealtCards" (
+  "GameID" INT NOT NULL,
+  "PlayerID" INT NOT NULL,
+  "TurnNr" INT AUTO_INCREMENT,
+  "Card" VARCHAR(50)
+);
+ALTER TABLE public."dealtCards" OWNER TO postgres;
+ALTER TABLE public."dealtCards" ADD PRIMARY KEY ("GameID", "TurnNr");
+ALTER TABLE public."dealtCards" ADD CONSTRAINT "FK_dealtCards_PlayerID "FOREIGN KEY ("PlayerID") REFERENCES Spieler("Id");
+ALTER TABLE public."dealtCards" ADD CONSTRAINT "FK_dealtCards_GameID" FOREIGN KEY ("GameID") REFERENCES Spiel("Id");
+
 --
 -- Name: Karten Karten_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
