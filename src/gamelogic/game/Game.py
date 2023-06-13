@@ -111,6 +111,7 @@ class Game:
         print("PLACEHOLDER FOR SENDING DATA TO THE DATABASE")
         return "GAME END"
 
+    """
     def run(self):
         while self.is_game_over() == False:
             print("**********************")
@@ -203,6 +204,7 @@ class Game:
         print("\n")
         self.finish_game()
         print("WINNER: ", self.winner)
+    """
 
     def __str__(self) -> str:
         return f"Game ID: {self.id}, ID von Player 1: {self.player_1.get_id()}, ID von Player 2: {self.player_2.get_id()}"
