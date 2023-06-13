@@ -1,11 +1,11 @@
-from src.dataconvert.DataConvert import DataConvert
-from src.gamemanagement.GameManagement import GameManagement
+# from src.dataconvert.DataConvert import DataConvert
+# from src.gamemanagement.GameManagement import GameManagement
 
 
 class GameState:
 
-    dc = DataConvert()
-    gm = GameManagement.get_instance(self=GameManagement)
+    # dc = DataConvert()
+    # gm = GameManagement.get_instance(self=GameManagement)
 
     def handle(self, g):
         pass
@@ -19,12 +19,16 @@ class NewTurnState(GameState):
     def handle(self, g, data=None):
         print("Created a new turn object !")
         print("Sending the data to the client . . .")
+        from src.dataconvert.DataConvert import DataConvert
+        from src.gamemanagement.GameManagement import GameManagement
+        # Objekte
+        dc = DataConvert()
+        gm = GameManagement.get_instance(self=GameManagement)
 
         # Funktionen
         g.next_turn()
-        g.state_output = self.dc.gamelogic_to_net(g)
-        self.gm.send_turn_data(g.state_output, g.active_player)
-        self.gm.send_turn_data(g.state_output)
+        g.state_output = dc.gamelogic_to_net(g)
+        gm.send_turn_data(g.state_output, g.active_player)
 
     def change_state(self, g):
         g.set_state(FirstAttemptState())
