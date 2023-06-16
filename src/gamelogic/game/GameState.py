@@ -23,17 +23,17 @@ class NewTurnState(GameState):
         if g.is_game_over() == False:
             print("Created a new turn object !")
             print("Sending the data to the client . . .")
-            from src.dataconvert.DataConvert import DataConvert
-            from src.gamemanagement.GameManagement import GameManagement
+            # from src.dataconvert.DataConvert import DataConvert
+            # from src.gamemanagement.GameManagement import GameManagement
             # Objekte
-            dc = DataConvert()
-            gm = GameManagement.get_instance(self=GameManagement)
+            # dc = DataConvert()
+            # gm = GameManagement.get_instance(self=GameManagement)
 
             # Funktionen
             g.next_turn()
             output = dc.gamelogic_to_net(g)
             # TODO: Folgende Methode entklammern
-            gm.send_turn_data(output, g.active_player)
+            # gm.send_turn_data(output, g.active_player)
             self.change_state(g)
             # return output
         else:

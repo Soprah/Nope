@@ -1,12 +1,12 @@
 from flask import Flask, request
 from flask_socketio import emit, SocketIO
 import json
-from src.gamemanagement.GameManagement import GameManagement
+# from src.gamemanagement.GameManagement import GameManagement
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
-gm = GameManagement.get_instance(self=GameManagement)
+# gm = GameManagement.get_instance(self=GameManagement)
 
 users = {}
 
@@ -31,7 +31,8 @@ def handle_join_game(join_data):
         "room": join_data["room"]
     }
     print(player_data)
-    gm.receive_player_data(player_data)
+    # gm.receive_player_data(player_data)
+
 
 def handle_game_start(start_data):
     user = start_data["user"]

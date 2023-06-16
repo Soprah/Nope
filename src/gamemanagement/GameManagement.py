@@ -137,9 +137,9 @@ class GameManagement:
 			"opponent": game.player_1
 		}
 		# TODO: Folgende Methode entklammern
-		from src.network import events
-		events.handle_game_start(p1_dict)
-		events.handle_game_start(p2_dict)
+		from src.network import Events
+		# events.handle_game_start(p1_dict)
+		# events.handle_game_start(p2_dict)
 		game.execute()
 
 	def send_turn_data(self, data, active_player):
@@ -147,5 +147,5 @@ class GameManagement:
 			"turn_data": data,
 			"user": active_player
 		}
-		from src.network import events
-		events.handle_next_turn(to_send_data)
+		from src.network import Events
+		# events.handle_next_turn(to_send_data)
