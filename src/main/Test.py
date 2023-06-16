@@ -10,5 +10,5 @@ from src.gamemanagement.GameManagement import GameManagement
 p1 = Player("Eric", "33")
 p2 = Player("Marc", "19")
 game = Game(p1, p2)
-# for c in game.deck.cards:
-#     print(c)
+for c in game.deck.cards:
+    print(c)

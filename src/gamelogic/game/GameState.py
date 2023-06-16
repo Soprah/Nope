@@ -1,5 +1,5 @@
 # from src.dataconvert.DataConvert import DataConvert
-# from src.gamemanagement.GameManagement import GameManagement
+from src.gamemanagement.GameManagement import GameManagement
 
 
 class GameState:
@@ -33,9 +33,9 @@ class NewTurnState(GameState):
             g.next_turn()
             output = dc.gamelogic_to_net(g)
             # TODO: Folgende Methode entklammern
-            # gm.send_turn_data(output, g.active_player)
+            gm.send_turn_data(output, g.active_player)
             self.change_state(g)
-            return output
+            # return output
         else:
             print("Das Spiel wurde beendet")
             g.finish_game()

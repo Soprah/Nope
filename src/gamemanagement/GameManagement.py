@@ -1,6 +1,6 @@
 from src.gamelogic.game.Game import Game
 from src.gamelogic.player.Player import Player
-from src.network import events
+# from src.network import events
 
 
 class GameManagement:
@@ -137,13 +137,15 @@ class GameManagement:
 			"opponent": game.player_1
 		}
 		# TODO: Folgende Methode entklammern
-		# events.handle_game_start(p1_dict)
-		# events.handle_game_start(p2_dict)
-		# game.execute()
+		from src.network import events
+		events.handle_game_start(p1_dict)
+		events.handle_game_start(p2_dict)
+		game.execute()
 
 	def send_turn_data(self, data, active_player):
 		to_send_data = {
 			"turn_data": data,
 			"user": active_player
 		}
+		from src.network import events
 		events.handle_next_turn(to_send_data)
