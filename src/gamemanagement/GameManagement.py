@@ -125,20 +125,19 @@ class GameManagement:
 		else:
 			return f"Es gibt kein laufendes Spiel mit der Spieler ID {p_id} !"
 
-	def start_game(self, game):
+	def start_game_p1_data(self, game):
 		p1_dict = {
-			"user": game.player_1,
-			"opponent": game.player_2
+			"user": game.player_1.name,
+			"opponent": game.player_2.name
 		}
+		return p1_dict
+
+	def start_game_p2_data(self, game):
 		p2_dict = {
-			"user": game.player_2,
-			"opponent": game.player_1
+			"user": game.player_2.name,
+			"opponent": game.player_1.name
 		}
-		# TODO: Folgende Methode entklammern
-		from src.network import Events
-		# events.handle_game_start(p1_dict)
-		# events.handle_game_start(p2_dict)
-		game.execute()
+		return p2_dict
 
 	def send_turn_data(self, data, active_player):
 		to_send_data = {

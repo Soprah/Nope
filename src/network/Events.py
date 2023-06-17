@@ -25,24 +25,36 @@ def handle_connect():
 
 @socketio.on("join_game")
 def handle_join_game(join_data):
+
+    # Client in "users" speichern
     join_data = json.loads(join_data)
     username = join_data["name"]
     if username in users:
         return False
     print(f"User {username} joined!")
     users[username] = request.sid
-    print(users)
+
+    # Baut Paket für GameManagement
     player_data = {
         "name": username,
         "token": request.sid,
         "room": join_data["room"]
     }
-    print(player_data)
+
+    # GameManagement reagiert auf das Paket
     message = gm.receive_player_data(player_data)
     print(message)
-    if message == "Successfully assigned a player to an existing room !":
-        pass
 
+    # Room enthält jetzt 2 Spieler
+    if message == "Successfully assigned a player to an existing room !":
+        print("Okay, LET'S GO !")
+        p_id = player_data.get("token")
+        game = gm.get_game(p_id)
+        p1_data = gm.start_game_p1_data(game)
+        p2_data = gm.start_game_p2_data(game)
+
+        handle_game_start(p1_data)
+        handle_game_start(p2_data)
 
 def handle_game_start(start_data):
     user = start_data["user"]
