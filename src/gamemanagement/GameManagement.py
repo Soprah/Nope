@@ -1,6 +1,5 @@
 from src.gamelogic.game.Game import Game
 from src.gamelogic.player.Player import Player
-# from src.network import events
 
 
 class GameManagement:

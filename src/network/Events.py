@@ -1,14 +1,20 @@
+import sys
+import os
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+src_dir = os.path.join(current_dir, '..', '..')
+sys.path.append(src_dir)
+
 from flask import Flask, request
 from flask_socketio import emit, SocketIO
 import json
-
-import GameManagement
+from src.gamemanagement.GameManagement import GameManagement
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 
-gm = GameManagement.get_instance(self=GameManagement)
+gm = GameManagement.get_instance(GameManagement)
 users = {}
 
 
@@ -19,7 +25,6 @@ def handle_connect():
 
 @socketio.on("join_game")
 def handle_join_game(join_data):
-    global a
     join_data = json.loads(join_data)
     username = join_data["name"]
     if username in users:
@@ -35,6 +40,9 @@ def handle_join_game(join_data):
     print(player_data)
     message = gm.receive_player_data(player_data)
     print(message)
+    if message == "Successfully assigned a player to an existing room !":
+        pass
+
 
 def handle_game_start(start_data):
     user = start_data["user"]
@@ -60,7 +68,7 @@ def handle_selected_cards(data):
         "token": request.sid
     }
     print(f"Received selected cards: {turn}")
-    #gm.receive_turn_data(turn)
+    # gm.receive_turn_data(turn)
 
 
 def handle_game_end(end_data):
