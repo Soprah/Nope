@@ -81,7 +81,7 @@ class ViewCard(ActionCard):
         local_color = self.get_color()
         local_number = self.get_number()
         return {
-            "id": -1,
+            "id": self.id,
             "color_amount": len(local_color),
             "color": local_color,
             "type": "number",

@@ -1,6 +1,5 @@
-from src.gamelogic.player.Player import Player
 from src.gamelogic.game.Game import Game
-from src.dataconvert.DataConvert import DataConvert
+from src.gamelogic.player.Player import Player
 
 
 class GameManagement:
@@ -32,7 +31,8 @@ class GameManagement:
 		:param player_data: name, token, room
 		:return:
 		"""
-		self.set_room(player_data)
+		return self.set_room(player_data)
+
 
 	def set_room(self, player_data):
 		"""
@@ -104,7 +104,6 @@ class GameManagement:
 		self.sessions[p1_id] = game
 		self.sessions[p2_id] = game
 
-	# TODO: Sind Tests notwendig?
 	def receive_turn_data(self, turn_data):
 		"""
 		Schnittstelle zwischen Netzwerk und GameManagement, wenn die Spielzugdaten gesendet werden
@@ -114,27 +113,36 @@ class GameManagement:
 		self.assign_turn_data(turn_data)
 
 	def assign_turn_data(self, turn_data):
-		dc = DataConvert()
 		p_id = turn_data.get("token")
 		game = self.get_game(p_id)
-		# Game existiert mit token
 		if game is not None:
-			# Richtiger Spieler
 			if game.active_player.id == p_id:
-				# Daten übergeben
-				dc.net_to_gamelogic(turn_data, game)
+				# TODO: Folgende Methode entklammern
+				# game.execute(turn_data)
 				return None
-			# Nicht aktiver Spieler
 			else:
 				return f"Der Spieler mit der ID {p_id} war nicht am Zug !"
-		# Kein Game existiert mit token
 		else:
 			return f"Es gibt kein laufendes Spiel mit der Spieler ID {p_id} !"
 
-	# TODO: Startet das Spiel
-	def start_game(self):
-		pass
+	def start_game_p1_data(self, game):
+		p1_dict = {
+			"user": game.player_1.name,
+			"opponent": game.player_2.name
+		}
+		return p1_dict
 
-	# TODO: Verschickt die Spielzugdaten, welches von DataConvert bereitgestellt wurde
-	def send_turn_data(self):
-		pass
+	def start_game_p2_data(self, game):
+		p2_dict = {
+			"user": game.player_2.name,
+			"opponent": game.player_1.name
+		}
+		return p2_dict
+
+	def send_turn_data(self, data, active_player):
+		to_send_data = {
+			"turn_data": data,
+			"user": active_player
+		}
+		from src.network import Events
+		# events.handle_next_turn(to_send_data)

@@ -1,11 +1,7 @@
 import uuid
 
-from src.gamelogic.card.JokerCard import JokerCard
-from src.gamelogic.card.NumberCard import NumberCard
-from src.gamelogic.card.RestartCard import RestartCard
-from src.gamelogic.card.SelectionCard import SelectionCard
-from src.gamelogic.card.ViewCard import ViewCard
 from src.gamelogic.deck.Deck import Deck
+from src.gamelogic.game.GameState import NewTurnState
 from src.gamelogic.player.Player import Player
 from src.gamelogic.turn.Turn import Turn
 
@@ -13,6 +9,7 @@ class Game:
 
     def __init__(self, p1, p2):
         self.id = uuid.uuid4()
+        self.state = NewTurnState()
         self.turns = []
         self.deck = Deck()
         self.player_1 = p1
@@ -24,24 +21,17 @@ class Game:
         self.winner = None
         self.reason_of_disqualification = None
 
-    '''
-    def setup(self, p1, p2):
-        self.id = uuid.uuid4()
-        self.turns = []
-        self.deck = Deck()
-        self.player_1 = p1
-        self.player_2 = p2
-        self.deck.initialize_discard_stack()
-        self.assign_deck_to_players()
-        self.pass_first_cards()
-        self.active_player = self.player_1
-        self.winner = None
-    '''
+    def execute(self, data=None):
+        return self.state.handle(self, data)
 
-    '''
-    def get_active_player(self):
-        return self.active_player
-    '''
+    def change_state(self):
+        self.state.change_state(self)
+
+    def set_state(self, state):
+        self.state = state
+
+    def get_state(self):
+        return self.state
 
     def switch_active_player(self):
         if self.active_player == self.player_1:
@@ -77,50 +67,6 @@ class Game:
         for i in range(amount_start_cards):
             self.player_1.draw_card()
             self.player_2.draw_card()
-
-    # '''
-    def send_turn_data(self, current_turn):
-        """
-        Übergibt die notwendigen turn_data an dem Spieler, der aktuell am Zug ist.
-
-        :param current_turn: der aktuelle Zug und seine Daten
-        :return: turn_data
-        """
-        turn_data = {}
-        if len(self.turns) == 1:
-            opponent = self.player_2
-            if isinstance(current_turn.top_card, (NumberCard, JokerCard, RestartCard)):
-                turn_data = {
-                    "previous_selected_cards": [],
-                    "top_card": current_turn.top_card,
-                    "amount_opponent_cards": len(opponent.hand),
-                    "own_hand_cards": current_turn.player.hand
-                }
-        # '''
-        elif len(self.turns) > 1:
-            previous_turn = self.turns[-1]
-            if isinstance(previous_turn, Turn) and isinstance(current_turn, Turn):
-                turn_data = {
-                    "previous_selected_cards": previous_turn.selected_cards,
-                    "top_card": previous_turn.top_card,
-                    "amount_opponent_cards": len(previous_turn.player.hand),
-                    "own_hand_cards": current_turn.player.hand
-                }
-        # '''
-        return turn_data
-    # '''
-
-    # def get_top_card(self):
-    #     """
-    #     Liefert die oberste Karte des Ablagestapels
-    #
-    #     :return:
-    #     """
-    #     top_card = self.deck.discard_stack[-1]
-    #     if isinstance(top_card, ViewCard):
-    #         if self.deck.discard_stack[-2] is not None:
-    #             top_card = self.deck.discard_stack[-2]
-    #     return top_card
 
     def next_turn(self):
         if self.is_game_over():
@@ -160,6 +106,7 @@ class Game:
         print("PLACEHOLDER FOR SENDING DATA TO THE DATABASE")
         return "GAME END"
 
+    """
     def run(self):
         while self.is_game_over() == False:
             print("**********************")
@@ -252,6 +199,7 @@ class Game:
         print("\n")
         self.finish_game()
         print("WINNER: ", self.winner)
+    """
 
     def __str__(self) -> str:
         return f"Game ID: {self.id}, ID von Player 1: {self.player_1.get_id()}, ID von Player 2: {self.player_2.get_id()}"

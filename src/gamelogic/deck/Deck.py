@@ -130,7 +130,6 @@ class Deck:
         self.discard_stack.append(first_card)
         return first_card
 
-    # TODO
     def clear_theoretical_references(self, discard_stack_cards):
         cleared_list = []
         for card in discard_stack_cards:
@@ -139,12 +138,6 @@ class Deck:
             cleared_list.append(card)
         return cleared_list
 
-    # TODO
-    def shuffle(self):
-        # if len(self.cards) != 104:
-        #     raise ValueError("The deck is not complete and therefore not ready to shuffle!")
-        random.shuffle(self.cards)
-        return self.cards
 
     def create_dict_deck_copy(self, card_list):
         deck_dict = {}
