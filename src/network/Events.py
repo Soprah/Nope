@@ -1,14 +1,16 @@
 from flask import Flask, request
 from flask_socketio import emit, SocketIO
 import json
-# from src.gamemanagement.GameManagement import GameManagement
+
+from Handler import Handler
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
-# gm = GameManagement.get_instance(self=GameManagement)
+handler = Handler()
 
 users = {}
+a = 0
 
 
 @socketio.on("connect")
@@ -18,6 +20,7 @@ def handle_connect():
 
 @socketio.on("join_game")
 def handle_join_game(join_data):
+    global a
     join_data = json.loads(join_data)
     username = join_data["name"]
     if username in users:
@@ -32,7 +35,9 @@ def handle_join_game(join_data):
     }
     print(player_data)
     # gm.receive_player_data(player_data)
-
+    a = a + handler.foo()
+    if a == 6:
+        print("Room created!")
 
 def handle_game_start(start_data):
     user = start_data["user"]
@@ -73,13 +78,14 @@ def handle_game_end(end_data):
 
 @socketio.on("disconnect")
 def handle_disconnect():
-    print("Client disconnected!")
     username = None
     for user in users:
         if users[user] == request.sid:
             username = user
+            print(f"Client {username} disconnected!")
     if username:
         del users[username]
+
 
 if __name__ == '__main__':
     socketio.run(app)
