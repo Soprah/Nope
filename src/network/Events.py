@@ -48,13 +48,20 @@ def handle_join_game(join_data):
     # Room enthält jetzt 2 Spieler
     if message == "Successfully assigned a player to an existing room !":
         print("Okay, LET'S GO !")
+
+        # Verschickt den Namen des Gegners
         p_id = player_data.get("token")
         game = gm.get_game(p_id)
         p1_data = gm.start_game_p1_data(game)
         p2_data = gm.start_game_p2_data(game)
-
         handle_game_start(p1_data)
         handle_game_start(p2_data)
+
+        # Spiel starten - Turn Data verschicken
+        turn_data = gm.start_game(game)
+        print("Anfang: ", turn_data)
+        handle_next_turn(turn_data)
+
 
 def handle_game_start(start_data):
     user = start_data["user"]

@@ -139,10 +139,18 @@ class GameManagement:
 		}
 		return p2_dict
 
+	def start_game(self, game):
+		turn_data = game.execute()
+		user = game.active_player.name
+		turn_data_player = {
+			"turn_data": turn_data,
+			"user": user
+		}
+		return turn_data_player
+
 	def send_turn_data(self, data, active_player):
 		to_send_data = {
 			"turn_data": data,
 			"user": active_player
 		}
-		from src.network import Events
 		# events.handle_next_turn(to_send_data)
