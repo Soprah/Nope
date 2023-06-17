@@ -32,7 +32,8 @@ class GameManagement:
 		:param player_data: name, token, room
 		:return:
 		"""
-		self.set_room(player_data)
+		return self.set_room(player_data)
+
 
 	def set_room(self, player_data):
 		"""
@@ -61,8 +62,6 @@ class GameManagement:
 			self.add_game_to_sessions(game, player_1.id, player_2.id)
 			room["game"] = game
 			room["player_2"] = player_2
-			# TODO: Folgende Methode entklammern
-			# self.start_game(game)
 			return "Successfully assigned a player to an existing room !"
 
 		# Room existiert nicht

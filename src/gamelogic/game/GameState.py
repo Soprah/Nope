@@ -1,11 +1,9 @@
-# from src.dataconvert.DataConvert import DataConvert
-from src.gamemanagement.GameManagement import GameManagement
+from src.dataconvert.DataConvert import DataConvert
 
 
 class GameState:
 
-    # dc = DataConvert()
-    # gm = GameManagement.get_instance(self=GameManagement)
+    dc = DataConvert()
 
     def handle(self, g):
         pass
@@ -59,10 +57,8 @@ class FirstAttemptState(GameState):
             print("Does he need another turn . . . ?")
 
             from src.dataconvert.DataConvert import DataConvert
-            from src.gamemanagement.GameManagement import GameManagement
             # Objekte
             dc = DataConvert()
-            gm = GameManagement.get_instance(self=GameManagement)
 
             # Funktionen
             print("Vom Client verschickte Dictionary: ", data)
