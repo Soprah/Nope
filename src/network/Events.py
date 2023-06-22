@@ -14,7 +14,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 
-gm = GameManagement.get_instance(GameManagement)
+gm = GameManagement.get_instance(self=GameManagement)
 users = {}
 
 
@@ -25,7 +25,6 @@ def handle_connect():
 
 @socketio.on("join_game")
 def handle_join_game(join_data):
-
     # Client in "users" speichern
     join_data = json.loads(join_data)
     username = join_data["name"]
@@ -47,8 +46,6 @@ def handle_join_game(join_data):
 
     # Room enthält jetzt 2 Spieler
     if message == "Successfully assigned a player to an existing room !":
-        print("Okay, LET'S GO !")
-
         # Verschickt den Namen des Gegners
         p_id = player_data.get("token")
         game = gm.get_game(p_id)
@@ -59,7 +56,6 @@ def handle_join_game(join_data):
 
         # Spiel starten - Turn Data verschicken
         turn_data = gm.start_game(game)
-        print("Anfang: ", turn_data)
         handle_next_turn(turn_data)
 
 
@@ -68,14 +64,14 @@ def handle_game_start(start_data):
     start_data = {
         "opponent_username": start_data["opponent"],
     }
-    print("Game started")
+    print("*** *** GAME START *** ***")
     emit("game_start", json.dumps(start_data), room=users[user])
 
 
 def handle_next_turn(next_turn):
     user = next_turn["user"]
     turn_data = next_turn["turn_data"]
-    print(f"Next turn: {user} {turn_data}")
+    # print(f"Next turn: {user} {turn_data}")
     emit("next_turn", json.dumps(turn_data), room=users[user])
 
 
@@ -86,15 +82,33 @@ def handle_selected_cards(data):
         "selected_cards": data["selected_cards"],
         "token": request.sid
     }
-    print(f"Received selected cards: {turn}")
-    # gm.receive_turn_data(turn)
+    is_turn_valid = gm.receive_turn_data(turn)
+    p_id = turn.get("token")
+    game = gm.get_game(p_id)
+    if not is_turn_valid or game.is_game_over():
+        p1_game_end_dict = {
+            "result": game.player_1.game_result,
+            "user": game.player_1.name
+        }
+        p2_game_end_dict = {
+            "result": game.player_2.game_result,
+            "user": game.player_2.name
+        }
+        handle_game_end(p1_game_end_dict)
+        handle_game_end(p2_game_end_dict)
+    else:
+        turn_data = gm.get_turn_data(game)
+        handle_next_turn(turn_data)
+
 
 
 def handle_game_end(end_data):
+    print("*** CLASS: Events ***")
     user = end_data["user"]
     result = {
         "result": end_data["result"],
-        "history": end_data["history"]
+        # TODO: History hier angeben oder nachher durch Datenbank ?
+        # "history": end_data["history"]
     }
     print("game ended")
     emit("game_end", json.dumps(result), room=users[user])
@@ -112,4 +126,4 @@ def handle_disconnect():
 
 
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(app, allow_unsafe_werkzeug=True)
