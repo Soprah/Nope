@@ -18,6 +18,7 @@ class Game:
         self.assign_deck_to_players()
         self.pass_first_cards()
         self.active_player = self.player_1
+        self.loser = None
         self.winner = None
         self.reason_of_disqualification = None
 
@@ -84,7 +85,7 @@ class Game:
     def make_move(self):
         cards_current_turn = self.turns[-1].selected_cards
         if len(cards_current_turn) == 0:
-            print("NOPE")
+            print("NOPE", flush=True)
         elif len(cards_current_turn) > 0:
             for card in cards_current_turn:
                 self.active_player.discard_card(card)
@@ -96,15 +97,23 @@ class Game:
         return len(self.player_1.hand) == 0 or len(self.player_2.hand) == 0 or self.player_1.is_disqualified or self.player_2.is_disqualified
 
     def finish_game(self):
-        if len(self.player_1.hand) == 0 or self.player_1.is_disqualified:
-            self.winner = self.player_2
-        elif len(self.player_2.hand) == 0 or self.player_2.is_disqualified:
-            self.winner = self.player_1
-        else:
-            print("No winner yet")
+        self.declare_winner_loser()
         print(f"Anzahl der Runden {len(self.turns)}")
         print("PLACEHOLDER FOR SENDING DATA TO THE DATABASE")
-        return "GAME END"
+
+    def declare_winner_loser(self):
+        if len(self.player_1.hand) == 0 or self.player_1.is_disqualified:
+            self.winner = self.player_2
+            self.player_2.game_result = "Victory"
+            self.loser = self.player_1
+            self.player_1.game_result = "Defeat"
+        elif len(self.player_2.hand) == 0 or self.player_2.is_disqualified:
+            self.winner = self.player_1
+            self.player_1.game_result = "Victory"
+            self.loser = self.player_2
+            self.player_2.game_result = "Defeat"
+        else:
+            print("No winner yet!")
 
     """
     def run(self):
