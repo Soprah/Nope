@@ -9,6 +9,7 @@ from flask import Flask, request
 from flask_socketio import emit, SocketIO
 import json
 from src.gamemanagement.GameManagement import GameManagement
+import src.database.DatabaseManagement as DBM
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
