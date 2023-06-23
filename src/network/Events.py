@@ -86,14 +86,19 @@ def handle_selected_cards(data):
     p_id = turn.get("token")
     game = gm.get_game(p_id)
     if not is_turn_valid or game.is_game_over():
+        # TODO: Hier die History aus der Datenbank mittels Datenbank API holen !
+        history = "Hallo Welt"
         p1_game_end_dict = {
             "result": game.player_1.game_result,
-            "user": game.player_1.name
+            "user": game.player_1.name,
+            "history": history
         }
         p2_game_end_dict = {
             "result": game.player_2.game_result,
-            "user": game.player_2.name
+            "user": game.player_2.name,
+            "history": history
         }
+        # Event game end
         handle_game_end(p1_game_end_dict)
         handle_game_end(p2_game_end_dict)
     else:
@@ -108,7 +113,7 @@ def handle_game_end(end_data):
     result = {
         "result": end_data["result"],
         # TODO: History hier angeben oder nachher durch Datenbank ?
-        # "history": end_data["history"]
+        "history": end_data["history"]
     }
     print("game ended")
     emit("game_end", json.dumps(result), room=users[user])
