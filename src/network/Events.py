@@ -88,6 +88,9 @@ def handle_selected_cards(data):
     game = gm.get_game(p_id)
     if not is_turn_valid or game.is_game_over():
         # TODO: Hier die History aus der Datenbank mittels Datenbank API holen !
+        DBM.connect()
+        DBM.game_to_database(game)
+        DBM.disconnect()
         history = "Hallo Welt"
         p1_game_end_dict = {
             "result": game.player_1.game_result,

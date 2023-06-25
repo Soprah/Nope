@@ -19,16 +19,24 @@ def connect():
         print(error)
         return False
 
-def game_to_database(game):#TODO TEsten mit einem Game Object
+def game_to_database(game):
     """ Methode zum Schreiben des Game Objekts in die Datenbank"""
     game_id = game.id
     turn_number = 0
     for turn in game.turns:
         player_name = turn.player
-        top_card = turn.top_card
+        top_card_id = turn.top_card['id']
         selected_cards = turn.selected_cards
+        selected_card_ids = ""
+        first = True
+        for card in selected_cards:
+            if first:
+                selected_card_ids = card['id']
+                first = False
+            else:
+                selected_card_ids += ", {}".format(card['id'])
         is_turn_valid = turn.is_turn_valid
-        insert_turns_into_database(game_id, turn_number, player_name, top_card, selected_cards, is_turn_valid)
+        insert_turns_into_database(game_id, turn_number, player_name, top_card_id, selected_card_ids, is_turn_valid)
         turn_number += 1
 
 def insert_turns_into_database(game_id, turn_number, player_name, top_card, selected_cards, is_turn_valid):
