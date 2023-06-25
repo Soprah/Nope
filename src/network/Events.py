@@ -75,6 +75,18 @@ def handle_next_turn(next_turn):
     # print(f"Next turn: {user} {turn_data}")
     emit("next_turn", json.dumps(turn_data), room=users[user])
 
+@socketio.on("get_history")
+def send_history():
+    print("send history")
+    history = []
+    DBM.connect()
+    for game_id in DBM.get_game_ids_in_database():
+        print(game_id[0])
+        for turn in DBM.get_history(game_id[0]):
+            history.append((game_id[0], {"turn_number":turn[0], "player_name":turn[1], "top_card":turn[2], "selected_cards":turn[3],"is_turn_valid":turn[4]}))
+    DBM.disconnect()
+    emit("receive_history", json.dumps(history))
+
 
 @socketio.on("play_cards")
 def handle_selected_cards(data):
@@ -88,9 +100,7 @@ def handle_selected_cards(data):
     game = gm.get_game(p_id)
     if not is_turn_valid or game.is_game_over():
         # TODO: Hier die History aus der Datenbank mittels Datenbank API holen !
-        DBM.connect()
         DBM.game_to_database(game)
-        DBM.disconnect()
         history = "Hallo Welt"
         p1_game_end_dict = {
             "result": game.player_1.game_result,
