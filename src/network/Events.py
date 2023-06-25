@@ -79,10 +79,10 @@ def handle_next_turn(next_turn):
 @socketio.on("play_cards")
 def handle_selected_cards(data):
     data = json.loads(data)
-    turn = {
-        "selected_cards": data["selected_cards"],
-        "token": request.sid
-    }
+    turn = data
+    turn["token"] = request.sid
+    if "chosen_number" in turn:
+        print(turn)
     is_turn_valid = gm.receive_turn_data(turn)
     p_id = turn.get("token")
     game = gm.get_game(p_id)
@@ -113,7 +113,6 @@ def handle_game_end(end_data):
     user = end_data["user"]
     result = {
         "result": end_data["result"],
-        # TODO: History hier angeben oder nachher durch Datenbank ?
         "history": end_data["history"]
     }
     print("game ended")
