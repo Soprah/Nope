@@ -181,6 +181,8 @@ class DataConvert:
         elif len(selection_card.color) == 4:
             # Dict besitzt Wahlwerte
             if "chosen_number" in modified_input_dict and "chosen_color" in modified_input_dict:
+                # "chosen_color" zu einem tupel casten
+                modified_input_dict["chosen_color"] = tuple(modified_input_dict.get("chosen_color"))
                 if modified_input_dict.get("chosen_number") in allowed_numbers and modified_input_dict.get(
                         "chosen_color") in allowed_colors:
                     # Theoretical Card setzen

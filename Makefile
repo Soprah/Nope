@@ -1,6 +1,7 @@
-THIS_DIR = /home/peter/Softwareprojekt/GitHub2/Nope
+THIS_DIR = /home/peter/Softwareprojekt/Github4/Nope
 
-.PHONY = run_client
-run_client:
+
+.PHONY = run_server
+run_server:
 	@export PYTHONPATH=${PYTHONPATH}:${THIS_DIR} ; \
-    python  ${THIS_DIR}/src/network/client.py
+    python3  ${THIS_DIR}/src/network/Events.py
