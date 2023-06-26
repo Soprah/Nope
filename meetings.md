@@ -311,3 +311,155 @@ Morgen ansprechen:
 	- Brunsmann spricht an wie wichtig es ist, dass das Turnier am Ende durchführbar ist(?)
 	- Brunsmann spricht über das Format der Tournierergebnisse(?)
 	- Brunsmann ist wichtig, dass das Tournier stattfinden kann und jeder eine fertige KI Logik hat(?)
+
+-------------------------------------------------------------------
+
+## 23.05.2023
+- 14.30Uhr | 60min
+
+### Teilnehmer
+- Gesamte Team
+
+#### Inhalt:
+- Datenbank ist bereit
+	- Es muss noch ein Format für die Tournierergebnisse gefunden werden
+- Daten sollten bei jedem Zug an die Datenbank geschickt werden
+	- ist sicherer und erlaubt das weiterführen einer pausierten Partie
+
+- Netzwerk Team guckt, wie man Flask auf einen Server ausführen kann
+- Websockets wurden durchschaut, nur noch das genaue Format der Daten muss bestimmt werden
+
+- Es gibt immer noch unklarheiten zu den Spielregeln, diese klären wir endgültig bevor die Arbeit weitergehen kann
+- Waldemar wird Eric bei der finalisierung der Spiellogik helfen müssen um unseren Zeitplan möglichst einzuhalten
+
+- André und Oskar werden die Clients startklar machen, um möglichst bald die Spiellogik testen zu können
+
+- wir haben uns entschlossen die täglichen Meetings beizubehalten
+
+-------------------------------------------------------------------
+
+## 30.05.2023
+- 14.30Uhr | 60min
+
+### Teilnehmer
+- Oskar Schaubert
+- Waldemar Schäfer
+- Eric Neppert
+- Manuel Wiebe
+
+#### Inhalt:
+- Wir hängen im Zeitplan hinterher, weder Server noch Spiellogik noch Clients sind bereit
+- Netzwerk und Client müssen Websockets abklären, treffen dafür wahrscheinlich am Donnerstag
+- Eric wird ab morgen öffentlich an der Spiellogik arbeiten, man soll dazustoßen wenn man kann um sie möglichst schnell zu beenden
+- Server läuft noch nicht, das Thema stellt sich als komplexer als erwartet heraus. Wir besprechen beim morgigen arbeiten ob er unterstützt werden kann
+
+-------------------------------------------------------------------
+
+## 06.06.2023
+- 14.30Uhr | 60min
+
+### Teilnehmer
+-Oskar Schaubert
+-Eric Neppert
+-Waldemar Schäfer
+-Manuel Wiebe
+-André Ghazaryan
+
+#### Inhalt:
+Der Client wurde vorgestellt, die meisten Features sind vorhanden nur noch die Einsicht der Spielverläufe muss implementiert werden. Zusätzlich sollte der Code noch kommentiert werden.
+
+Die Kommunikationsschicht des Servers ist ebenfalls fertig, es fehlt hier ebenfalls nur noch die Einsicht der Spielverläufe.
+
+Das Client Team trifft sich morgen und beendet die History Features, zusätzlich wird die Client-Server Verbindung im Localhost getestet.
+
+Jason verlässt das Projekt, André wird die Aufgaben der Datenbank übernehmen
+
+Die Spiellogik Ebene fehlen noch ein paar Features, welche Eric in den nächsten Tagen fertigstellen wird.
+
+Nächstes Meeting am Samstag um 14:30 Uhr.
+
+Letztes Meeting am Montag um 19:00 Uhr, da wird das Tournier durchgeführt + letzte Besprechung vor der Abgabe.
+
+-------------------------------------------------------------------
+
+## 10.06.2023
+- 14.30Uhr | 60min
+
+### Teilnehmer
+-Oskar Schaubert
+-Eric Nepert
+-Waldemar Schäfer
+-André Ghazaryan
+-Manuel Wiebe
+
+#### Inhalt:
+- Server konnte nicht zum laufen gebracht werden, Docker konnte das Problem nicht lösen
+- Wir versuchen im Internet einen alternativen Server zu holen als letzte Notlösung
+
+- Der Client hatte Probleme mit dem Zugreifen auf Daten vom eigenen Projekt, dies konnte gelöst werden
+
+- Spiellogik noch nicht bereit, GameManagement fast bereit
+
+- Im Falle dass der Server nicht fertig wird, werden wir das Tournier im Localhost durchführen müssen
+
+- Wir haben entschlossen, die Spiellogik gemeinsam zuende zu bringen
+
+-------------------------------------------------------------------
+
+## 12.06.2023
+- 19.00Uhr | 60min
+
+### Teilnehmer
+-Oskar Schaubert
+-Eric Nepert
+-Waldemar Schäfer
+-André Ghazaryan
+-Manuel Wiebe
+
+#### Inhalt:
+- Spezifikation muss etwas angepasst werden (welche Programmiersprachen werden benutzt, Jason ist weggefallen etc.)
+- Server ist bereit
+- Spiellogik braucht nur noch das State Pattern
+- Server wird noch mit der Datenbank verbunden
+- Die Main Methode des Clients befindet sich in der Netzwerkschicht
+
+-------------------------------------------------------------------
+
+## 13.06.2023
+- 14.30Uhr | 60min
+
+### Teilnehmer
+-Oskar Schaubert
+-Eric Nepert
+-Waldemar Schäfer
+-André Ghazaryan
+-Manuel Wiebe
+
+#### Inhalt:
+Offen stehende Aufgaben:
+1) 4 KI Clients	(*6 Tage)
+	- Spiellogik berechnen
+	- testen: kann ein Spiel durchgeführt werden?
+2) Datenbank (4 Tage)
+	- mit den Server verbinden
+	- auf den Server aufsetzen
+3) Kommunikationsschicht des Servers:
+	- Circular import error beheben (3 Tage)
+	- IDs der Aktionskarten umstrukturieren, Initialkarte mitschicken (4 Tage)
+4) Spielresultate in der Datenbank speichern, Tourniertabelle (4 Tage)
+	- vorhandene Planung mit history_list nutzen
+	- Tourniertabelle braucht nur Resultate
+	
+Aufwandsschätzung:
+15 Tage
+*(Arbeit an KI Clients wird von jedem parallel ausgeführt)
+	
+Priorität (höhste bis tiefste):
+3) Kommunikationsschicht als erstes gemeinsam beenden
+Ab hier kann jeder parallel an der KI arbeiten
+2), 4)
+
+
+Nächstes Meeting: Dienstag, der 20.06 um 14:30 über Zoom
+Finale Abgabe: 	Dienstag, der 27.06 um 14:30 Präsent
+
